@@ -12,9 +12,9 @@ republiky mnoha různými formami:
 - Widget / nástroj plochy
 - Notifikace / oznámení
 
-Děkuji za inspiraci webu [www.zemancountdown.cz](https://www.zemancountdown.cz).
+Děkuji za inspiraci webem [www.zemancountdown.cz](https://www.zemancountdown.cz).
 
-Aplikace je psaná v Kotlinu s pomocí Jetpack knihoven včetně Jetpack Compose UI toolkitu.
+Aplikace je napsaná v Kotlinu s pomocí Jetpack knihoven včetně Jetpack Compose UI toolkitu.
 
 ### Licence
 
@@ -22,7 +22,7 @@ Licencováno pod [GNU GPL v3.0](LICENSE.txt) licencí.
 
 ## Screenshoty
 
-<img src=" screenshots/cs_light_app.png" width="25%" /><img src="screenshots/cs_light_screen.png" width="25%" /><img src="screenshots/cs_light_wallpaper.png" width="25%" /><img src="screenshots/cs_light_notifications.png" width="25%" />
+<img src="screenshots/cs_light_app.png" width="25%" /><img src="screenshots/cs_light_screen.png" width="25%" /><img src="screenshots/cs_light_wallpaper.png" width="25%" /><img src="screenshots/cs_light_notifications.png" width="25%" />
 
-<img src=" screenshots/cs_dark_app.png" width="25%" /><img src="screenshots/cs_dark_screen.png" width="25%" /><img src="screenshots/cs_dark_wallpaper.png" width="25%" /><img src="screenshots/cs_dark_notifications.png" width="25%" />
+<img src="screenshots/cs_dark_app.png" width="25%" /><img src="screenshots/cs_dark_screen.png" width="25%" /><img src="screenshots/cs_dark_wallpaper.png" width="25%" /><img src="screenshots/cs_dark_notifications.png" width="25%" />
 
