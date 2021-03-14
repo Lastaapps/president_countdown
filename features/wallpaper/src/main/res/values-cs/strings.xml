@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~   Copyright 2021, Petr Laštovička as Lasta apps, All rights reserved
+  ~
+  ~     This file is part of President Countdown.
+  ~
+  ~     This app is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU General Public License as published by
+  ~     the Free Software Foundation, either version 3 of the License, or
+  ~     (at your option) any later version.
+  ~
+  ~     This app is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU General Public License
+  ~     along with this app.  If not, see <https://www.gnu.org/licenses/>.
+  ~
+  -->
+
+<resources>
+
+    <string name="ui_portrait">Na výšku</string>
+    <string name="ui_landscape">Na šířku</string>
+    <string name="content_description_set_wallpaper">Nastavit jako pozadí plochy</string>
+    <string name="ui_rotation_fix">Oprava režimu na šířku</string>
+    <string name="content_description_hide">Skrýt</string>
+    <string name="ui_rotation_help_title">Oprava režimu na šířku</string>
+    <string name="ui_rotation_help_text">
+        Zapněte tuto funkci pokud se pozadí chová divně v reřimu na šířku.
+        Obvykle na tabletech není nutno tuto funkci použít.
+        Na druhou stranu, na mnoha telefonech se tato chyba vyskytne a je nutno aplikaci ukozornit,
+        že nefunguje jak by měla.
+        Pokud nepoužívate tapetu v reřimu na šířku, tuto možnost ignorujte.
+    </string>
+    <string name="ui_rotation_help_understand">Jasný, chápu</string>
+    <string name="ui_wallpaper_theme">Téma pozadí</string>
+    <string name="ui_system">Systémové</string>
+    <string name="ui_day">Světlé</string>
+    <string name="ui_night">Tmavé</string>
+    <string name="ui_foreground">Barva textu</string>
+    <string name="ui_background">Barva pozadí</string>
+    <string name="ui_theme_day">Světlé</string>
+    <string name="ui_theme_night">Tmavé</string>
+</resources>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~   Copyright 2021, Petr Laštovička as Lasta apps, All rights reserved
+  ~
+  ~     This file is part of President Countdown.
+  ~
+  ~     This app is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU General Public License as published by
+  ~     the Free Software Foundation, either version 3 of the License, or
+  ~     (at your option) any later version.
+  ~
+  ~     This app is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU General Public License
+  ~     along with this app.  If not, see <https://www.gnu.org/licenses/>.
+  ~
+  -->
+
+<resources>
+    <string name="share">Sdílet</string>
+    <string name="share_message">Nazdar, netrpíš náhodou nedostatkem znechucení či dokonce deprese? Jestli jo, tak si stáhni tuhle skvělou appku, 100% pomůže. No a kdyby jsi náhodou nedostatkem ne trpěl, stejně neuděláš chybu.</string>
+    <string name="rate">Ohodnoťte nás</string>
+    <string name="thank_review">Děkujeme za Váš čas</string>
+    <string name="license_notices">Použité knihovny</string>
+    <string name="licenses_title">Použité knihovny</string>
+    <string name="unknown_version">Neznámá verze</string>
+    <string name="other_resources">Další zdroje</string>
+    <string name="content_description_hrad">Odkaz na hrad.cz</string>
+    <string name="content_description_wikipedia">Odkat na článek na Wikipedii o prezidentovi ČR</string>
+    <string name="content_description_jmzsn">Odkaz na Facebookovou stránku hlídající stav pana prezidenta</string>
+    <string name="content_description_jmzdp">Odkaz na další zábavnou aplikaci s prezidentskou tématikou</string>
+    <string name="content_description_surprice">Nech se překvapit</string>
+    <string name="whats_new">Novinky</string>
+    <string name="privacy_policy">Ochrana osobních údajů</string>
+    <string name="buggy_ok">OK</string>
+    <string name="buggy_text">
+        Všimli jste si, že aplikace přeskočí čas od času při odpočtu sekundu či dvě?
+        Toto je způsobenou snahou vývojáře co nejvíce šetřit zdroje zařízení: baterku a vytížení procesoru.
+        Dále aplikace musí kvůli widgetům nebo notifikacím interagovat se systémem, který je také vysoce optimalizovaný
+        na šetření, to samozřejmě přidává další potencionální prodlevu.
+        Bohužel důsledkem je, že se tato chyba může čas od času vyskytnout, převážně na slabších zařízeních.
+        Děkujeme za pochopení.
+        \n
+        Pokud jste si všimli dalších chyb, neváhejte je nahlásit v Telegramové skupině o kousek níže.
+    </string>
+    <string name="buggy_title">Sekám se?</string>
+    <string name="buggy_button">Sekám se?</string>
+</resources>

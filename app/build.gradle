@@ -1,0 +1,136 @@
+/*
+ *   Copyright 2021, Petr Laštovička as Lasta apps, All rights reserved
+ *
+ *     This file is part of President Countdown.
+ *
+ *     This app is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     This app is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with this app.  If not, see <https://www.gnu.org/licenses/>.
+ *
+ */
+
+plugins {
+    id "com.android.application"
+
+    id "kotlin-android"
+    //id "kotlin-kapt"
+    //id "com.google.devtools.ksp"
+
+    id "com.google.gms.google-services"
+    id "com.google.firebase.crashlytics"
+    id 'com.google.android.gms.oss-licenses-plugin'
+}
+
+android {
+
+    if (targets_preview) {
+        compileSdkVersion compile_sdk_version
+        buildToolsVersion build_tools_version
+
+        defaultConfig.targetSdkVersion target_sdk_version
+    } else {
+        compileSdkVersion legacy_compile_sdk_version
+        buildToolsVersion legacy_build_tools_version
+
+        defaultConfig.targetSdkVersion legacy_target_sdk_version
+    }
+
+    defaultConfig {
+        applicationId "cz.lastaapps.president.app"
+        minSdkVersion min_sdk_version
+        versionCode 100
+        versionName "1.0.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+    }
+
+    buildTypes {
+        debug {
+            ext.alwaysUpdateBuildId = false
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        coreLibraryDesugaringEnabled true
+
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+        useIR = true
+    }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerVersion compose_compiler_version
+        kotlinCompilerExtensionVersion compose_version
+    }
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+    kotlinOptions {
+        jvmTarget = "1.8"
+        freeCompilerArgs += ["-Xallow-jvm-ir-dependencies"]
+    }
+}
+
+dependencies {
+
+    coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:$desugar_version"
+
+    //implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
+
+    implementation project(":app:firebase")
+    implementation project(":app:navigation")
+    implementation project(":core:core")
+    implementation project(":features:about")
+    implementation project(":features:notifications")
+    implementation project(":features:privacypolicy")
+    implementation project(":features:wallpaper")
+    implementation project(":features:whatsnew")
+    implementation project(":features:widget")
+    implementation project(":lastaapps:common")
+    implementation project(":ui:clock")
+    implementation project(":ui:common")
+    implementation project(":ui:composeimpl")
+    implementation project(":ui:socials")
+
+    implementation "androidx.appcompat:appcompat:$appcompat_version"
+    implementation "androidx.annotation:annotation:$annotation_version"
+    implementation "androidx.collection:collection-ktx:$collection_version"
+    implementation "androidx.core:core-ktx:$core_version"
+    implementation "androidx.startup:startup-runtime:$startup_version"
+    implementation "androidx.work:work-runtime-ktx:$work_version"
+
+    implementation "com.google.android.gms:play-services-oss-licenses:$oss_licenses_version"
+    implementation "com.google.android.play:core-ktx:$play_version"
+
+    implementation platform("com.google.firebase:firebase-bom:$firebase_bom_version")
+    implementation "com.google.firebase:firebase-analytics-ktx"
+    implementation "com.google.firebase:firebase-config-ktx"
+    implementation "com.google.firebase:firebase-messaging-ktx"
+    implementation "com.google.firebase:firebase-crashlytics-ktx"
+
+    testImplementation "junit:junit:$junit_version"
+    androidTestImplementation "androidx.test.ext:junit:$androidx_junit_version"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_core_version"
+}

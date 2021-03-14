@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~   Copyright 2021, Petr Laštovička as Lasta apps, All rights reserved
+  ~
+  ~     This file is part of President Countdown.
+  ~
+  ~     This app is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU General Public License as published by
+  ~     the Free Software Foundation, either version 3 of the License, or
+  ~     (at your option) any later version.
+  ~
+  ~     This app is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU General Public License
+  ~     along with this app.  If not, see <https://www.gnu.org/licenses/>.
+  ~
+  -->
+
+<resources>
+
+    <string name="share">Share</string>
+    <string name="share_message">Do you suffer from the lack of depression? Get this app and you woun\'t anymore</string>
+
+    <string name="rate">Rate us</string>
+    <string name="thank_review">Thanks for your review!</string>
+
+    <string name="license_notices">License notices</string>
+    <string name="licenses_title">Open source licenses notices</string>
+
+    <string name="unknown_version">Unknown version</string>
+
+    <string name="other_resources">Other resources</string>
+
+    <string name="content_description_hrad">Link to hrad.cz</string>
+    <string name="content_description_wikipedia">Link to Wikipedia to the article about the President</string>
+    <string name="content_description_jmzsn">Link to Facebook page controlling if the President is still alive</string>
+    <string name="content_description_jmzdp">Link to one funny app with presidents theme</string>
+    <string name="content_description_surprice">Click me and see</string>
+    <string name="whats_new">What\'s new</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="buggy_ok">OK</string>
+    <string name="buggy_text">
+        Have you seen some seconds skipped? This can unfortunately ocurre from time to time, mostly on lower-end devices.
+        It\'s caused by the app trying to save as many resources - battery and performance. We are sorry for the inconvenience.
+        \n
+        If you have noticed another bugs, feel free to report them using Telegram below.
+    </string>
+    <string name="buggy_title">Buggy app?</string>
+    <string name="buggy_button">Buggy app?</string>
+
+</resources>

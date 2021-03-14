@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~   Copyright 2021, Petr Laštovička as Lasta apps, All rights reserved
+  ~
+  ~     This file is part of President Countdown.
+  ~
+  ~     This app is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU General Public License as published by
+  ~     the Free Software Foundation, either version 3 of the License, or
+  ~     (at your option) any later version.
+  ~
+  ~     This app is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU General Public License
+  ~     along with this app.  If not, see <https://www.gnu.org/licenses/>.
+  ~
+  -->
+
+<resources>
+
+
+    <string name="announcements_channel_name">Důležitá oznámení</string>
+    <string name="announcements_channel_description">
+        Připomíná vám prezidentovy narozeniny, svátky, výročí zvolení a kulatá čísla do konce mandátu.
+    </string>
+
+    <string name="announcements_birthday_title">%s ná dnes narozeniny!</string>
+    <plurals name="announcements_birthday_text">
+        <item quantity="one">Je %d rok starý. Narodil se %s.</item>
+        <item quantity="few">Je %d roky starý. Narodil se %s.</item>
+        <item quantity="other">Je %d let starý. Narodil se %s.</item>
+    </plurals>
+
+    <string name="announcements_nameday_title">%s má dnes svátek!</string>
+    <string name="announcements_nameday_text">Nevěděli jste? Teď už víte.</string>
+
+    <string name="announcements_elected_title">%s slaví výročí!</string>
+    <plurals name="announcements_elected_text">
+        <item quantity="one">Prezident byl zvolen před %s rokem.</item>
+        <item quantity="few">Prezident byl zvolen před %s lety.</item>
+        <item quantity="other">Prezident byl zvolen před %s lety.</item>
+    </plurals>
+
+    <string name="announcements_remains_title_future">O další rok dál!</string>
+    <plurals name="announcements_remains_text_future">
+        <item quantity="one">Prezidentův mandát skončí za %d rok.</item>
+        <item quantity="few">Prezidentův mandát skončí za %d roky.</item>
+        <item quantity="other">Prezidentův mandát skončí za %d let.</item>
+    </plurals>
+    <string name="announcements_remains_title_now">Je konec!</string>
+    <string name="announcements_remains_text_now">Prezidentův mandát právě skončil.</string>
+    <string name="announcements_remains_title_history">Připomínka z minulosti</string>
+    <plurals name="announcements_remains_text_history">
+        <item quantity="one">Prezidentův mandát skončil před %d rokem.</item>
+        <item quantity="few">Prezidentův mandát skončil před %d lety.</item>
+        <item quantity="other">Prezidentův mandát skončil před %d lety.</item>
+    </plurals>
+
+
+    <string name="daily_channel_name">Denní připomínka</string>
+    <string name="daily_channel_description">
+        Dostávejte oznámení o době do konce mandátu každý den.
+    </string>
+
+    <string name="daily_title">Další den za námi</string>
+    <string name="daily_text_template_complex">Zbývá %s a %s</string>
+    <string name="daily_text_template_simple">Zbývá %s</string>
+    <string name="daily_text_template_end">Trvání mandátu je u konce</string>
+    <plurals name="daily_text_years">
+        <item quantity="other">%d rok</item>
+        <item quantity="few">%d roky</item>
+        <item quantity="one">%d let</item>
+    </plurals>
+    <plurals name="daily_text_days">
+        <item quantity="other">%d den</item>
+        <item quantity="few">%d dny</item>
+        <item quantity="one">%d dní</item>
+    </plurals>
+
+
+    <string name="permanent_channel_name">Stálá notifikace s odpočtem</string>
+    <string name="permanent_channel_description">
+        Zobrazí stálou notifikaci s odpočtem do konce mandátu prezidenta.
+    </string>
+
+    <string name="permanent_loading_title">Chviličku</string>
+    <string name="permanent_loading_text">Načítám…</string>
+    <string name="permanent_paused_title">Pozastaveno</string>
+    <string name="permanent_paused_text">Odemkněte telefon pro obnovení odpočtu</string>
+    <string name="permanent_template_title">Čas do konce mandátu</string>
+    <string name="permanent_template_text">%dy %dd %dh %dm %ds</string>
+    <string name="permanent_over_title">Je konec!</string>
+
+
+    <string name="sett_time">Čas, kdy budete dostávat oznámení</string>
+    <string name="sett_time_CET_timezone">SEČ</string>
+    <string name="sett_announcements">Důležitá oznámení</string>
+    <string name="sett_daily">Pravidelně posílat info o času do konce prezidentova mandátu</string>
+    <string name="sett_permanent">Zobrazit stálé oznámení s časem do konce mandátu</string>
+
+    <string name="sett_system">Otevřít systémová nastavení</string>
+</resources>

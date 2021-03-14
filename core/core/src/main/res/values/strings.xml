@@ -1,0 +1,39 @@
+<!--
+  ~   Copyright 2021, Petr Laštovička as Lasta apps, All rights reserved
+  ~
+  ~     This file is part of President Countdown.
+  ~
+  ~     This app is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU General Public License as published by
+  ~     the Free Software Foundation, either version 3 of the License, or
+  ~     (at your option) any later version.
+  ~
+  ~     This app is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU General Public License
+  ~     along with this app.  If not, see <https://www.gnu.org/licenses/>.
+  ~
+  -->
+
+<resources>
+
+    <string name="app_name">President Countdown</string>
+
+    <string name="working">Miloš Zeman is working</string>
+    <string name="finished">Miloš Zeman\'s mandate has ended</string>
+    <string name="left">Miloš Zeman has left his position</string>
+    <string name="died">Miloš Zeman has died</string>
+    <string name="loading" translatable="false" />
+    <string name="error">Nope, an error occurred</string>
+
+    <string name="working_formatted"><![CDATA[<b><font color=#d90023>Miloš Zeman</font></b> is working]]></string>
+    <string name="finished_formatted"><![CDATA[<b><font color=#d90023>Miloš Zeman\'s</font></b> mandate has ended]]></string>
+    <string name="left_formatted"><![CDATA[<b><font color=#d90023>Miloš Zeman</font></b> has left his position]]></string>
+    <string name="died_formatted"><![CDATA[<b><font color=#d90023>Miloš Zeman</font></b> has died]]></string>
+    <string name="loading_formatted"><![CDATA[]]></string>
+    <string name="error_formatted"><![CDATA[Nope, an error occurred]]></string>
+
+</resources>

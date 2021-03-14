@@ -1,0 +1,44 @@
+<!--
+  ~   Copyright 2021, Petr Laštovička as Lasta apps, All rights reserved
+  ~
+  ~     This file is part of President Countdown.
+  ~
+  ~     This app is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU General Public License as published by
+  ~     the Free Software Foundation, either version 3 of the License, or
+  ~     (at your option) any later version.
+  ~
+  ~     This app is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU General Public License
+  ~     along with this app.  If not, see <https://www.gnu.org/licenses/>.
+  ~
+  -->
+
+<resources>
+
+    <string name="ui_theme_day">Light</string>
+    <string name="ui_theme_night">Dark</string>
+    <string name="ui_portrait">Portrait</string>
+    <string name="ui_landscape">Landscape</string>
+    <string name="content_description_set_wallpaper">Set as wallpaper</string>
+    <string name="ui_rotation_fix">Landscape fix</string>
+    <string name="content_description_hide">Hide</string>
+    <string name="ui_rotation_help_title">Rotation fix</string>
+    <string name="ui_rotation_help_understand">Understand</string>
+    <string name="ui_wallpaper_theme">Choose the homescreen\'s wallpaper theme</string>
+    <string name="ui_system">System</string>
+    <string name="ui_day">Day</string>
+    <string name="ui_night">Night</string>
+    <string name="ui_rotation_help_text">
+        Turn this on if the wallpaper doesn\'t rotate when your home screen is in the landscape mode.
+        Usually on the most tables this is not required.
+        However, some phone manufactures have official API wrongly implemented, so the fix is required.
+        If you don\'t use the wallpaper in the landscape mode, ignore this option.
+    </string>
+    <string name="ui_foreground">Text color</string>
+    <string name="ui_background">Background color</string>
+</resources>

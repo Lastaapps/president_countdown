@@ -1,0 +1,35 @@
+<!--
+  ~   Copyright 2021, Petr Laštovička as Lasta apps, All rights reserved
+  ~
+  ~     This file is part of President Countdown.
+  ~
+  ~     This app is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU General Public License as published by
+  ~     the Free Software Foundation, either version 3 of the License, or
+  ~     (at your option) any later version.
+  ~
+  ~     This app is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU General Public License
+  ~     along with this app.  If not, see <https://www.gnu.org/licenses/>.
+  ~
+  -->
+
+<resources>
+
+    <string name="wallpaper">Set as wallpaper</string>
+    <string name="widget">Use as widget</string>
+    <string name="notification">Notifications</string>
+    <string name="about">About</string>
+
+    <string name="widget_help">On the home screen, long hold a finger until a menu appears. Then choose widgets and find our widget</string>
+
+    <string name="widget_debug_enabled">Debug mode enabled!</string>
+    <string name="widget_debug_disabled">Debug mode disabled!</string>
+
+    <string name="content_description_theme">Changes app\'s system/light/dark theme modes</string>
+
+</resources>

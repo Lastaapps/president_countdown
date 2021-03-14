@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~   Copyright 2021, Petr Laštovička as Lasta apps, All rights reserved
+  ~
+  ~     This file is part of President Countdown.
+  ~
+  ~     This app is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU General Public License as published by
+  ~     the Free Software Foundation, either version 3 of the License, or
+  ~     (at your option) any later version.
+  ~
+  ~     This app is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU General Public License
+  ~     along with this app.  If not, see <https://www.gnu.org/licenses/>.
+  ~
+  -->
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tool="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="16dp">
+
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/time_root"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tool:constraint_referenced_ids="years,days,hours,minutes,seconds"
+        tool:flow_horizontalGap="8dp"
+        tool:layout_constraintBottom_toBottomOf="parent"
+        tool:layout_constraintEnd_toEndOf="parent"
+        tool:layout_constraintStart_toStartOf="parent"
+        tool:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/years"
+        style="@style/TextFlow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tool:constraint_referenced_ids="yv,yu" />
+
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/days"
+        style="@style/TextFlow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tool:constraint_referenced_ids="dv,du" />
+
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/hours"
+        style="@style/TextFlow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tool:constraint_referenced_ids="hv,hu" />
+
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/minutes"
+        style="@style/TextFlow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tool:constraint_referenced_ids="mv,mu" />
+
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/seconds"
+        style="@style/TextFlow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tool:constraint_referenced_ids="sv,su" />
+
+    <TextView
+        android:id="@+id/yv"
+        style="@style/Digit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/year_digit"
+        tools:text="2" />
+
+    <TextView
+        android:id="@+id/yu"
+        style="@style/Unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="years" />
+
+
+    <TextView
+        android:id="@+id/dv"
+        style="@style/Digit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="128" />
+
+    <TextView
+        android:id="@+id/du"
+        style="@style/Unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="days" />
+
+    <TextView
+        android:id="@+id/hv"
+        style="@style/Digit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="14" />
+
+    <TextView
+        android:id="@+id/hu"
+        style="@style/Unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="hours" />
+
+    <TextView
+        android:id="@+id/mv"
+        style="@style/Digit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="24" />
+
+    <TextView
+        android:id="@+id/mu"
+        style="@style/Unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="minutes" />
+
+    <TextView
+        android:id="@+id/sv"
+        style="@style/Digit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="53" />
+
+    <TextView
+        android:id="@+id/su"
+        style="@style/Unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="seconds" />
+
+    <TextView
+        android:id="@+id/state"
+        style="@style/State"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tool:layout_constraintBottom_toBottomOf="parent"
+        tool:layout_constraintEnd_toEndOf="parent"
+        tool:layout_constraintStart_toStartOf="parent"
+        tool:layout_constraintTop_toTopOf="parent"
+        tools:text="The President state" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

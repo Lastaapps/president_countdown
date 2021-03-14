@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~   Copyright 2021, Petr Laštovička as Lasta apps, All rights reserved
+  ~
+  ~     This file is part of President Countdown.
+  ~
+  ~     This app is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU General Public License as published by
+  ~     the Free Software Foundation, either version 3 of the License, or
+  ~     (at your option) any later version.
+  ~
+  ~     This app is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU General Public License
+  ~     along with this app.  If not, see <https://www.gnu.org/licenses/>.
+  ~
+  -->
+
+<resources>
+
+    <string name="announcements_channel_name">Important announcements</string>
+    <string name="announcements_channel_description">
+        Informs you about presidents birthdays, name-days
+        and rounded years from the appointment or until the end of the mandate.
+    </string>
+
+    <string name="announcements_birthday_title">%s has birthday today!</string>
+    <plurals name="announcements_birthday_text">
+        <item quantity="one">He is %d year old and was born on %s.</item>
+        <item quantity="other">He is %d years old and was born on %s.</item>
+    </plurals>
+
+    <string name="announcements_nameday_title">%s has name-day today!</string>
+    <string name="announcements_nameday_text">Now you know</string>
+
+    <string name="announcements_elected_title">%s has a jubilee!</string>
+    <plurals name="announcements_elected_text">
+        <item quantity="one">The president was elected %s year ago.</item>
+        <item quantity="other">The president was elected %s years ago.</item>
+    </plurals>
+
+    <string name="announcements_remains_title_future">One year closer!</string>
+    <plurals name="announcements_remains_text_future">
+        <item quantity="one">President\'s mandate will end in %d year.</item>
+        <item quantity="other">President\'s mandate will end in %d years.</item>
+    </plurals>
+    <string name="announcements_remains_title_now">The end!</string>
+    <string name="announcements_remains_text_now">President\'s mandate has just ended.</string>
+    <string name="announcements_remains_title_history">History revision</string>
+    <plurals name="announcements_remains_text_history">
+        <item quantity="one">Presidents\'s mandate ended %d year ago.</item>
+        <item quantity="other">Presidents\'s mandate ended %d years ago.</item>
+    </plurals>
+
+
+    <string name="daily_channel_name">Daily notification</string>
+    <string name="daily_channel_description">
+        Receive notification about time remaining to the end of the mandate every day.
+    </string>
+
+    <string name="daily_title">Another day over</string>
+    <string name="daily_text_template_complex">%s and %s left</string>
+    <string name="daily_text_template_simple">%s left</string>
+    <string name="daily_text_template_end">The mandate has ended</string>
+    <plurals name="daily_text_years">
+        <item quantity="other">%d years</item>
+        <item quantity="one">%d year</item>
+    </plurals>
+    <plurals name="daily_text_days">
+        <item quantity="other">%d days</item>
+        <item quantity="one">%d day</item>
+    </plurals>
+
+
+    <string name="permanent_channel_name">Permanent time left notification</string>
+    <string name="permanent_channel_description">
+        Shows you a permanent notification containing the time left until the end of the mandate.
+    </string>
+
+    <string name="permanent_loading_title">Wait a second</string>
+    <string name="permanent_loading_text">Loading…</string>
+    <string name="permanent_paused_title">Paused</string>
+    <string name="permanent_paused_text">Unlock your phone to resume</string>
+    <string name="permanent_template_title">Time left until the end of the mandate</string>
+    <string name="permanent_template_text">%dy %dd %dh %dm %ds</string>
+    <string name="permanent_over_title">It\'s over</string>
+
+
+    <string name="sett_time">Time, when you will receive notification</string>
+    <string name="sett_time_CET_timezone">CET</string>
+    <string name="sett_announcements">Important announcements</string>
+    <string name="sett_daily">Send progress update every morning</string>
+    <string name="sett_permanent">Show a notification with the current progress all the time</string>
+
+    <string name="sett_system">Open system settings</string>
+
+</resources>

@@ -1,0 +1,47 @@
+<!--
+  ~   Copyright 2021, Petr Laštovička as Lasta apps, All rights reserved
+  ~
+  ~     This file is part of President Countdown.
+  ~
+  ~     This app is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU General Public License as published by
+  ~     the Free Software Foundation, either version 3 of the License, or
+  ~     (at your option) any later version.
+  ~
+  ~     This app is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU General Public License
+  ~     along with this app.  If not, see <https://www.gnu.org/licenses/>.
+  ~
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="64dp"
+    android:height="64dp"
+    android:viewportWidth="64"
+    android:viewportHeight="64">
+    <path
+        android:pathData="m64,29.6973 l-0,-20.5364 -61.6092,-0 28.7373,20.5364h3.2082z"
+        android:strokeLineJoin="round"
+        android:strokeWidth="0.265001"
+        android:fillColor="@color/flag_white"
+        android:strokeColor="#00000000"
+        android:strokeLineCap="butt" />
+    <path
+        android:pathData="M0,13.929V49.4944L26.6741,31.7117Z"
+        android:strokeLineJoin="round"
+        android:strokeWidth="0.265001"
+        android:fillColor="@color/flag_blue"
+        android:strokeColor="#00000000"
+        android:strokeLineCap="butt" />
+    <path
+        android:pathData="m63.9978,34.2609 l-0,20.5364 -61.6092,0 28.7373,-20.5364h3.2082z"
+        android:strokeLineJoin="round"
+        android:strokeWidth="0.265001"
+        android:fillColor="@color/flag_red"
+        android:strokeColor="#00000000"
+        android:strokeLineCap="butt" />
+</vector>
