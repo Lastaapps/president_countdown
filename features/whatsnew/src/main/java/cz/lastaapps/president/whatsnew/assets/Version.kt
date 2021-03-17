@@ -18,16 +18,40 @@
  *
  */
 
-package cz.lastaapps.president.whatsnew.json
+package cz.lastaapps.president.whatsnew.assets
 
+import android.content.Context
+import cz.lastaapps.president.core.functionality.getLocale
 import java.time.LocalDate
+
+private const val defaultLocale = "en-US"
 
 /**
  * Represents app version message info
  * */
 internal data class Version(
-    val buildNumber: Long,
     val name: String,
+    val buildNumber: Long,
     val releasedDate: LocalDate,
-    val content: String
-)
+    val isBeta: Boolean,
+    val isAlpha: Boolean,
+    private val contents: HashMap<String, String>
+) : Comparable<Version> {
+
+    override fun compareTo(other: Version): Int {
+        return -1 * releasedDate.compareTo(other.releasedDate)
+    }
+
+    fun getLocalizedContent(context: Context): String {
+        val locale = context.getLocale()
+
+        val localeName = locale.toLanguageTag()
+
+        return contents[localeName] ?: contents[defaultLocale]!!
+    }
+}
+
+internal fun List<Version>.filterAlpha() = filter { true }
+internal fun List<Version>.filterBeta() = filter { !it.isAlpha }
+internal fun List<Version>.filterGeneral() = filter { !it.isAlpha && !it.isBeta }
+

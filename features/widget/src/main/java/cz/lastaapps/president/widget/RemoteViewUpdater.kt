@@ -65,24 +65,15 @@ internal object RemoteViewUpdater {
             views.setViewVisibility(R.id.state, View.GONE)
             views.setViewVisibility(R.id.time, View.VISIBLE)
 
-            val values = IntArray(5)
-            val units = IntArray(5)
-
-            values[0] = R.id.yv
-            units[0] = R.id.yu
-            values[1] = R.id.dv
-            units[1] = R.id.du
-            values[2] = R.id.hv
-            units[2] = R.id.hu
-            values[3] = R.id.mv
-            units[3] = R.id.mu
-            values[4] = R.id.sv
-            units[4] = R.id.su
+            val values = listOf(R.id.yv, R.id.dv, R.id.hv, R.id.mv, R.id.sv)
+            val units = listOf(R.id.yu, R.id.du, R.id.hu, R.id.mu, R.id.su)
 
             val plurals = TimePlurals(context)
 
             for (i in 0 until 5) {
                 val value = state[i]
+
+                val v1 = plurals.getByIndex(i, value.toInt())
 
                 views.setTextViewText(values[i], value.toString())
                 views.setTextViewText(units[i], plurals.getByIndex(i, value.toInt()))
@@ -91,13 +82,14 @@ internal object RemoteViewUpdater {
             true
 
         } else {
+
+            views.setViewVisibility(R.id.state, View.VISIBLE)
+            views.setViewVisibility(R.id.time, View.GONE)
+
             val text = HtmlCompat.fromHtml(
                 context.getString(state.state.formattedStringId),
                 HtmlCompat.FROM_HTML_MODE_LEGACY
             )
-
-            views.setViewVisibility(R.id.state, View.VISIBLE)
-            views.setViewVisibility(R.id.time, View.GONE)
             views.setTextViewText(R.id.state, text)
 
             false

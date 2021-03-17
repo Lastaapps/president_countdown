@@ -20,28 +20,24 @@
 
 package cz.lastaapps.ui.settings
 
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material.icons.filled.ArrowDropUp
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Card
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Switch
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import com.google.android.material.timepicker.MaterialTimePicker
 import cz.lastaapps.ui.common.components.VerticalDivider
-import java.time.LocalTime
-import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
 
 /*
 * Settings components implementation
@@ -59,109 +55,6 @@ fun SwitchSettings(
 ) {
     CustomSettings(text = text, onClick = onChange, modifier = modifier) {
         Switch(checked = checked, onCheckedChange = { onChange() })
-    }
-}
-
-/**
- * Opens Material time picker, shows time selected (+ timezone name)
- * */
-@Composable
-fun TimeSettings(
-    text: String,
-    time: LocalTime,
-    modifier: Modifier = Modifier,
-    onTimeChanged: (LocalTime) -> Unit,
-    timezone: String = "",
-) {
-
-    var timeText = time.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT))
-    if (timezone != "")
-        timeText += " $timezone"
-
-    //TODO migrate to a compose solution when available
-    val context = LocalContext.current
-    val onClick: () -> Unit = {
-        val picker = MaterialTimePicker.Builder()
-            .setHour(time.hour)
-            .setMinute(time.minute)
-            .setInputMode(MaterialTimePicker.INPUT_MODE_CLOCK)
-            .setTitleText(text)
-            .build()
-
-        (context as AppCompatActivity).let {
-            picker.show(it.supportFragmentManager, picker.toString())
-            picker.addOnPositiveButtonClickListener {
-                val newTime = LocalTime.of(picker.hour, picker.minute)
-                onTimeChanged(newTime)
-            }
-        }
-    }
-
-    CustomSettings(
-        text = text,
-        onClick = onClick,
-        modifier = modifier,
-        divider = false,
-    ) {
-        Text(timeText)
-    }
-}
-
-@Composable
-fun <T> DropdownSettings(
-    text: String,
-    items: List<T>,
-    selected: T,
-    onItemSelected: (T) -> Unit,
-    modifier: Modifier = Modifier,
-    itemsText: @Composable (T) -> String = { it.toString() }
-) {
-    CustomSettings(
-        text = text,
-        modifier = modifier,
-        divider = false,
-    ) {
-
-        var expanded by remember { mutableStateOf(false) }
-
-        val onClick = { expanded = true }
-
-        Row(
-            modifier = Modifier.clickable { onClick() },
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Text(
-                text = itemsText(selected),
-            )
-            IconButton(
-                onClick = onClick,
-            ) {
-                Icon(
-                    imageVector = if (expanded) Icons.Default.ArrowDropUp
-                    else Icons.Default.ArrowDropDown,
-                    contentDescription = null
-                )
-            }
-        }
-
-        DropdownMenu(
-            expanded = expanded,
-            onDismissRequest = { expanded = false },
-        ) {
-
-            for (item in items) {
-
-                DropdownMenuItem(
-                    onClick = {
-                        onItemSelected(item)
-                        expanded = false
-                    },
-                    modifier = modifier
-                ) {
-                    Text(itemsText(item))
-                }
-            }
-        }
     }
 }
 

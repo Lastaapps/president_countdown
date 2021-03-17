@@ -142,6 +142,8 @@ class PresidentWallpaperService : WallpaperService() {
         internal fun displayChanged() = scope.launch(Dispatchers.Default) {
 
             val config = this@PresidentWallpaperService.resources.configuration
+
+            @Suppress("DEPRECATION")
             val display = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R)
                 displayContext?.display else wm.defaultDisplay
             display!!

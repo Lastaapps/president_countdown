@@ -29,15 +29,19 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import cz.lastaapps.common.Communication
+import cz.lastaapps.president.constants.githubProjectName
+import cz.lastaapps.president.whatsnew.BuildConfig
 import cz.lastaapps.president.whatsnew.R
 import cz.lastaapps.president.whatsnew.WhatsNewProperties
-import cz.lastaapps.president.whatsnew.json.Loader
-import cz.lastaapps.president.whatsnew.json.Version
+import cz.lastaapps.president.whatsnew.assets.*
+import cz.lastaapps.ui.common.components.ImageTextRow
 import cz.lastaapps.ui.settings.SwitchSettings
 import java.time.format.DateTimeFormatter
 
@@ -82,7 +86,7 @@ private fun Content(
         val paddingModifier = Modifier.padding(top = 4.dp, bottom = 4.dp)
 
         Text(
-            text = stringResource(id = R.string.dialog_title),
+            text = stringResource(id = R.string.whatsnew_dialog_title),
             modifier = paddingModifier.constrainAs(topConst) {
                 centerHorizontallyTo(parent)
                 top.linkTo(parent.top)
@@ -107,21 +111,35 @@ private fun Content(
                 bottom.linkTo(parent.bottom)
             }
         ) {
+            ViewCommits(paddingModifier.fillMaxWidth())
+
             AutoLaunchSettings(
-                modifier = paddingModifier
-                    .fillMaxWidth()
-                    .wrapContentHeight()
+                modifier = paddingModifier.fillMaxWidth()
             )
 
             TextButton(
                 onClick = { visibilityChanged(false) },
-                modifier = paddingModifier
-                    .align(Alignment.End)
-                    .wrapContentHeight(),
+                modifier = paddingModifier.align(Alignment.End),
             ) {
-                Text(stringResource(id = R.string.dialog_ok))
+                Text(stringResource(id = R.string.whatsnew_dialog_ok))
             }
         }
+    }
+}
+
+@Composable
+private fun ViewCommits(modifier: Modifier = Modifier) {
+
+    val context = LocalContext.current
+    Button(
+        onClick = { Communication.openProjectsCommits(context, githubProjectName) },
+        modifier = modifier,
+        colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.secondary),
+    ) {
+        ImageTextRow(
+            painter = painterResource(id = cz.lastaapps.common.R.drawable.ic_github),
+            text = stringResource(id = R.string.view_commits),
+        )
     }
 }
 
@@ -138,14 +156,14 @@ private fun AutoLaunchSettings(modifier: Modifier = Modifier) {
         }
     }
 
-    settings?.let { settings ->
+    settings?.let {
 
-        val state by settings.autoLaunchFlow.collectAsState()
+        val state by it.autoLaunchFlow.collectAsState()
 
         SwitchSettings(
             text = stringResource(id = R.string.sett_auto_launch),
             checked = state,
-            onChange = { settings.autoLaunch = !state },
+            onChange = { it.autoLaunch = !state },
             modifier = modifier,
         )
     }
@@ -179,7 +197,10 @@ private fun VersionItem(version: Version, modifier: Modifier = Modifier) {
             Text(text = version.name + " - " + version.buildNumber.toString())
             Text(text = version.releasedDate.format(DateTimeFormatter.ISO_LOCAL_DATE))
             Divider()
-            Text(text = version.content, modifier = Modifier.padding(top = 4.dp))
+            Text(
+                text = version.getLocalizedContent(LocalContext.current),
+                modifier = Modifier.padding(top = 4.dp)
+            )
         }
     }
 }
@@ -194,7 +215,13 @@ private fun loadVersions(): List<Version> {
     val context = LocalContext.current
 
     LaunchedEffect("") {
-        list = Loader(context).load()
+        list = Loader(context).load().let {
+            when {
+                BuildConfig.isAlpha -> it.filterAlpha()
+                BuildConfig.isBeta -> it.filterBeta()
+                else -> it.filterGeneral()
+            }
+        }
     }
 
     return list

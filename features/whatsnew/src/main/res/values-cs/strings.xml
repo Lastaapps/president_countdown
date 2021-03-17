@@ -19,7 +19,8 @@
   -->
 
 <resources>
-    <string name="dialog_title">Novinky</string>
-    <string name="dialog_ok">OK</string>
+    <string name="whatsnew_dialog_title">Novinky</string>
+    <string name="whatsnew_dialog_ok">OK</string>
     <string name="sett_auto_launch">Zobrazit u nových verzí</string>
+    <string name="view_commits">Commit zprávy</string>
 </resources>

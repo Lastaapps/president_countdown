@@ -21,14 +21,13 @@
 package cz.lastaapps.president.whatsnew
 
 import android.content.Context
-import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
-import android.os.Build
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import cz.lastaapps.president.core.functionality.getVersionCode
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -97,7 +96,7 @@ class WhatsNewProperties private constructor(
      * */
     fun updateVersion() {
         try {
-            versionRead = getVersion(context)
+            versionRead = context.getVersionCode()
 
         } catch (e: PackageManager.NameNotFoundException) {
             e.printStackTrace()
@@ -107,17 +106,6 @@ class WhatsNewProperties private constructor(
     /**
      * @return if there is new version and user requires it
      * */
-    fun shouldAutoShow(): Boolean = autoLaunch && (versionRead < getVersion(context))
+    fun shouldAutoShow(): Boolean = autoLaunch && (versionRead < context.getVersionCode())
 
-}
-
-/**
- * @return current app version code
- * */
-private fun getVersion(context: Context): Long {
-    val pInfo: PackageInfo =
-        context.packageManager.getPackageInfo(context.packageName, 0)
-
-    val build = if (Build.VERSION.SDK_INT >= 28) pInfo.longVersionCode else pInfo.versionCode
-    return build.toLong()
 }

@@ -84,7 +84,7 @@ private fun Content(requestDismiss: () -> Unit, modifier: Modifier = Modifier) {
             modifier = paddingModifier,
         )
         Text(
-            text = stringResource(id = R.string.dialog_apps_name),
+            text = stringResource(id = cz.lastaapps.president.core.R.string.app_name),
             style = typo.h6,
             textAlign = TextAlign.Center,
             modifier = paddingModifier,
@@ -97,6 +97,7 @@ private fun Content(requestDismiss: () -> Unit, modifier: Modifier = Modifier) {
         )
         Text(
             text = stringResource(id = R.string.dialog_nutshell),
+            style = typo.body2,
             textAlign = TextAlign.Center,
             modifier = paddingModifier,
         )

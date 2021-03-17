@@ -34,7 +34,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Help
 import androidx.compose.material.icons.filled.OpenInNew
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -46,6 +45,7 @@ import androidx.constraintlayout.compose.Dimension
 import cz.lastaapps.president.wallpaper.R
 import cz.lastaapps.president.wallpaper.service.PresidentWallpaperService
 import cz.lastaapps.ui.common.components.TextSwitch
+import cz.lastaapps.ui.common.extencions.rememberMutableSaveable
 import cz.lastaapps.ui.common.layouts.ExpandableBottomLayout
 import cz.lastaapps.ui.settings.ColoPickerDialogSettings
 import cz.lastaapps.ui.settings.DropdownSettings
@@ -76,7 +76,7 @@ internal fun WallpaperOptionsLayout(modifier: Modifier = Modifier) {
             }
         )
 
-        var expanded by rememberSaveable { mutableStateOf(true) }
+        var expanded by rememberMutableSaveable { mutableStateOf(true) }
 
         val maxHeightGuide = createGuidelineFromTop(.3f)
 
@@ -211,7 +211,7 @@ private fun RotationFixSwitch(modifier: Modifier = Modifier) {
         val spading = 8.dp
         val (textConst, switchConst) = createRefs()
 
-        var showDialog by rememberSaveable { mutableStateOf(false) }
+        var showDialog by rememberMutableSaveable { mutableStateOf(false) }
 
         Row(
             modifier = Modifier.constrainAs(textConst) {

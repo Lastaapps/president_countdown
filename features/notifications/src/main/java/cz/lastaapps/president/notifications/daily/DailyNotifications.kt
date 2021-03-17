@@ -43,10 +43,10 @@ internal class DailyNotifications(context: Context) : NotificationsCreator(conte
     override val channelDescription: Int
         get() = R.string.daily_channel_description
 
-    private val title = context.getString(R.string.daily_title)
-    private val complexTemplate by lazy { context.getString(R.string.daily_text_template_complex) }
-    private val simpleTemplate by lazy { context.getString(R.string.daily_text_template_simple) }
-    private val endTemplate by lazy { context.getString(R.string.daily_text_template_end) }
+    private val title get() = context.getString(R.string.daily_title)
+    private val complexTemplate get() = context.getString(R.string.daily_text_template_complex)
+    private val simpleTemplate get() = context.getString(R.string.daily_text_template_simple)
+    private val endTemplate get() = context.getString(R.string.daily_text_template_end)
 
     fun createDailyNotification(currentState: CurrentState): Notification {
 

@@ -34,9 +34,7 @@ object Communication {
     private const val facebookUrl = "https://www.facebook.com/lastaapps/"
     private const val githubUrl = "https://github.com/lastaapps/"
     private const val telegramUrl = "https://t.me/lasta_apps"
-
-    private const val playStoreUrl =
-        "https://play.google.com/store/apps/dev?id=8043580628539311707"
+    private const val playStoreUrl = "https://play.google.com/store/apps/dev?id=8043580628539311707"
 
     fun openFacebook(context: Context) = openFacebookPage(context, facebookUrl)
 
@@ -56,7 +54,11 @@ object Communication {
 
     fun openGithub(context: Context) = openUrl(context, githubUrl)
 
-    fun openProjectsGithub(context: Context, name: String) = openUrl(context, "$githubUrl$name/")
+    fun openProjectsGithub(context: Context, name: String) =
+        openUrl(context, "$githubUrl$name/")
+
+    fun openProjectsCommits(context: Context, name: String) =
+        openUrl(context, "$githubUrl$name/commits/")
 
     fun openTelegram(context: Context) = openUrl(context, telegramUrl)
 

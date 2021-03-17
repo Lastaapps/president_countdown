@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~   Copyright 2021, Petr Laštovička as Lasta apps, All rights reserved
+  ~
+  ~     This file is part of President Countdown.
+  ~
+  ~     This app is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU General Public License as published by
+  ~     the Free Software Foundation, either version 3 of the License, or
+  ~     (at your option) any later version.
+  ~
+  ~     This app is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU General Public License
+  ~     along with this app.  If not, see <https://www.gnu.org/licenses/>.
+  ~
+  -->
+
+<versions>
+    <version name="1.0.0" type="beta" build="1" released="2021-04-01">
+        <en-US>
+            This is a beta release
+        </en-US>
+        <cs-CZ>
+            Toto je beta vydání
+        </cs-CZ>
+    </version>
+    <version name="1.0.0" type="alpha" build="1" released="2021-04-02">
+        <en-US>
+            This is a test release
+        </en-US>
+        <cs-CZ>
+            Toto je testovací vydání
+        </cs-CZ>
+    </version>
+    <version name="1.0.0" type="release" build="1" released="2021-04-03">
+        <en-US>
+            This is an official release
+        </en-US>
+        <cs-CZ>
+            Toto je oficiální vydání
+        </cs-CZ>
+    </version>
+    <version name="1.0.0" type="release" build="1" released="2021-04-03">
+        <en-US>
+            New line test
+
+
+            The test end
+        </en-US>
+        <cs-CZ>
+            Víceřádkový test
+
+
+            Kocen víceřádkového textu
+        </cs-CZ>
+    </version>
+    <version name="1.0.0" type="alpha" build="1" released="2021-03-01">
+        <en-US>
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nam sed tellus id magna
+            elementum tincidunt. Maecenas lorem. Phasellus faucibus molestie nisl. Proin pede metus,
+            vulputate nec, fermentum fringilla, vehicula vitae, justo. Nulla quis diam. Morbi leo
+            mi, nonummy eget tristique non, rhoncus non leo. Nunc auctor. Nullam sit amet magna in
+            magna gravida vehicula. Mauris elementum mauris vitae tortor. Proin in tellus sit amet
+            nibh dignissim sagittis. Pellentesque habitant morbi tristique senectus et netus et
+            malesuada fames ac turpis egestas. Pellentesque arcu. Aenean fermentum risus id tortor.
+        </en-US>
+        <cs-CZ>
+            Vítr skoro nefouká a tak by se na první pohled mohlo zdát, že se balónky snad vůbec
+            nepohybují. Jenom tak klidně levitují ve vzduchu. Jelikož slunce jasně září a na obloze
+            byste od východu k západu hledali mráček marně, balónky působí jako jakási fata morgána
+            uprostřed pouště. Zkrátka široko daleko nikde nic, jen zelenkavá tráva, jasně modrá
+            obloha a tři křiklavě barevné pouťové balónky, které se téměř nepozorovatelně pohupují
+            ani ne moc vysoko, ani moc nízko nad zemí. Kdyby pod balónky nebyla sytě zelenkavá
+            tráva, ale třeba suchá silnice či beton, možná by bylo vidět jejich barevné stíny - to
+            jak přes poloprůsvitné barevné balónky prochází ostré sluneční paprsky.
+        </cs-CZ>
+    </version>
+    <version name="1.0.0" type="alpha" build="1" released="2021-03-30">
+        <en-US>
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nam sed tellus id magna
+            elementum tincidunt. Maecenas lorem. Phasellus faucibus molestie nisl. Proin pede metus,
+            vulputate nec, fermentum fringilla, vehicula vitae, justo. Nulla quis diam. Morbi leo
+            mi, nonummy eget tristique non, rhoncus non leo. Nunc auctor. Nullam sit amet magna in
+            magna gravida vehicula. Mauris elementum mauris vitae tortor. Proin in tellus sit amet
+            nibh dignissim sagittis. Pellentesque habitant morbi tristique senectus et netus et
+            malesuada fames ac turpis egestas. Pellentesque arcu. Aenean fermentum risus id tortor.
+        </en-US>
+        <cs-CZ>
+            Vítr skoro nefouká a tak by se na první pohled mohlo zdát, že se balónky snad vůbec
+            nepohybují. Jenom tak klidně levitují ve vzduchu. Jelikož slunce jasně září a na obloze
+            byste od východu k západu hledali mráček marně, balónky působí jako jakási fata morgána
+            uprostřed pouště. Zkrátka široko daleko nikde nic, jen zelenkavá tráva, jasně modrá
+            obloha a tři křiklavě barevné pouťové balónky, které se téměř nepozorovatelně pohupují
+            ani ne moc vysoko, ani moc nízko nad zemí. Kdyby pod balónky nebyla sytě zelenkavá
+            tráva, ale třeba suchá silnice či beton, možná by bylo vidět jejich barevné stíny - to
+            jak přes poloprůsvitné barevné balónky prochází ostré sluneční paprsky.
+        </cs-CZ>
+    </version>
+    <version name="1.0.0" type="alpha" build="1" released="2021-03-15">
+        <en-US>
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nam sed tellus id magna
+            elementum tincidunt. Maecenas lorem. Phasellus faucibus molestie nisl. Proin pede metus,
+            vulputate nec, fermentum fringilla, vehicula vitae, justo. Nulla quis diam. Morbi leo
+            mi, nonummy eget tristique non, rhoncus non leo. Nunc auctor. Nullam sit amet magna in
+            magna gravida vehicula. Mauris elementum mauris vitae tortor. Proin in tellus sit amet
+            nibh dignissim sagittis. Pellentesque habitant morbi tristique senectus et netus et
+            malesuada fames ac turpis egestas. Pellentesque arcu. Aenean fermentum risus id tortor.
+        </en-US>
+        <cs-CZ>
+            Vítr skoro nefouká a tak by se na první pohled mohlo zdát, že se balónky snad vůbec
+            nepohybují. Jenom tak klidně levitují ve vzduchu. Jelikož slunce jasně září a na obloze
+            byste od východu k západu hledali mráček marně, balónky působí jako jakási fata morgána
+            uprostřed pouště. Zkrátka široko daleko nikde nic, jen zelenkavá tráva, jasně modrá
+            obloha a tři křiklavě barevné pouťové balónky, které se téměř nepozorovatelně pohupují
+            ani ne moc vysoko, ani moc nízko nad zemí. Kdyby pod balónky nebyla sytě zelenkavá
+            tráva, ale třeba suchá silnice či beton, možná by bylo vidět jejich barevné stíny - to
+            jak přes poloprůsvitné barevné balónky prochází ostré sluneční paprsky.
+        </cs-CZ>
+    </version>
+    <version name="1.0.0" type="alpha" build="1" released="2021-03-06">
+        <en-US>
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nam sed tellus id magna
+            elementum tincidunt. Maecenas lorem. Phasellus faucibus molestie nisl. Proin pede metus,
+            vulputate nec, fermentum fringilla, vehicula vitae, justo. Nulla quis diam. Morbi leo
+            mi, nonummy eget tristique non, rhoncus non leo. Nunc auctor. Nullam sit amet magna in
+            magna gravida vehicula. Mauris elementum mauris vitae tortor. Proin in tellus sit amet
+            nibh dignissim sagittis. Pellentesque habitant morbi tristique senectus et netus et
+            malesuada fames ac turpis egestas. Pellentesque arcu. Aenean fermentum risus id tortor.
+        </en-US>
+        <cs-CZ>
+            Vítr skoro nefouká a tak by se na první pohled mohlo zdát, že se balónky snad vůbec
+            nepohybují. Jenom tak klidně levitují ve vzduchu. Jelikož slunce jasně září a na obloze
+            byste od východu k západu hledali mráček marně, balónky působí jako jakási fata morgána
+            uprostřed pouště. Zkrátka široko daleko nikde nic, jen zelenkavá tráva, jasně modrá
+            obloha a tři křiklavě barevné pouťové balónky, které se téměř nepozorovatelně pohupují
+            ani ne moc vysoko, ani moc nízko nad zemí. Kdyby pod balónky nebyla sytě zelenkavá
+            tráva, ale třeba suchá silnice či beton, možná by bylo vidět jejich barevné stíny - to
+            jak přes poloprůsvitné barevné balónky prochází ostré sluneční paprsky.
+        </cs-CZ>
+    </version>
+    <version name="1.0.0" type="alpha" build="1" released="2021-03-03">
+        <en-US>
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nam sed tellus id magna
+            elementum tincidunt. Maecenas lorem. Phasellus faucibus molestie nisl. Proin pede metus,
+            vulputate nec, fermentum fringilla, vehicula vitae, justo. Nulla quis diam. Morbi leo
+            mi, nonummy eget tristique non, rhoncus non leo. Nunc auctor. Nullam sit amet magna in
+            magna gravida vehicula. Mauris elementum mauris vitae tortor. Proin in tellus sit amet
+            nibh dignissim sagittis. Pellentesque habitant morbi tristique senectus et netus et
+            malesuada fames ac turpis egestas. Pellentesque arcu. Aenean fermentum risus id tortor.
+        </en-US>
+        <cs-CZ>
+            Vítr skoro nefouká a tak by se na první pohled mohlo zdát, že se balónky snad vůbec
+            nepohybují. Jenom tak klidně levitují ve vzduchu. Jelikož slunce jasně září a na obloze
+            byste od východu k západu hledali mráček marně, balónky působí jako jakási fata morgána
+            uprostřed pouště. Zkrátka široko daleko nikde nic, jen zelenkavá tráva, jasně modrá
+            obloha a tři křiklavě barevné pouťové balónky, které se téměř nepozorovatelně pohupují
+            ani ne moc vysoko, ani moc nízko nad zemí. Kdyby pod balónky nebyla sytě zelenkavá
+            tráva, ale třeba suchá silnice či beton, možná by bylo vidět jejich barevné stíny - to
+            jak přes poloprůsvitné barevné balónky prochází ostré sluneční paprsky.
+        </cs-CZ>
+    </version>
+    <version name="1.0.0" type="alpha" build="1" released="2021-03-10">
+        <en-US>
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nam sed tellus id magna
+            elementum tincidunt. Maecenas lorem. Phasellus faucibus molestie nisl. Proin pede metus,
+            vulputate nec, fermentum fringilla, vehicula vitae, justo. Nulla quis diam. Morbi leo
+            mi, nonummy eget tristique non, rhoncus non leo. Nunc auctor. Nullam sit amet magna in
+            magna gravida vehicula. Mauris elementum mauris vitae tortor. Proin in tellus sit amet
+            nibh dignissim sagittis. Pellentesque habitant morbi tristique senectus et netus et
+            malesuada fames ac turpis egestas. Pellentesque arcu. Aenean fermentum risus id tortor.
+        </en-US>
+        <cs-CZ>
+            Vítr skoro nefouká a tak by se na první pohled mohlo zdát, že se balónky snad vůbec
+            nepohybují. Jenom tak klidně levitují ve vzduchu. Jelikož slunce jasně září a na obloze
+            byste od východu k západu hledali mráček marně, balónky působí jako jakási fata morgána
+            uprostřed pouště. Zkrátka široko daleko nikde nic, jen zelenkavá tráva, jasně modrá
+            obloha a tři křiklavě barevné pouťové balónky, které se téměř nepozorovatelně pohupují
+            ani ne moc vysoko, ani moc nízko nad zemí. Kdyby pod balónky nebyla sytě zelenkavá
+            tráva, ale třeba suchá silnice či beton, možná by bylo vidět jejich barevné stíny - to
+            jak přes poloprůsvitné barevné balónky prochází ostré sluneční paprsky.
+        </cs-CZ>
+    </version>
+    <version name="1.0.0" type="alpha" build="1" released="2021-03-02">
+        <en-US>
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nam sed tellus id magna
+            elementum tincidunt. Maecenas lorem. Phasellus faucibus molestie nisl. Proin pede metus,
+            vulputate nec, fermentum fringilla, vehicula vitae, justo. Nulla quis diam. Morbi leo
+            mi, nonummy eget tristique non, rhoncus non leo. Nunc auctor. Nullam sit amet magna in
+            magna gravida vehicula. Mauris elementum mauris vitae tortor. Proin in tellus sit amet
+            nibh dignissim sagittis. Pellentesque habitant morbi tristique senectus et netus et
+            malesuada fames ac turpis egestas. Pellentesque arcu. Aenean fermentum risus id tortor.
+        </en-US>
+        <cs-CZ>
+            Vítr skoro nefouká a tak by se na první pohled mohlo zdát, že se balónky snad vůbec
+            nepohybují. Jenom tak klidně levitují ve vzduchu. Jelikož slunce jasně září a na obloze
+            byste od východu k západu hledali mráček marně, balónky působí jako jakási fata morgána
+            uprostřed pouště. Zkrátka široko daleko nikde nic, jen zelenkavá tráva, jasně modrá
+            obloha a tři křiklavě barevné pouťové balónky, které se téměř nepozorovatelně pohupují
+            ani ne moc vysoko, ani moc nízko nad zemí. Kdyby pod balónky nebyla sytě zelenkavá
+            tráva, ale třeba suchá silnice či beton, možná by bylo vidět jejich barevné stíny - to
+            jak přes poloprůsvitné barevné balónky prochází ostré sluneční paprsky.
+        </cs-CZ>
+    </version>
+    <version name="1.0.0" type="alpha" build="1" released="2021-03-11">
+        <en-US>
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nam sed tellus id magna
+            elementum tincidunt. Maecenas lorem. Phasellus faucibus molestie nisl. Proin pede metus,
+            vulputate nec, fermentum fringilla, vehicula vitae, justo. Nulla quis diam. Morbi leo
+            mi, nonummy eget tristique non, rhoncus non leo. Nunc auctor. Nullam sit amet magna in
+            magna gravida vehicula. Mauris elementum mauris vitae tortor. Proin in tellus sit amet
+            nibh dignissim sagittis. Pellentesque habitant morbi tristique senectus et netus et
+            malesuada fames ac turpis egestas. Pellentesque arcu. Aenean fermentum risus id tortor.
+        </en-US>
+        <cs-CZ>
+            Vítr skoro nefouká a tak by se na první pohled mohlo zdát, že se balónky snad vůbec
+            nepohybují. Jenom tak klidně levitují ve vzduchu. Jelikož slunce jasně září a na obloze
+            byste od východu k západu hledali mráček marně, balónky působí jako jakási fata morgána
+            uprostřed pouště. Zkrátka široko daleko nikde nic, jen zelenkavá tráva, jasně modrá
+            obloha a tři křiklavě barevné pouťové balónky, které se téměř nepozorovatelně pohupují
+            ani ne moc vysoko, ani moc nízko nad zemí. Kdyby pod balónky nebyla sytě zelenkavá
+            tráva, ale třeba suchá silnice či beton, možná by bylo vidět jejich barevné stíny - to
+            jak přes poloprůsvitné barevné balónky prochází ostré sluneční paprsky.
+        </cs-CZ>
+    </version>
+</versions>

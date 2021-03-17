@@ -63,7 +63,7 @@ class PermanentService : Service() {
         }
     }
 
-    private val notifications by lazy { PermanentNotifications(this) }
+    private val notifications get() = PermanentNotifications(this)
     private val mgr by lazy { NotificationManagerCompat.from(this) }
 
     private val scope = CoroutineScope(Dispatchers.Default)

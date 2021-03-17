@@ -23,7 +23,6 @@ package cz.lastaapps.ui.colorpicker
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,6 +32,7 @@ import androidx.compose.ui.unit.max
 import cz.lastaapps.ui.common.components.ColorPreview
 import cz.lastaapps.ui.common.components.ColorPreviewConstants
 import cz.lastaapps.ui.common.components.GeneralDialog
+import cz.lastaapps.ui.common.extencions.rememberMutableSaveable
 import kotlin.math.roundToInt
 
 internal val alpha = Color(0xff000000)
@@ -133,7 +133,7 @@ fun ColorPicker(
                 if (showPreview)
                     ColorPreview(
                         color = color,
-                        size = colorPreviewSize
+                        canvasSize = colorPreviewSize
                     )
             }
         }
@@ -171,7 +171,7 @@ internal fun HexField(
     modifier: Modifier = Modifier,
     alphaEnabled: Boolean = true,
 ) {
-    var text by rememberSaveable(color) { mutableStateOf(color.toHexColor(alphaEnabled)) }
+    var text by rememberMutableSaveable(color) { mutableStateOf(color.toHexColor(alphaEnabled)) }
 
     TextField(
         value = text,

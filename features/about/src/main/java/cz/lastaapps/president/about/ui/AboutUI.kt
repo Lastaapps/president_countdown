@@ -24,7 +24,6 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageInfo
 import android.content.pm.PackageManager.NameNotFoundException
 import android.net.Uri
 import android.os.Build
@@ -50,6 +49,8 @@ import cz.lastaapps.president.about.R
 import cz.lastaapps.president.clock.ClockLayout
 import cz.lastaapps.president.constants.playStoreLink
 import cz.lastaapps.president.core.functionality.getLocale
+import cz.lastaapps.president.core.functionality.getVersionCode
+import cz.lastaapps.president.core.functionality.getVersionName
 import cz.lastaapps.president.core.president.President
 import cz.lastaapps.president.privacypolicy.PrivacyPolicy
 import cz.lastaapps.president.whatsnew.ui.WhatsNewDialog
@@ -113,7 +114,8 @@ private fun Content(modifier: Modifier = Modifier) {
             }
 
             //describes, why the UI can seen buggy and some numbers are eventually skipped
-            BuggyUI()
+            //disabled - app doesn't lag as much any more and this would drop down overall feel
+            //BuggyUI()
 
             DeveloperNotice()
             Version()
@@ -222,7 +224,7 @@ private fun PresidentWebLinks(modifier: Modifier = Modifier) {
                         )
                     },
                     socialIconContent(
-                        Icons.Default.AccessibilityNew,
+                        Icons.Default.Lightbulb,
                         contentId = R.string.content_description_surprice
                     )
                 )
@@ -369,10 +371,8 @@ private fun shareAction(context: Context) {
 fun Version(modifier: Modifier = Modifier) {
     val context = LocalContext.current
     val text = try {
-        val pInfo: PackageInfo =
-            context.packageManager.getPackageInfo(context.packageName, 0)
-        val version = pInfo.versionName
-        val build = if (Build.VERSION.SDK_INT >= 28) pInfo.longVersionCode else pInfo.versionCode
+        val version = context.getVersionName()
+        val build = context.getVersionCode()
 
         "$version $build"
     } catch (e: NameNotFoundException) {

@@ -71,7 +71,7 @@ class WidgetUpdateService : Service() {
         }
     }
 
-    private lateinit var notifications: Notifications
+    private val notifications get() = Notifications(this)
     private val mgr by lazy { NotificationManagerCompat.from(this) }
 
     private val scope = CoroutineScope(Dispatchers.Default)
@@ -83,8 +83,6 @@ class WidgetUpdateService : Service() {
         super.onCreate()
 
         Log.i(TAG, "Creating service, debug is: $debug")
-
-        notifications = Notifications(this)
 
         startForeground(NOTIFICATION_ID, notifications.createBasicNotification())
 
@@ -111,7 +109,9 @@ class WidgetUpdateService : Service() {
     //updates the notification when the language changes
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
+
         mgr.notify(NOTIFICATION_ID, notifications.createBasicNotification())
+        startJob()
     }
 
     private fun startJob() {
@@ -153,9 +153,9 @@ class WidgetUpdateService : Service() {
 
     private fun startUpdating() = scope.launch {
 
-        val context = this@WidgetUpdateService
-
         CurrentState.getCurrentBuffered(scope).collect {
+
+            val context = this@WidgetUpdateService
             val views = RemoteViewUpdater.createRemoteViews(context)
 
             RemoteViewUpdater.updateViews(context, views, it)

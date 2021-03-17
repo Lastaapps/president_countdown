@@ -43,10 +43,16 @@ android {
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            buildConfigField "java.lang.Boolean", "isAlpha", "$app_is_alpha"
+            buildConfigField "java.lang.Boolean", "isBeta", "$app_is_beta"
         }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            buildConfigField "java.lang.Boolean", "isAlpha", "$app_is_alpha"
+            buildConfigField "java.lang.Boolean", "isBeta", "$app_is_beta"
         }
     }
     compileOptions {
@@ -80,6 +86,8 @@ dependencies {
     coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:$desugar_version"
 
     implementation project(":core:core")
+    implementation project(":core:constants")
+    implementation project(":lastaapps:common")
     implementation project(":ui:common")
     implementation project(":ui:composeimpl")
     implementation project(":ui:settings")

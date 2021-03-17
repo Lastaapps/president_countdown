@@ -65,7 +65,7 @@
     </string>
 
     <string name="daily_title">Další den za námi</string>
-    <string name="daily_text_template_complex">Zbývá %s a %s</string>
+    <string name="daily_text_template_complex">Zbývá %1$s a %2$s</string>
     <string name="daily_text_template_simple">Zbývá %s</string>
     <string name="daily_text_template_end">Trvání mandátu je u konce</string>
     <plurals name="daily_text_years">
@@ -90,7 +90,7 @@
     <string name="permanent_paused_title">Pozastaveno</string>
     <string name="permanent_paused_text">Odemkněte telefon pro obnovení odpočtu</string>
     <string name="permanent_template_title">Čas do konce mandátu</string>
-    <string name="permanent_template_text">%dy %dd %dh %dm %ds</string>
+    <string name="permanent_template_text">%1$dy %2$dd %3$dh %4$dm %5$ds</string>
     <string name="permanent_over_title">Je konec!</string>
 
 

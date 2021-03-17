@@ -20,5 +20,5 @@
 
 <resources>
     <!-- Base application theme. -->
-    <style name="Theme.President" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge"></style>
+    <style name="Theme.President" parent="Theme.MaterialComponents.DayNight.NoActionBar"></style>
 </resources>

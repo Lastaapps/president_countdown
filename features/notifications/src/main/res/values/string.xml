@@ -61,7 +61,7 @@
     </string>
 
     <string name="daily_title">Another day over</string>
-    <string name="daily_text_template_complex">%s and %s left</string>
+    <string name="daily_text_template_complex">%1$s and %2$s left</string>
     <string name="daily_text_template_simple">%s left</string>
     <string name="daily_text_template_end">The mandate has ended</string>
     <plurals name="daily_text_years">
@@ -84,7 +84,7 @@
     <string name="permanent_paused_title">Paused</string>
     <string name="permanent_paused_text">Unlock your phone to resume</string>
     <string name="permanent_template_title">Time left until the end of the mandate</string>
-    <string name="permanent_template_text">%dy %dd %dh %dm %ds</string>
+    <string name="permanent_template_text">%1$dy %2$dd %3$dh %4$dm %5$ds</string>
     <string name="permanent_over_title">It\'s over</string>
 
 

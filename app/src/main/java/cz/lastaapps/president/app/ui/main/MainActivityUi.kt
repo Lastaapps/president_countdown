@@ -29,7 +29,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -51,6 +50,7 @@ import cz.lastaapps.president.privacypolicy.PrivacyPolicy
 import cz.lastaapps.president.wallpaper.settings.ui.WallpaperSettings
 import cz.lastaapps.president.whatsnew.WhatsNewProperties
 import cz.lastaapps.president.whatsnew.ui.WhatsNewDialog
+import cz.lastaapps.ui.common.extencions.rememberMutableSaveable
 import cz.lastaapps.ui.common.layouts.ExpandableBottomLayout
 import cz.lastaapps.ui.common.themes.MainTheme
 import kotlinx.coroutines.delay
@@ -214,7 +214,7 @@ private fun Content(
 
         val (clock, messages, overview, themeMode) = createRefs()
 
-        var expanded by rememberSaveable { mutableStateOf(false) }
+        var expanded by rememberMutableSaveable { mutableStateOf(false) }
 
         val guideClock = createGuidelineFromTop(0.3f)
         //Clock

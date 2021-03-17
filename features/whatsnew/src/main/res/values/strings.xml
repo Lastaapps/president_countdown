@@ -19,7 +19,14 @@
   -->
 
 <resources>
-    <string name="dialog_title">What\'s new!</string>
-    <string name="dialog_ok">OK</string>
+
+    <!--
+     There was naming conflict with Privacy policy dialog_title string resource
+     Probably temporary and caused by nonTransitiveRClass flag
+    -->
+    <string name="whatsnew_dialog_title">What\'s new!</string>
+    <string name="whatsnew_dialog_ok">OK</string>
+
     <string name="sett_auto_launch">Show on a new version</string>
+    <string name="view_commits">View commits</string>
 </resources>

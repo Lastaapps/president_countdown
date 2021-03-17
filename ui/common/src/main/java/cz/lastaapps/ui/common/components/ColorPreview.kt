@@ -30,6 +30,7 @@ import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import kotlin.math.min
 
 object ColorPreviewConstants {
     val size = 40.dp
@@ -42,17 +43,20 @@ object ColorPreviewConstants {
 fun ColorPreview(
     color: Color,
     modifier: Modifier = Modifier,
-    size: Dp = ColorPreviewConstants.size,
+    canvasSize: Dp = ColorPreviewConstants.size,
 ) {
     val strokeColor = MaterialTheme.colors.onSurface
 
     Canvas(
-        modifier = modifier.size(size)
+        modifier = modifier.size(canvasSize)
     ) {
-        val diameter = 0.8f * size.value
+        val canvasWidth = size.width
+        val canvasHeight = size.height
+        val drawingArea = min(canvasWidth, canvasHeight)
+        val radius = 0.9f * drawingArea / 2
 
-        drawCircle(color, diameter, style = Fill)
-        drawCircle(strokeColor, diameter, style = Stroke(width = size.value / 10))
+        drawCircle(color, radius, style = Fill)
+        drawCircle(strokeColor, radius, style = Stroke(width = drawingArea / 20))
     }
 }
 

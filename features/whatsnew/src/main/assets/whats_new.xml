@@ -1,4 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
   ~   Copyright 2021, Petr Laštovička as Lasta apps, All rights reserved
   ~
   ~     This file is part of President Countdown.
@@ -18,15 +20,24 @@
   ~
   -->
 
-<resources>
-
-    <string name="dialog_title">Privacy Policy</string>
-    <string name="dialog_license">Licensed under GNU GPL 3</string>
-    <string name="dialog_nutshell">In a nutshell, we collect only some basic anonymous features usage data and app crashes using the Firebase services. This is necessary to maintain the app well. Just check the code yourself later ;)</string>
-    <string name="dialog_read_button">Read the policies</string>
-    <string name="dialog_have_read">I have read them</string>
-    <string name="dialog_disagree">Disagree</string>
-    <string name="dialog_show_source">Show source</string>
-    <string name="dialog_agree">Agree</string>
-
-</resources>
+<!-- type values: alpha, beta, release-->
+<versions>
+    <version name="1.0.0-alpha02" type="alpha" build="1000001" released="2021-03-18">
+        <en-US>
+            Bux fixes and minor updates
+        </en-US>
+        <cs-CZ>
+            Oprava chyb a drobné vylepšení
+        </cs-CZ>
+    </version>
+    <version name="1.0.0-alpha01" type="alpha" build="1000000" released="2021-03-15">
+        <en-US>
+            The initial release
+            Clock, wallpaper, widget and notifications are supported.
+        </en-US>
+        <cs-CZ>
+            První verze
+            Obsahuje hodiny, pozadí plochy, widget a oznámení o událostech.
+        </cs-CZ>
+    </version>
+</versions>

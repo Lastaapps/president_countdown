@@ -21,6 +21,7 @@
 package cz.lastaapps.president.core.functionality
 
 import android.content.Context
+import android.content.pm.PackageInfo
 import android.os.Build
 import java.util.*
 
@@ -44,6 +45,23 @@ fun Context.getLocale(): Locale {
     } else {
         resources.configuration.locale
     }
+}
+
+/**
+ * @return the current apps version code
+ * */
+fun Context.getVersionCode(): Long {
+    val pInfo: PackageInfo = packageManager.getPackageInfo(packageName, 0)
+    @Suppress("DEPRECATION")
+    return if (Build.VERSION.SDK_INT >= 28) pInfo.longVersionCode else pInfo.versionCode.toLong()
+}
+
+/**
+ * @return the current apps name
+ * */
+fun Context.getVersionName(): String {
+    val pInfo: PackageInfo = packageManager.getPackageInfo(packageName, 0)
+    return pInfo.versionName
 }
 
 

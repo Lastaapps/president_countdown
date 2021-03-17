@@ -26,13 +26,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import cz.lastaapps.ui.colorpicker.ColorPicker
 import cz.lastaapps.ui.colorpicker.ColorPickerDialog
 import cz.lastaapps.ui.common.components.ColorPreview
+import cz.lastaapps.ui.common.extencions.rememberMutableSaveable
 
 
 /**
@@ -46,7 +46,7 @@ fun ColoPickerSettings(
     modifier: Modifier = Modifier,
     alphaEnabled: Boolean = true,
 ) {
-    var shown by rememberSaveable { mutableStateOf(false) }
+    var shown by rememberMutableSaveable { mutableStateOf(false) }
 
     Column(modifier.animateContentSize()) {
 
@@ -77,7 +77,7 @@ fun ColoPickerDialogSettings(
     modifier: Modifier = Modifier,
     alphaEnabled: Boolean = true,
 ) {
-    var shown by rememberSaveable { mutableStateOf(false) }
+    var shown by rememberMutableSaveable { mutableStateOf(false) }
 
     CustomSettings(
         text = text,
