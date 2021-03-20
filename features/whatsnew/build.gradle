@@ -37,22 +37,14 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
+
+        buildConfigField "java.lang.Boolean", "isAlpha", "$app_is_alpha"
+        buildConfigField "java.lang.Boolean", "isBeta", "$app_is_beta"
     }
 
     buildTypes {
-        debug {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-
-            buildConfigField "java.lang.Boolean", "isAlpha", "$app_is_alpha"
-            buildConfigField "java.lang.Boolean", "isBeta", "$app_is_beta"
-        }
         release {
-            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-
-            buildConfigField "java.lang.Boolean", "isAlpha", "$app_is_alpha"
-            buildConfigField "java.lang.Boolean", "isBeta", "$app_is_beta"
         }
     }
     compileOptions {

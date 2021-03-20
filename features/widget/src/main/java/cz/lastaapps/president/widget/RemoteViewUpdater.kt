@@ -73,8 +73,6 @@ internal object RemoteViewUpdater {
             for (i in 0 until 5) {
                 val value = state[i]
 
-                val v1 = plurals.getByIndex(i, value.toInt())
-
                 views.setTextViewText(values[i], value.toString())
                 views.setTextViewText(units[i], plurals.getByIndex(i, value.toInt()))
             }

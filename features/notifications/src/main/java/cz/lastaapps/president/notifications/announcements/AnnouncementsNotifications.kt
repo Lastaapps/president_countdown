@@ -68,6 +68,7 @@ internal class AnnouncementsNotifications(context: Context) : NotificationsCreat
         return createNotification(title, text, pendingBirthdayRequest)
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun createNameday(now: LocalDate = nowCET): Notification {
         val title = context.getString(R.string.announcements_nameday_title, President.name)
         val text = context.getString(R.string.announcements_nameday_text)

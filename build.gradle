@@ -22,8 +22,8 @@
 buildscript {
     ext {
 
-        app_version_code = 1000001 // 1x major . 2x minor . 2x path . 2x build diff
-        app_version_name = "1.0.0-alpha02"
+        app_version_code = 1000003 // 1x major . 2x minor . 2x path . 2x build diff
+        app_version_name = "1.0.0-alpha03"
         app_is_alpha = true
         app_is_beta = false
 

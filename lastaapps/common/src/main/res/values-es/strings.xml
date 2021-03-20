@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~   Copyright 2021, Petr Laštovička as Lasta apps, All rights reserved
   ~
   ~     This file is part of President Countdown.
@@ -20,11 +18,10 @@
   ~
   -->
 
-<manifest package="cz.lastaapps.common"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <queries>
-        <package android:name="com.facebook.katana" />
-    </queries>
-
-</manifest>
+<resources>
+    <string name="content_description_facebook">La página de Facebook del desarrollador</string>
+    <string name="content_description_github">El perfil de Github del desarrollador</string>
+    <string name="content_description_play_store">The contact to the app\'s developer using Telegram</string>
+    <string name="content_description_telegram">El contacto con el desarrollador de la aplicación que usa Telegram</string>
+    <string name="content_description_github_project">El repositorio de Github del código fuente del proyecto</string>
+</resources>

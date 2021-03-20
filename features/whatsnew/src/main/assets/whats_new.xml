@@ -22,6 +22,14 @@
 
 <!-- type values: alpha, beta, release-->
 <versions>
+    <version name="1.0.0-alpha03" type="alpha" build="1000002" released="2021-03-20">
+        <en-US>
+            App size reduced.
+        </en-US>
+        <cs-CZ>
+            Zmenšena velikost aplikace.
+        </cs-CZ>
+    </version>
     <version name="1.0.0-alpha02" type="alpha" build="1000001" released="2021-03-18">
         <en-US>
             Bux fixes and minor updates
