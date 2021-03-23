@@ -78,7 +78,6 @@ dependencies {
     implementation project(":core:assets")
     implementation project(":core:core")
     implementation project(":ui:common")
-    implementation project(":ui:clock")
     implementation project(":ui:composeimpl")
     implementation project(":ui:settings")
 

@@ -18,21 +18,23 @@
  *
  */
 
-package cz.lastaapps.president.widget
+package cz.lastaapps.president.widget.widget
 
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import cz.lastaapps.president.widget.WidgetConfig
+import cz.lastaapps.president.widget.service.WidgetUpdateService
 
 /**
  * Trampoline activity - started to start another activity
  * Restarts WidgetUpdateService and starts the activity from WidgetConfig
  * */
-internal class WidgetClickActivity : AppCompatActivity() {
+internal class WidgetClickedActivity : AppCompatActivity() {
 
     companion object {
-        private val TAG = WidgetClickActivity::class.simpleName
+        private val TAG = WidgetClickedActivity::class.simpleName
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

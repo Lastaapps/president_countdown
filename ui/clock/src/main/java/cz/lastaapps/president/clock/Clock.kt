@@ -36,6 +36,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import cz.lastaapps.president.core.president.CurrentState
+import cz.lastaapps.president.core.president.TimePlurals
 import cz.lastaapps.president.core.president.get
 
 @Composable

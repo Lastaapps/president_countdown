@@ -22,7 +22,15 @@
 
 <!-- type values: alpha, beta, release-->
 <versions>
-    <version name="1.0.0-alpha03" type="alpha" build="1000002" released="2021-03-20">
+    <version name="1.0.0-alpha04" type="alpha" build="1000004" released="2021-03-23">
+        <en-US>
+            Widget configs added.
+        </en-US>
+        <cs-CZ>
+            Přidáno nastavení widgetů.
+        </cs-CZ>
+    </version>
+    <version name="1.0.0-alpha03" type="alpha" build="1000003" released="2021-03-20">
         <en-US>
             App size reduced.
         </en-US>

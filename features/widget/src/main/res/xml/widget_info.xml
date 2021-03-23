@@ -26,4 +26,5 @@
     android:previewImage="@drawable/preview"
     android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="1800000"
-    android:widgetCategory="home_screen|keyguard" />
+    android:widgetCategory="home_screen|keyguard"
+    android:configure="cz.lastaapps.president.widget.config.WidgetConfigActivity" />

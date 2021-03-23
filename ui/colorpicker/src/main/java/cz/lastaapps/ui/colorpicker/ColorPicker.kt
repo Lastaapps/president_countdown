@@ -133,7 +133,7 @@ fun ColorPicker(
                 if (showPreview)
                     ColorPreview(
                         color = color,
-                        canvasSize = colorPreviewSize
+                        preferredSize = colorPreviewSize
                     )
             }
         }

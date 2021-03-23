@@ -18,7 +18,7 @@
  *
  */
 
-package cz.lastaapps.president.widget
+package cz.lastaapps.president.widget.service
 
 import android.app.Service
 import android.appwidget.AppWidgetManager
@@ -29,16 +29,20 @@ import android.os.IBinder
 import android.util.Log
 import androidx.core.app.NotificationManagerCompat
 import cz.lastaapps.president.core.president.CurrentState
+import cz.lastaapps.president.widget.config.database.WidgetDatabase
+import cz.lastaapps.president.widget.widget.DebugSettings
+import cz.lastaapps.president.widget.widget.PresidentWidget
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.stateIn
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
 /**
  * Updates widgets every second + shows notifications
  * */
-class WidgetUpdateService : Service() {
+internal class WidgetUpdateService : Service() {
 
     companion object {
         private val TAG = WidgetUpdateService::class.simpleName
@@ -51,6 +55,13 @@ class WidgetUpdateService : Service() {
 
             //creates a notification channel
             Notifications(context)
+
+            //checks if there are any widgets placed
+            if (!checkWidgetsPresented(context)) {
+                Log.i(TAG, "Service not started, there are no widgets presented")
+                stopService(context)
+                return
+            }
 
             val intent = Intent(context, WidgetUpdateService::class.java)
 
@@ -68,6 +79,15 @@ class WidgetUpdateService : Service() {
 
             val intent = Intent(context, WidgetUpdateService::class.java)
             context.stopService(intent)
+        }
+
+        private fun checkWidgetsPresented(context: Context): Boolean {
+            val mgr = AppWidgetManager.getInstance(context)
+            val widgets = mgr.getAppWidgetIds(
+                ComponentName(context, PresidentWidget::class.java)
+            )
+
+            return widgets.isNotEmpty()
         }
     }
 
@@ -92,7 +112,7 @@ class WidgetUpdateService : Service() {
         startJob()
 
         scope.launch {
-            Settings.debugFlow.collectLatest {
+            DebugSettings.debugFlow.collectLatest {
                 debug = it
             }
         }
@@ -119,7 +139,7 @@ class WidgetUpdateService : Service() {
 
         job?.cancel()
 
-        if (!checkWidgetsPresented()) {
+        if (!checkWidgetsPresented(this)) {
             Log.e(TAG, "No widgets found, stopping")
 
             stopForeground(true)
@@ -153,14 +173,13 @@ class WidgetUpdateService : Service() {
 
     private fun startUpdating() = scope.launch {
 
+        val context = this@WidgetUpdateService
+
+        val themes = WidgetDatabase.createDatabase(context).configRepo.getAll().stateIn(this)
+
         CurrentState.getCurrentBuffered(scope).collect {
 
-            val context = this@WidgetUpdateService
-            val views = RemoteViewUpdater.createRemoteViews(context)
-
-            RemoteViewUpdater.updateViews(context, views, it)
-
-            PresidentWidget.updateAllWithState(context, views)
+            PresidentWidget.updateAllWithState(context, it, themes.value)
 
             if (debug) {
                 Log.d(TAG, "Updating ${LocalTime.now().format(DateTimeFormatter.ISO_TIME)}")
@@ -184,17 +203,6 @@ class WidgetUpdateService : Service() {
         override fun onReceive(context: Context?, intent: Intent?) {
             stopJob()
         }
-    }
-
-    private fun checkWidgetsPresented(): Boolean {
-        val mgr = AppWidgetManager.getInstance(this)
-        val widgets = mgr.getAppWidgetIds(
-            ComponentName(this@WidgetUpdateService, PresidentWidget::class.java)
-        )
-        if (debug)
-            Log.d(TAG, "There are ${widgets.size} widgets")
-
-        return widgets.isNotEmpty()
     }
 
     override fun onDestroy() {

@@ -18,7 +18,7 @@
  *
  */
 
-package cz.lastaapps.president.widget
+package cz.lastaapps.president.widget.widget
 
 import android.content.Context
 import cz.lastaapps.president.core.App
@@ -27,9 +27,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 /**
  * Stores widget settings
  * */
-internal object Settings {
+internal object DebugSettings {
 
-    private val TAG = Settings::class.simpleName
+    private val TAG get() = DebugSettings::class.simpleName
 
     private const val SP_NAME = "WIDGET_COMMON_SETTINGS"
     private const val KEY_DEBUG = "DEBUG"

@@ -29,7 +29,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.lifecycleScope
 import cz.lastaapps.president.app.ui.main.MainActivityRoot
 import cz.lastaapps.president.firebase.MyAnalytics
-import cz.lastaapps.president.widget.WidgetUpdateService
+import cz.lastaapps.president.widget.WidgetConfig
 import kotlinx.coroutines.delay
 
 class MainActivity : AppCompatActivity() {
@@ -61,8 +61,8 @@ class MainActivity : AppCompatActivity() {
 
         //restarts widgets if necessary
         lifecycleScope.launchWhenResumed {
-            delay(2000)
-            WidgetUpdateService.startService(this@MainActivity)
+            delay(3000)
+            WidgetConfig.updateService(this@MainActivity)
         }
 
         //set the Main UI

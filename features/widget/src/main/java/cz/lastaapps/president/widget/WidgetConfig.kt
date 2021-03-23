@@ -21,13 +21,56 @@
 package cz.lastaapps.president.widget
 
 import android.app.Activity
+import android.app.PendingIntent
+import android.appwidget.AppWidgetManager
+import android.content.ComponentName
 import android.content.Context
+import android.content.Intent
+import android.os.Build
+import android.os.Bundle
+import cz.lastaapps.president.core.functionality.PendingIntentCompat
+import cz.lastaapps.president.widget.config.WidgetConfigActivity
+import cz.lastaapps.president.widget.service.WidgetUpdateService
+import cz.lastaapps.president.widget.widget.DebugSettings
+import cz.lastaapps.president.widget.widget.PresidentWidget
 import kotlin.reflect.KClass
 
 /**
  * Entry point for the module
  * */
 object WidgetConfig {
+
+    /**
+     * Tries to pin a widget
+     * @return if app pinning is available and pinning request has been made
+     * */
+    fun requestWidgetPinning(context: Context): Boolean {
+
+        val mgr = AppWidgetManager.getInstance(context)
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && mgr.isRequestPinAppWidgetSupported) {
+
+            val configIntent = Intent(context, WidgetConfigActivity::class.java)
+            val pending = PendingIntent.getActivity(
+                context,
+                WidgetConfigActivity.REQUEST_CODE,
+                configIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntentCompat.FLAG_MUTABLE,
+            )
+
+            //shows a dialog to place the widget directly
+            //add callback for launching the configuration activity
+            mgr.requestPinAppWidget(
+                ComponentName(context, PresidentWidget::class.java),
+                Bundle().apply {
+                    //putString(AppWidgetManager.EXTRA_APPWIDGET_PREVIEW, )
+                },
+                pending,
+            )
+
+            true
+
+        } else false
+    }
 
     /**Reference to MainActivity should be put there, because it isn't accessible otherwise*/
     var mainActivity: KClass<out Activity>? = null
@@ -39,8 +82,8 @@ object WidgetConfig {
     /**Toggles widget debug mode
      * @return new state*/
     fun toggleDebug(): Boolean {
-        return (!Settings.debugFlow.value).also {
-            Settings.debug = it
+        return (!DebugSettings.debugFlow.value).also {
+            DebugSettings.debug = it
         }
     }
 }

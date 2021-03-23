@@ -47,7 +47,7 @@
                 style="@style/Value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#F00"
+                tools:textColor="@color/year_digit_color"
                 tools:text="0" />
 
             <TextView
@@ -153,7 +153,6 @@
         style="@style/Label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         tools:text="@string/left_formatted"
         tools:visibility="visible" />
 

@@ -73,28 +73,30 @@ internal fun MainActivityRoot() {
     val uiMode by uiModeStorage.getThemeFlow().collectAsState()
 
     MainTheme(UIModeState.isLight(uiMode)) {
+        Surface(color = MaterialTheme.colors.background) {
 
-        //shows privacy policy dialog
-        if (checkPrivacyPolicy()) {
+            //shows privacy policy dialog
+            if (checkPrivacyPolicy()) {
 
-            //shows whats new
-            checkWhatsNew()
+                //shows whats new
+                checkWhatsNew()
 
-            //navigation between parts of the app
-            val navController = rememberNavController()
-            val maxSizeModifier = Modifier.fillMaxSize()
+                //navigation between parts of the app
+                val navController = rememberNavController()
+                val maxSizeModifier = Modifier.fillMaxSize()
 
-            NavHost(navController, startDestination = N.id.home) {
-                composable(N.id.home) {
-                    MainScaffold(
-                        navController,
-                        uiModeStorage,
-                        maxSizeModifier
-                    )
+                NavHost(navController, startDestination = N.id.home) {
+                    composable(N.id.home) {
+                        MainScaffold(
+                            navController,
+                            uiModeStorage,
+                            maxSizeModifier
+                        )
+                    }
+                    composable(N.id.wallpaperSettings) { WallpaperSettings(maxSizeModifier) }
+                    composable(N.id.notificationSettings) { NotificationSettings(maxSizeModifier) }
+                    composable(N.id.about) { About(maxSizeModifier) }
                 }
-                composable(N.id.wallpaperSettings) { WallpaperSettings(maxSizeModifier) }
-                composable(N.id.notificationSettings) { NotificationSettings(maxSizeModifier) }
-                composable(N.id.about) { About(maxSizeModifier) }
             }
         }
     }
@@ -310,4 +312,4 @@ internal fun viewModel(
     key: String? = null,
     factory: ViewModelProvider.Factory? = null
 ): MainViewModel =
-    cz.lastaapps.ui.common.extencions.viewModel(MainViewModel::class, key, factory)
+    cz.lastaapps.ui.common.extencions.viewModelKt(MainViewModel::class, key, factory)

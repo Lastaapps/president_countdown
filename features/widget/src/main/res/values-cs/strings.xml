@@ -28,4 +28,16 @@
     <string name="notification_content_text">
         Toto je nutné k aktualizci widgetu. Kliknutím mě můžete skrýt trvale.
     </string>
+    <string name="widget_loading">Načítám…</string>
+    <string name="config_invalid_input">Chybný vstup!</string>
+    <string name="mode_light">Pouze světlý</string>
+    <string name="mode_system">Systémový</string>
+    <string name="mode_dark">Pouze tmavý</string>
+    <string name="foreground">Popředí</string>
+    <string name="background">Pozadí</string>
+    <string name="cancel">Zrušit</string>
+    <string name="ok">OK</string>
+    <string name="differ_year">Odlišná barva pro roky</string>
+    <string name="preview_light">Světlý</string>
+    <string name="preview_dark">Tmavý</string>
 </resources>

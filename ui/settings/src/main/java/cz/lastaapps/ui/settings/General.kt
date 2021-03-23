@@ -31,17 +31,17 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Switch
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import cz.lastaapps.ui.common.components.VerticalDivider
 
-/*
-* Settings components implementation
-* */
+val defaultSettingsActionWidth = 48.dp
 
 /**
  * Text and switch
@@ -67,6 +67,7 @@ fun CustomSettings(
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {},
     divider: Boolean = true,
+    actionWidth: Dp? = if (divider) defaultSettingsActionWidth else null,
     content: @Composable () -> Unit,
 ) {
     ConstraintLayout(
@@ -83,6 +84,7 @@ fun CustomSettings(
                 start.linkTo(parent.start)
                 centerVerticallyTo(parent)
                 end.linkTo(dividerConst.start, padding)
+
                 width = Dimension.fillToConstraints
             }
         )
@@ -91,6 +93,7 @@ fun CustomSettings(
             modifier = Modifier.constrainAs(dividerConst) {
                 end.linkTo(contentConst.start, padding)
                 centerVerticallyTo(parent)
+
                 height = Dimension.fillToConstraints
             },
         ) {
@@ -105,8 +108,12 @@ fun CustomSettings(
                 end.linkTo(parent.end)
                 centerVerticallyTo(parent)
 
-                width = Dimension.wrapContent
+                width = if (actionWidth != null)
+                    Dimension.value(actionWidth)
+                else
+                    Dimension.wrapContent
             },
+            contentAlignment = Alignment.Center
         ) {
             content()
         }

@@ -21,4 +21,6 @@
 <resources>
     <dimen name="valueSize">28sp</dimen>
     <dimen name="unitSize">13sp</dimen>
+
+    <dimen name="border_width">2dp</dimen>
 </resources>

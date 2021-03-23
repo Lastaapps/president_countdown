@@ -29,5 +29,17 @@
     <string name="notification_content_text">
         This is required to keep the widgets updated. Click me to hide this notification.
     </string>
+    <string name="config_invalid_input">Wrong input!</string>
+    <string name="widget_loading">Loading…</string>
+    <string name="mode_light">Light only</string>
+    <string name="mode_system">System</string>
+    <string name="mode_dark">Dark only</string>
+    <string name="preview_light">Light</string>
+    <string name="preview_dark">Dark</string>
+    <string name="foreground">Foreground</string>
+    <string name="background">Background</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="differ_year">Differ the year\'s color</string>
 
 </resources>

@@ -34,4 +34,31 @@
     <string name="died_formatted"><![CDATA[<b><font color=#d90023>Miloš Zeman</font></b> zemřel]]></string>
     <string name="loading_formatted"><![CDATA[]]></string>
     <string name="error_formatted"><![CDATA[Jejda, chyba!]]></string>
+
+    <plurals name="year">
+        <item quantity="one">rok</item>
+        <item quantity="few">roky</item>
+        <item quantity="other">let</item>
+    </plurals>
+    <plurals name="day">
+        <item quantity="one">den</item>
+        <item quantity="few">dny</item>
+        <item quantity="other">dnů</item>
+    </plurals>
+    <plurals name="hour">
+        <item quantity="one">hodina</item>
+        <item quantity="few">hodiny</item>
+        <item quantity="other">hodin</item>
+    </plurals>
+    <plurals name="minute">
+        <item quantity="one">minuta</item>
+        <item quantity="few">minuty</item>
+        <item quantity="other">minut</item>
+    </plurals>
+    <plurals name="second">
+        <item quantity="one">sekunda</item>
+        <item quantity="few">sekundy</item>
+        <item quantity="other">sekund</item>
+    </plurals>
+
 </resources>

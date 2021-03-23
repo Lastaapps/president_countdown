@@ -39,29 +39,29 @@ import cz.lastaapps.ui.common.extencions.rememberMutableSaveable
  * Shows color picker by expanding downward and previews currently selected color
  * */
 @Composable
-fun ColoPickerSettings(
+fun ColorPickerSetting(
     text: String,
     color: Color,
     onColorChanged: (Color) -> Unit,
+    expanded: Boolean,
+    onExpandedChanged: ((Boolean) -> Unit),
     modifier: Modifier = Modifier,
     alphaEnabled: Boolean = true,
+    hexEnabled: Boolean = true,
 ) {
-    var shown by rememberMutableSaveable { mutableStateOf(false) }
 
     Column(modifier.animateContentSize()) {
 
         CustomSettings(
             text = text,
-            onClick = {
-                shown = !shown
-            },
+            onClick = { onExpandedChanged(!expanded) },
             modifier = Modifier.fillMaxWidth(),
         ) {
             ColorPreview(color = color)
         }
 
-        if (shown) {
-            ColorPicker(color, onColorChanged, alphaEnabled = alphaEnabled)
+        if (expanded) {
+            ColorPicker(color, onColorChanged, alphaEnabled = alphaEnabled, showHex = hexEnabled)
         }
     }
 }
@@ -70,7 +70,7 @@ fun ColoPickerSettings(
  * Shows color picker dialog and previews currently selected color
  * */
 @Composable
-fun ColoPickerDialogSettings(
+fun ColorPickerDialogSetting(
     text: String,
     color: Color,
     onColorChanged: (Color) -> Unit,

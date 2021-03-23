@@ -18,30 +18,54 @@
   ~
   -->
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="5dp"
-    android:background="@color/background_color">
+    android:background="@android:color/transparent">
 
     <FrameLayout
+        android:id="@+id/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/border"
-        android:padding="2dp">
+        android:layout_margin="@dimen/border_width"
+        android:padding="4dp"
+        tools:background="#FFF">
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="2dp">
-
-            <include
-                layout="@layout/widget_countdown_clock"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center" />
-        </FrameLayout>
+        <include
+            layout="@layout/widget_countdown_clock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
     </FrameLayout>
 
-</FrameLayout>
+    <FrameLayout
+        android:id="@+id/border_top"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/border_width"
+        android:layout_alignParentTop="true"
+        tools:background="#333" />
+
+    <FrameLayout
+        android:id="@+id/border_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/border_width"
+        android:layout_alignParentBottom="true"
+        tools:background="#333" />
+
+    <FrameLayout
+        android:id="@+id/border_start"
+        android:layout_width="@dimen/border_width"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        tools:background="#333" />
+
+    <FrameLayout
+        android:id="@+id/border_end"
+        android:layout_width="@dimen/border_width"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        tools:background="#333" />
+
+</RelativeLayout>

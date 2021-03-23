@@ -22,7 +22,6 @@ package cz.lastaapps.ui.common.themes
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
@@ -88,8 +87,8 @@ fun MainTheme(
     MaterialTheme(
         colors = animatedColors,
     ) {
-        updateStatusBar(lightTheme = lightTheme)
+        updateStatusBar()
 
-        Surface(content = content, color = MaterialTheme.colors.background)
+        content()
     }
 }

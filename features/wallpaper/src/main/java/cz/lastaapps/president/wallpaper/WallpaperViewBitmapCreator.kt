@@ -37,8 +37,8 @@ import androidx.constraintlayout.helper.widget.Flow
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.text.HtmlCompat
-import cz.lastaapps.president.clock.TimePlurals
 import cz.lastaapps.president.core.president.CurrentState
+import cz.lastaapps.president.core.president.TimePlurals
 import cz.lastaapps.president.core.president.get
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock

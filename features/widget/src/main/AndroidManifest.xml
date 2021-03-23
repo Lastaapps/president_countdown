@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
   ~   Copyright 2021, Petr Laštovička as Lasta apps, All rights reserved
   ~
   ~     This file is part of President Countdown.
@@ -24,14 +25,25 @@
     <application>
 
         <activity
-            android:name=".WidgetClickActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:exported="false" />
+            android:name=".config.WidgetConfigActivity"
+            android:exported="true"
+            android:theme="@style/Theme.SplashScreen">
 
-        <service android:name=".WidgetUpdateService" />
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+
+
+        <activity
+            android:name=".widget.WidgetClickedActivity"
+            android:exported="false"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <service android:name=".service.WidgetUpdateService" />
 
         <receiver
-            android:name=".PresidentWidget"
+            android:name=".widget.PresidentWidget"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -40,6 +52,12 @@
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_info" />
+
+            <!-- One UI option to change a widget settings later -->
+            <meta-data
+                android:name="android.appwidget.provider.semConfigureActivity"
+                android:value="cz.lastaapps.president.widget.config.WidgetConfigActivity" />
+
         </receiver>
     </application>
 

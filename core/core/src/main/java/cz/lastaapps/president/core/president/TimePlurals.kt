@@ -18,9 +18,10 @@
  *
  */
 
-package cz.lastaapps.president.clock
+package cz.lastaapps.president.core.president
 
 import android.content.Context
+import cz.lastaapps.president.core.R
 
 /**
  * Shortcut for plurals for time names - year, day, hour, minute, second

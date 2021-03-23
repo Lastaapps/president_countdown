@@ -95,7 +95,7 @@ data class CurrentState(
         /**
          * @return current state
          *  */
-        fun getCurrentStateOnce(): CurrentState = runBlocking(Dispatchers.Default) {
+        fun getCurrentStateOnceAsync(): CurrentState = runBlocking(Dispatchers.Default) {
             createCurrentState(PresidentStateStorage.getCurrentState())
         }
 

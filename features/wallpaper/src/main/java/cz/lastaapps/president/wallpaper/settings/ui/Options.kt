@@ -47,7 +47,7 @@ import cz.lastaapps.president.wallpaper.service.PresidentWallpaperService
 import cz.lastaapps.ui.common.components.TextSwitch
 import cz.lastaapps.ui.common.extencions.rememberMutableSaveable
 import cz.lastaapps.ui.common.layouts.ExpandableBottomLayout
-import cz.lastaapps.ui.settings.ColoPickerDialogSettings
+import cz.lastaapps.ui.settings.ColorPickerDialogSetting
 import cz.lastaapps.ui.settings.DropdownSettings
 import cz.lastaapps.ui.settings.SettingsGroup
 import cz.lastaapps.ui.settings.SettingsGroupColumn
@@ -321,7 +321,7 @@ private fun ForegroundPicker(modifier: Modifier = Modifier) {
     val viewModel = viewModel()
     val color by remember { viewModel.foregroundColor }.collectAsState()
 
-    ColoPickerDialogSettings(
+    ColorPickerDialogSetting(
         text = stringResource(id = R.string.ui_foreground),
         color = color,
         onColorChanged = { viewModel.setForegroundColor(it) },
@@ -336,7 +336,7 @@ private fun BackgroundPicker(modifier: Modifier = Modifier) {
     val viewModel = viewModel()
     val color by remember { viewModel.backgroundColor }.collectAsState()
 
-    ColoPickerDialogSettings(
+    ColorPickerDialogSetting(
         text = stringResource(id = R.string.ui_background),
         color = color,
         onColorChanged = { viewModel.setBackgroundColor(it) },

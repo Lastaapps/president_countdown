@@ -20,7 +20,7 @@
 
 package cz.lastaapps.ui.common.extencions
 
-import android.app.Activity
+import android.annotation.SuppressLint
 import android.util.Log
 import android.view.Window
 import androidx.compose.material.MaterialTheme
@@ -28,7 +28,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.platform.LocalContext
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -40,7 +39,7 @@ private const val TAG = "ComposeFunctions"
  * The same as libraries #viewModel(), but this one accepts KClass instead of java Class
  * */
 @Composable
-fun <T : ViewModel> viewModel(
+fun <T : ViewModel> viewModelKt(
     modelClass: KClass<T>,
     key: String? = null,
     factory: ViewModelProvider.Factory? = null
@@ -49,18 +48,18 @@ fun <T : ViewModel> viewModel(
 /**
  * changes status bar color to selected color
  * */
+@SuppressLint("ComposableNaming")
 @Composable
 fun updateStatusBar(
-    lightTheme: Boolean,
     statusBarColor: Color = MaterialTheme.colors.primaryVariant
 ) {
-    val context = LocalContext.current
+    val activity = LocalActivity.getCompat()
 
-    remember(lightTheme, context) {
-        if (context is Activity) {
+    remember(activity, statusBarColor) {
+        if (activity != null) {
             Log.i(TAG, "Updating status bar color")
 
-            val window: Window = context.window
+            val window: Window = activity.window
 
             val controller = WindowInsetsControllerCompat(window, window.decorView)
 

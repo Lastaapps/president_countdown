@@ -1,0 +1,88 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 3,
+    "identityHash": "bb3e4e2004064c2b4bfc27402a618489",
+    "entities": [
+      {
+        "tableName": "widget_state",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `theme` INTEGER NOT NULL, `light_foreground` INTEGER NOT NULL, `dark_foreground` INTEGER NOT NULL, `light_background` INTEGER NOT NULL, `dark_background` INTEGER NOT NULL, `light_differ_year` INTEGER NOT NULL, `dark_differ_year` INTEGER NOT NULL, `light_year_color` INTEGER NOT NULL, `dark_year_color` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "theme",
+            "columnName": "theme",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lightForeground",
+            "columnName": "light_foreground",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "darkForeground",
+            "columnName": "dark_foreground",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lightBackground",
+            "columnName": "light_background",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "darkBackground",
+            "columnName": "dark_background",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lightDifferYear",
+            "columnName": "light_differ_year",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "darkDifferYear",
+            "columnName": "dark_differ_year",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lightYearColor",
+            "columnName": "light_year_color",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "darkYearColor",
+            "columnName": "dark_year_color",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'bb3e4e2004064c2b4bfc27402a618489')"
+    ]
+  }
+}

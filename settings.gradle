@@ -19,6 +19,13 @@
  *
  */
 
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+    }
+}
+
 rootProject.name = "President Countdown"
 
 include ':app'

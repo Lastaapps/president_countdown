@@ -44,6 +44,7 @@ fun <T> DropdownSettings(
         text = text,
         modifier = modifier,
         divider = false,
+        actionWidth = null,
     ) {
 
         var expanded by remember { mutableStateOf(false) }

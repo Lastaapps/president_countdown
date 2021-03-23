@@ -18,7 +18,7 @@
  *
  */
 
-package cz.lastaapps.president.widget
+package cz.lastaapps.president.widget.service
 
 import android.app.Notification
 import android.app.PendingIntent
@@ -30,6 +30,7 @@ import androidx.core.app.NotificationChannelCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import cz.lastaapps.president.core.functionality.PendingIntentCompat
+import cz.lastaapps.president.widget.R
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 

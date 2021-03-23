@@ -23,6 +23,8 @@ package cz.lastaapps.president.wallpaper.settings.ui
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.toRect
@@ -54,27 +56,30 @@ fun WallpaperSettings(modifier: Modifier = Modifier) {
     }
 
     MainTheme(lightTheme = isDay) {
-        ConstraintLayout(modifier = modifier.fillMaxSize()) {
+        Surface(color = MaterialTheme.colors.background) {
 
-            val (settingsConst, wallpaperConst) = createRefs()
+            ConstraintLayout(modifier = modifier.fillMaxSize()) {
 
-            WallpaperCanvas(
-                Modifier
-                    .constrainAs(wallpaperConst) {
-                        centerTo(parent)
-                        width = Dimension.fillToConstraints
-                        height = Dimension.fillToConstraints
-                    }
-            )
+                val (settingsConst, wallpaperConst) = createRefs()
 
-            WallpaperOptionsLayout(
-                Modifier
-                    .constrainAs(settingsConst) {
-                        centerToWithPadding(parent, sideMargins)
-                        width = Dimension.fillToConstraints
-                        height = Dimension.fillToConstraints
-                    }
-            )
+                WallpaperCanvas(
+                    Modifier
+                        .constrainAs(wallpaperConst) {
+                            centerTo(parent)
+                            width = Dimension.fillToConstraints
+                            height = Dimension.fillToConstraints
+                        }
+                )
+
+                WallpaperOptionsLayout(
+                    Modifier
+                        .constrainAs(settingsConst) {
+                            centerToWithPadding(parent, sideMargins)
+                            width = Dimension.fillToConstraints
+                            height = Dimension.fillToConstraints
+                        }
+                )
+            }
         }
     }
 }
@@ -107,4 +112,4 @@ internal fun viewModel(
     key: String? = null,
     factory: ViewModelProvider.Factory? = null
 ): WallpaperViewModel =
-    cz.lastaapps.ui.common.extencions.viewModel(WallpaperViewModel::class, key, factory)
+    cz.lastaapps.ui.common.extencions.viewModelKt(WallpaperViewModel::class, key, factory)

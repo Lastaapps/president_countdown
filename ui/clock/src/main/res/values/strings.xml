@@ -23,24 +23,4 @@
     <string name="message_remains">remains until the expiry of the second presidential mandate of </string>
     <string name="message_thank_you">Thank you very much!</string>
 
-    <plurals name="year">
-        <item quantity="one">year</item>
-        <item quantity="other">years</item>
-    </plurals>
-    <plurals name="day">
-        <item quantity="one">day</item>
-        <item quantity="other">days</item>
-    </plurals>
-    <plurals name="hour">
-        <item quantity="one">hour</item>
-        <item quantity="other">hours</item>
-    </plurals>
-    <plurals name="minute">
-        <item quantity="one">minute</item>
-        <item quantity="other">minutes</item>
-    </plurals>
-    <plurals name="second">
-        <item quantity="one">second</item>
-        <item quantity="other">seconds</item>
-    </plurals>
 </resources>

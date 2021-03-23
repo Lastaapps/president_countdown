@@ -21,12 +21,9 @@
 package cz.lastaapps.president.app.ui.main
 
 import android.app.WallpaperManager
-import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.os.Build
-import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -48,7 +45,7 @@ import androidx.navigation.compose.navigate
 import cz.lastaapps.president.app.R
 import cz.lastaapps.president.navigation.NavigationConstants
 import cz.lastaapps.president.wallpaper.service.PresidentWallpaperService
-import cz.lastaapps.president.widget.PresidentWidget
+import cz.lastaapps.president.widget.WidgetConfig
 import cz.lastaapps.ui.common.components.ClickableButton
 import cz.lastaapps.ui.common.components.IconTextRow
 import cz.lastaapps.ui.common.extencions.iconSize
@@ -155,20 +152,8 @@ private fun About(navController: NavController, modifier: Modifier = Modifier) {
 }
 
 private fun widgetAction(context: Context) {
-    val mgr = AppWidgetManager.getInstance(context)
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && mgr.isRequestPinAppWidgetSupported) {
 
-        //shows a dialog to place the widget directly
-        //add callback for launching the configuration activity
-        mgr.requestPinAppWidget(
-            ComponentName(context, PresidentWidget::class.java),
-            Bundle().apply {
-                //putString(AppWidgetManager.EXTRA_APPWIDGET_PREVIEW, )
-            },
-            null
-        )
-
-    } else {
+    if (!WidgetConfig.requestWidgetPinning(context)) {
         //show a dialog with help how to place a widget on the home screen
         AlertDialog.Builder(context)
             .setMessage(R.string.widget_help)

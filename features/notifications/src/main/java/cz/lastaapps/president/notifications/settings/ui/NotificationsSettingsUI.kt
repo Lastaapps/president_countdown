@@ -192,5 +192,5 @@ private fun OpenSystemSettings(modifier: Modifier = Modifier) {
 
 @Composable
 private fun viewModel() =
-    cz.lastaapps.ui.common.extencions.viewModel(NotifyViewModel::class)
+    cz.lastaapps.ui.common.extencions.viewModelKt(NotifyViewModel::class)
 
