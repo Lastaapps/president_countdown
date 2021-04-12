@@ -23,7 +23,6 @@ package cz.lastaapps.president.app.initializers
 import android.content.Context
 import androidx.annotation.Keep
 import androidx.startup.Initializer
-import cz.lastaapps.president.app.MainActivity
 import cz.lastaapps.president.core.App
 import cz.lastaapps.president.core.InitializerTemplate
 import cz.lastaapps.president.widget.WidgetConfig
@@ -38,8 +37,6 @@ class WidgetInitializer : InitializerTemplate<Any> {
 
     override fun create(context: Context): Any {
         logCreate()
-
-        WidgetConfig.mainActivity = MainActivity::class
 
         //delays launch to speedup startup time
         App.afterAppInitialization.add { appContext, _ ->

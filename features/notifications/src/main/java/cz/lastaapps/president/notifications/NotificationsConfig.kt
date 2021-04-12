@@ -25,8 +25,7 @@ import android.content.Context
 import cz.lastaapps.president.notifications.announcements.AnnouncementsPlanner
 import cz.lastaapps.president.notifications.daily.DailyPlanner
 import cz.lastaapps.president.notifications.permanent.PermanentService
-import cz.lastaapps.president.notifications.settings.Settings
-import kotlinx.coroutines.CoroutineScope
+import cz.lastaapps.president.notifications.ui.settings.NotificationSettingsRepo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlin.reflect.KClass
@@ -42,9 +41,9 @@ object NotificationsConfig {
     /**
      * Set's up all the alarms and starts permanent notification service
      * */
-    suspend fun initAll(context: Context, scope: CoroutineScope) {
+    suspend fun initAll(context: Context) {
 
-        val settings = Settings.getInstance(context, scope)
+        val settings = NotificationSettingsRepo.getInstance(context)
 
         withContext(Dispatchers.Main) {
             AnnouncementsPlanner(context).plan(settings)

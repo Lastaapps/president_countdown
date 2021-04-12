@@ -21,6 +21,7 @@
 package cz.lastaapps.president.widget.widget
 
 import android.app.PendingIntent
+import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.Intent
 import android.view.View
@@ -31,6 +32,7 @@ import cz.lastaapps.president.core.president.CurrentState
 import cz.lastaapps.president.core.president.TimePlurals
 import cz.lastaapps.president.core.president.get
 import cz.lastaapps.president.widget.R
+import cz.lastaapps.president.widget.config.WidgetConfigActivity
 
 /**
  * Manages all the work with remote view for the widget
@@ -47,11 +49,21 @@ internal object RemoteViewUpdater {
 
     /**
      * Creates RemoteViews for the widget
+     * @param widgetId opens WidgetConfigActivity on widget click
+     * (if AppWidgetManager.INVALID_APPWIDGET_ID is used, clicks are disabled)
      * */
-    fun createRemoteViews(context: Context): RemoteViews =
+    fun createRemoteViews(context: Context, widgetId: Int): RemoteViews =
         RemoteViews(context.packageName, R.layout.widget).also {
 
-            val intent = Intent(context, WidgetClickedActivity::class.java)
+            val intent =
+                if (widgetId != AppWidgetManager.INVALID_APPWIDGET_ID)
+                //opens widget configs
+                    Intent(context, WidgetConfigActivity::class.java).also { intent ->
+                        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId)
+                    }
+                else
+                    return@also
+
             val pending = PendingIntent.getActivity(
                 context,
                 pendingRequest,

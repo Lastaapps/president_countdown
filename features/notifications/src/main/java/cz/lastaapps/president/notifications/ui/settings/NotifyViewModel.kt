@@ -18,13 +18,12 @@
  *
  */
 
-package cz.lastaapps.president.notifications.settings.ui
+package cz.lastaapps.president.notifications.ui.settings
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.viewModelScope
 import cz.lastaapps.president.notifications.NotificationsConfig
-import cz.lastaapps.president.notifications.settings.Settings
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -32,13 +31,13 @@ import java.time.LocalTime
 
 internal class NotifyViewModel(private val app: Application) : AndroidViewModel(app) {
 
-    private lateinit var settings: Settings
+    private lateinit var settings: NotificationSettingsRepo
 
     private val initMutex = Mutex()
 
     suspend fun initializeSettings() = initMutex.withLock {
         if (!this::settings.isInitialized)
-            settings = Settings.getInstance(app, viewModelScope)
+            settings = NotificationSettingsRepo.getInstance(app)
     }
 
     val announcementsFlow by lazy { settings.announcementsFlow }
@@ -74,8 +73,8 @@ internal class NotifyViewModel(private val app: Application) : AndroidViewModel(
         }
 
     private fun updateConfigs() {
-        viewModelScope.launch {
-            NotificationsConfig.initAll(app, viewModelScope)
+        GlobalScope.launch {
+            NotificationsConfig.initAll(app)
         }
     }
 }

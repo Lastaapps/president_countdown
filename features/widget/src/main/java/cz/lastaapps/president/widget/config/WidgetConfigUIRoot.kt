@@ -20,6 +20,7 @@
 
 package cz.lastaapps.president.widget.config
 
+import android.appwidget.AppWidgetManager
 import android.view.Gravity
 import android.view.View
 import android.widget.FrameLayout
@@ -42,11 +43,13 @@ import androidx.compose.ui.unit.min
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import cz.lastaapps.battery.BatteryWarning
 import cz.lastaapps.president.core.president.CurrentState
 import cz.lastaapps.president.widget.R
 import cz.lastaapps.president.widget.widget.RemoteViewUpdater
 import cz.lastaapps.ui.common.extencions.rememberMutableSaveable
 import cz.lastaapps.ui.common.extencions.viewModelKt
+import cz.lastaapps.ui.common.layouts.BorderLayout
 import cz.lastaapps.ui.common.layouts.WidthLimitingLayout
 import cz.lastaapps.ui.settings.ColorPickerSetting
 import cz.lastaapps.ui.settings.SettingsGroupColumn
@@ -72,7 +75,7 @@ internal fun WidgetConfigRoot(
     }
 
     //stops activity when widget customization task is finished
-    val uiStage by viewModel.uiState.collectAsState()
+    val uiStage by viewModel.configProgressState.collectAsState()
     remember(uiStage) {
         when (uiStage) {
             UIStage.OK -> onSuccess()
@@ -82,7 +85,7 @@ internal fun WidgetConfigRoot(
     }
 
     //loads data representing UI state
-    var isLightPreview by rememberMutableSaveable { mutableStateOf(true) }
+    val isLightPreview by viewModel.getIsLightPreview().collectAsState()
     val widgetState by viewModel.getState().collectAsState()
 
     //limits max width
@@ -100,7 +103,7 @@ internal fun WidgetConfigRoot(
 
             ConstraintLayout(Modifier.fillMaxSize()) {
 
-                val (previewConst, settConst) = createRefs()
+                val (previewConst, settConst, batteryConst) = createRefs()
 
                 //previews the widget
                 WidgetPreview(
@@ -117,13 +120,11 @@ internal fun WidgetConfigRoot(
                         },
                 )
 
-                //all the widget options
-                val scroll = rememberScrollState()
-                SettingsContent(
+                Card(
+                    backgroundColor = MaterialTheme.colors.background,
                     modifier = Modifier
                         //set's max height so preview is shows no matter what
                         .sizeIn(maxHeight = constraintLayoutHeight * .75f)
-                        .verticalScroll(scroll)
                         .constrainAs(settConst) {
                             bottom.linkTo(parent.bottom)
                             centerHorizontallyTo(parent)
@@ -131,10 +132,31 @@ internal fun WidgetConfigRoot(
                             width = Dimension.fillToConstraints
                             height = Dimension.wrapContent
                         },
-                    state = widgetState,
-                    onStateChanged = { viewModel.setState(it) },
-                    isLightPreview = isLightPreview,
-                    onLightPreviewChanged = { isLightPreview = it }
+                ) {
+                    BorderLayout(
+                        modifier = Modifier.padding(8.dp),
+                        centerContent = {
+                            //all the widget options
+                            SettingsContent(
+                                modifier = Modifier.verticalScroll(rememberScrollState()),
+                                state = widgetState,
+                                onStateChanged = { viewModel.setState(it) },
+                                isLightPreview = isLightPreview,
+                                onLightPreviewChanged = { viewModel.setIsLightPreview(it) }
+                            )
+                        },
+                        bottomContent = {
+                            ConfirmButtons()
+                        },
+                        spaceBy = 8.dp,
+                    )
+                }
+
+                BatteryWarning(
+                    modifier = Modifier.constrainAs(batteryConst) {
+                        top.linkTo(parent.top, 32.dp)
+                        end.linkTo(parent.end, 32.dp)
+                    },
                 )
             }
         }
@@ -174,7 +196,8 @@ private fun WidgetPreview(
 
         val context = LocalContext.current
         val views = remember(context) {
-            RemoteViewUpdater.createRemoteViews(context)
+            //AppWidgetManager.INVALID_APPWIDGET_ID disables the preview - prevents clicks
+            RemoteViewUpdater.createRemoteViews(context, AppWidgetManager.INVALID_APPWIDGET_ID)
         }
 
         remember(state) {
@@ -224,34 +247,26 @@ private fun SettingsContent(
     onLightPreviewChanged: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Card(
-        backgroundColor = MaterialTheme.colors.background,
+    Column(
         modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        Column(
-            modifier = Modifier.padding(8.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            UIModeSelection(
-                state = state,
-                onStateChanged = onStateChanged,
-            )
-            ThemedOptions(
-                state = state,
-                onStateChanged = onStateChanged,
-                isLightPreview = isLightPreview,
-                onLightPreviewChanged = onLightPreviewChanged,
-            )
-            DifferYear(
-                state = state,
-                onStateChanged = onStateChanged,
-                isLightPreview = isLightPreview,
-                modifier = Modifier.fillMaxWidth(),
-            )
-            ConfirmButtons(
-                modifier = Modifier.fillMaxWidth(),
-            )
-        }
+        UIModeSelection(
+            state = state,
+            onStateChanged = onStateChanged,
+        )
+        ThemedOptions(
+            state = state,
+            onStateChanged = onStateChanged,
+            isLightPreview = isLightPreview,
+            onLightPreviewChanged = onLightPreviewChanged,
+        )
+        DifferYear(
+            state = state,
+            onStateChanged = onStateChanged,
+            isLightPreview = isLightPreview,
+            modifier = Modifier.fillMaxWidth(),
+        )
     }
 }
 
@@ -301,8 +316,6 @@ private fun UIModeSelection(
         Slider(
             value = position,
             onValueChange = { position = it },
-            //TODO resolve after Compose version upgrade
-            //onChangeFinished is not updated in the Slider
             onValueChangeFinished = {
                 val newTheme = when (round(position).toInt()) {
                     0 -> WidgetThemeMode.DAY
@@ -310,7 +323,7 @@ private fun UIModeSelection(
                     2 -> WidgetThemeMode.NIGHT
                     else -> throw IllegalStateException("Illegal slider position $position")
                 }
-                //onStateChanged(state.copy(theme = newTheme))
+                onStateChanged(state.copy(theme = newTheme))
             },
             steps = 1,
             valueRange = 0f..2f,
@@ -490,7 +503,7 @@ private fun ConfirmButtons(modifier: Modifier = Modifier) {
         val viewModel = viewModel()
 
         //buttons are disabled when the data are processed to prevent multiple calls
-        val uiStage by viewModel.uiState.collectAsState()
+        val uiStage by viewModel.configProgressState.collectAsState()
         val enabled = remember(uiStage) {
             uiStage != UIStage.PROCESSING
         }

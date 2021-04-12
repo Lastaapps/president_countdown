@@ -22,6 +22,7 @@ package cz.lastaapps.president.widget.config
 
 import android.app.Application
 import android.appwidget.AppWidgetManager
+import android.content.res.Configuration
 import androidx.annotation.IntDef
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
@@ -29,10 +30,7 @@ import cz.lastaapps.president.core.president.CurrentState
 import cz.lastaapps.president.widget.config.database.WidgetDatabase
 import cz.lastaapps.president.widget.widget.RemoteViewUpdater
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 internal class WidgetViewModel(private val app: Application) : AndroidViewModel(app) {
@@ -44,6 +42,22 @@ internal class WidgetViewModel(private val app: Application) : AndroidViewModel(
 
 
     private var widgetId: Int = AppWidgetManager.INVALID_APPWIDGET_ID
+
+    private val state by lazy {
+        MutableStateFlow(WidgetState.createDefault(AppWidgetManager.INVALID_APPWIDGET_ID))
+    }
+
+    fun getState(): StateFlow<WidgetState> = state
+    fun setState(state: WidgetState) {
+        this.state.tryEmit(state)
+    }
+
+    private val isLightPreview = MutableStateFlow(true)
+    fun getIsLightPreview() = isLightPreview
+    fun setIsLightPreview(isLight: Boolean) {
+        isLightPreview.tryEmit(isLight)
+    }
+
 
     private var databaseCollectionJob: Job? = null
 
@@ -57,36 +71,40 @@ internal class WidgetViewModel(private val app: Application) : AndroidViewModel(
 
         databaseCollectionJob?.cancel()
         databaseCollectionJob = viewModelScope.launch {
-            repo.getById(widgetId).collect {
-                it?.let {
-                    state.emit(it)
+            launch {
+                repo.getById(widgetId).collect {
+                    it?.let {
+                        state.emit(it)
+                    }
                 }
+            }
+
+            //loads default preview theme - light or dark - based on saved data or current ui state
+            launch {
+
+                val databaseState = repo.getById(widgetId).first() ?: return@launch
+
+                setIsLightPreview(
+                    when (databaseState.theme) {
+                        WidgetThemeMode.DAY -> true
+                        WidgetThemeMode.NIGHT -> false
+                        WidgetThemeMode.SYSTEM ->
+                            context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_YES == 0
+                        else -> return@launch
+                    }
+                )
             }
         }
     }
 
-    private val state by lazy { MutableStateFlow(WidgetState.createDefault(widgetId)) }
-    fun getState(): StateFlow<WidgetState> =
-        state.also {
-            viewModelScope.launch {
-                it.collectLatest {
-                    println("New state")
-                }
-            }
-        }
-
-    fun setState(state: WidgetState) {
-        this.state.tryEmit(state)
-    }
-
-    val uiState = MutableStateFlow<@UIStage Int>(UIStage.CONFIG)
+    val configProgressState = MutableStateFlow<@UIStage Int>(UIStage.CONFIG)
 
     fun cancel() {
-        uiState.tryEmit(UIStage.CANCEL)
+        configProgressState.tryEmit(UIStage.CANCEL)
     }
 
     fun ok() {
-        uiState.tryEmit(UIStage.PROCESSING)
+        configProgressState.tryEmit(UIStage.PROCESSING)
 
         viewModelScope.launch {
 
@@ -96,7 +114,7 @@ internal class WidgetViewModel(private val app: Application) : AndroidViewModel(
 
             val appWidgetManager: AppWidgetManager = AppWidgetManager.getInstance(context)
 
-            RemoteViewUpdater.createRemoteViews(context).also { views ->
+            RemoteViewUpdater.createRemoteViews(context, widgetId).also { views ->
 
                 val countdownState = CurrentState.getCurrentState(this).value
 
@@ -106,7 +124,7 @@ internal class WidgetViewModel(private val app: Application) : AndroidViewModel(
                 appWidgetManager.updateAppWidget(widgetId, views)
             }
 
-            uiState.tryEmit(UIStage.OK)
+            configProgressState.tryEmit(UIStage.OK)
         }
     }
 }

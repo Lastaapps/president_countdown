@@ -45,7 +45,7 @@ import cz.lastaapps.president.app.ui.uimode.UIModeStorage
 import cz.lastaapps.president.app.ui.uimode.UIModeSwitch
 import cz.lastaapps.president.clock.CreateClock
 import cz.lastaapps.president.clock.WebMessages
-import cz.lastaapps.president.notifications.settings.ui.NotificationSettings
+import cz.lastaapps.president.notifications.ui.settings.NotificationSettings
 import cz.lastaapps.president.privacypolicy.PrivacyPolicy
 import cz.lastaapps.president.wallpaper.settings.ui.WallpaperSettings
 import cz.lastaapps.president.whatsnew.WhatsNewProperties
@@ -55,7 +55,6 @@ import cz.lastaapps.ui.common.layouts.ExpandableBottomLayout
 import cz.lastaapps.ui.common.themes.MainTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 import cz.lastaapps.president.navigation.NavigationConstants as N
 
 private val padding = 16.dp
@@ -65,7 +64,7 @@ private const val UI_MODE_STORAGE_NAME = "MAIN_UI_MODE"
  * UI for the Main activity
  * */
 @Composable
-internal fun MainActivityRoot() {
+internal fun MainActivityRoot(modifier: Modifier = Modifier) {
 
     //manages ui mode
     val context = LocalContext.current
@@ -83,19 +82,18 @@ internal fun MainActivityRoot() {
 
                 //navigation between parts of the app
                 val navController = rememberNavController()
-                val maxSizeModifier = Modifier.fillMaxSize()
 
                 NavHost(navController, startDestination = N.id.home) {
                     composable(N.id.home) {
                         MainScaffold(
                             navController,
                             uiModeStorage,
-                            maxSizeModifier
+                            modifier
                         )
                     }
-                    composable(N.id.wallpaperSettings) { WallpaperSettings(maxSizeModifier) }
-                    composable(N.id.notificationSettings) { NotificationSettings(maxSizeModifier) }
-                    composable(N.id.about) { About(maxSizeModifier) }
+                    composable(N.id.wallpaperSettings) { WallpaperSettings(modifier) }
+                    composable(N.id.notificationSettings) { NotificationSettings(modifier) }
+                    composable(N.id.about) { About(modifier) }
                 }
             }
         }
@@ -153,16 +151,15 @@ private fun MainScaffold(
 ) {
 
     val scaffoldState = rememberScaffoldState()
-    val scope = rememberCoroutineScope()
     val viewModel = viewModel()
 
     //deletes snackbar message on config/orientation change
     remember(LocalContext.current.resources) {
         viewModel.showSnackbar(null)
-        Any()
+        null
     }
 
-    scope.launch {
+    LaunchedEffect("") {
         //wait's until snackbar message has been deleted after a configuration change
         delay(100)
         viewModel.snackbarMessage.collectLatest {

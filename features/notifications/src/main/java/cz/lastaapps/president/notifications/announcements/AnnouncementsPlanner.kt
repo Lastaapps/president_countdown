@@ -30,7 +30,7 @@ import cz.lastaapps.president.core.functionality.LocalDateCET
 import cz.lastaapps.president.core.functionality.PendingIntentCompat
 import cz.lastaapps.president.core.president.President
 import cz.lastaapps.president.notifications.announcements.AnnouncementType.Companion.putAnnouncedTypeExtra
-import cz.lastaapps.president.notifications.settings.Settings
+import cz.lastaapps.president.notifications.ui.settings.NotificationSettingsRepo
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.ZonedDateTime
@@ -45,7 +45,7 @@ internal class AnnouncementsPlanner(private val context: Context) {
     /**
      * Plans all the events
      * */
-    fun plan(settings: Settings) {
+    fun plan(settings: NotificationSettingsRepo) {
 
         //creates a notification channel
         AnnouncementsNotifications(context)

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~   Copyright 2021, Petr Laštovička as Lasta apps, All rights reserved
+  ~
+  ~     This file is part of President Countdown.
+  ~
+  ~     This app is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU General Public License as published by
+  ~     the Free Software Foundation, either version 3 of the License, or
+  ~     (at your option) any later version.
+  ~
+  ~     This app is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU General Public License
+  ~     along with this app.  If not, see <https://www.gnu.org/licenses/>.
+  ~
+  -->
+
+<resources>
+
+    <string name="battery_open">App info</string>
+    <string name="battery_ignore">Ignore</string>
+    <string name="battery_title">Battery restrictions</string>
+    <string name="battery_text">
+        It looks like this app is restricted from running in the background.
+        Please, enable running in the background to make sure, that widgets and notification would run smoothly.
+
+        Open the App info page, go to the Battery section and disable background battery restrictions.
+        Don\'t be afraid of a battery drain, this app is well optimized to save as much as possible.
+
+        If the problem persist, try opening Settings > Battery or Settings > Device care > Battery.
+        Search for the Battery manager or the Background usage limits and remove this app from sleep.
+    </string>
+    <string name="battery_warning_content_description">Battery restriction warning</string>
+    <string name="battery_settings">Settings</string>
+</resources>

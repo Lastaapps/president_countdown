@@ -40,10 +40,52 @@ fun <T> DropdownSettings(
     modifier: Modifier = Modifier,
     itemsText: @Composable (T) -> String = { it.toString() }
 ) {
+
+    var expanded by remember { mutableStateOf(false) }
+
     CustomSettings(
-        text = text,
+        title = text,
+        selected = itemsText(selected),
+        onClick = { expanded = true },
         modifier = modifier,
-        divider = false,
+        useDivider = false,
+        actionWidth = null,
+    )
+
+    DropdownMenu(
+        expanded = expanded,
+        onDismissRequest = { expanded = false },
+    ) {
+
+        for (item in items) {
+
+            DropdownMenuItem(
+                onClick = {
+                    onItemSelected(item)
+                    expanded = false
+                },
+                modifier = modifier
+            ) {
+                Text(itemsText(item))
+            }
+        }
+    }
+}
+
+
+@Composable
+fun <T> DropdownWithMenuSettings(
+    text: String,
+    items: List<T>,
+    selected: T,
+    onItemSelected: (T) -> Unit,
+    modifier: Modifier = Modifier,
+    itemsText: @Composable (T) -> String = { it.toString() }
+) {
+    CustomSettings(
+        title = text,
+        modifier = modifier,
+        useDivider = false,
         actionWidth = null,
     ) {
 

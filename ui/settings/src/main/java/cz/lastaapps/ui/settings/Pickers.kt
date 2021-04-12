@@ -68,10 +68,10 @@ fun TimeSettings(
     }
 
     CustomSettings(
-        text = text,
+        title = text,
         onClick = onClick,
         modifier = modifier,
-        divider = false,
+        useDivider = false,
     ) {
         Text(timeText)
     }

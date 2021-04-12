@@ -23,6 +23,7 @@ package cz.lastaapps.president.app.initializers
 import android.content.Context
 import androidx.annotation.Keep
 import androidx.startup.Initializer
+import androidx.work.impl.WorkManagerInitializer
 import cz.lastaapps.president.app.workers.WorkersManager
 import cz.lastaapps.president.core.InitializerTemplate
 
@@ -32,7 +33,6 @@ import cz.lastaapps.president.core.InitializerTemplate
  * */
 @Keep
 class MyWorkersInitializer : InitializerTemplate<WorkersManager> {
-
 
     override fun create(context: Context): WorkersManager {
         logCreate()

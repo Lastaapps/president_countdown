@@ -30,7 +30,7 @@ import android.util.Log
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import cz.lastaapps.president.core.president.CurrentState
-import cz.lastaapps.president.notifications.settings.Settings
+import cz.lastaapps.president.notifications.ui.settings.NotificationSettingsRepo
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
 
@@ -46,7 +46,7 @@ class PermanentService : Service() {
         private fun getServiceIntent(context: Context) =
             Intent(context, PermanentService::class.java)
 
-        fun startService(context: Context, settings: Settings) {
+        fun startService(context: Context, settings: NotificationSettingsRepo) {
 
             //creates a notification channel
             PermanentNotifications(context)
@@ -84,6 +84,9 @@ class PermanentService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+
+        startForeground(notificationId, notifications.createInitial())
+
         return START_NOT_STICKY
     }
 

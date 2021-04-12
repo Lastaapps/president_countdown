@@ -29,6 +29,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import cz.lastaapps.ui.colorpicker.ColorPicker
 import cz.lastaapps.ui.colorpicker.ColorPickerDialog
 import cz.lastaapps.ui.common.components.ColorPreview
@@ -53,11 +54,12 @@ fun ColorPickerSetting(
     Column(modifier.animateContentSize()) {
 
         CustomSettings(
-            text = text,
+            title = text,
             onClick = { onExpandedChanged(!expanded) },
             modifier = Modifier.fillMaxWidth(),
+            useDivider = true,
         ) {
-            ColorPreview(color = color)
+            ColorPreview(color = color, preferredSize = 32.dp)
         }
 
         if (expanded) {
@@ -80,13 +82,14 @@ fun ColorPickerDialogSetting(
     var shown by rememberMutableSaveable { mutableStateOf(false) }
 
     CustomSettings(
-        text = text,
+        title = text,
         onClick = {
             shown = !shown
         },
         modifier = modifier,
+        useDivider = true,
     ) {
-        ColorPreview(color = color)
+        ColorPreview(color = color, preferredSize = 32.dp)
     }
 
     ColorPickerDialog(

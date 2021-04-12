@@ -22,6 +22,16 @@
 
 <!-- type values: alpha, beta, release-->
 <versions>
+    <version name="1.0.0-alpha05" type="alpha" build="1000005" released="2021-04-12">
+        <en-US>
+            Widget config bux fixes.
+            Minor UI updates.
+        </en-US>
+        <cs-CZ>
+            Oprava chyb nastavení widgetu.
+            Drobné úpravy UI.
+        </cs-CZ>
+    </version>
     <version name="1.0.0-alpha04" type="alpha" build="1000004" released="2021-03-23">
         <en-US>
             Widget configs added.

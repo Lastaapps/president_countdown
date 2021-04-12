@@ -24,7 +24,10 @@ import android.app.WallpaperManager
 import android.content.ComponentName
 import android.content.Intent
 import android.content.res.Configuration
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -47,89 +50,91 @@ import cz.lastaapps.president.wallpaper.service.PresidentWallpaperService
 import cz.lastaapps.ui.common.components.TextSwitch
 import cz.lastaapps.ui.common.extencions.rememberMutableSaveable
 import cz.lastaapps.ui.common.layouts.ExpandableBottomLayout
-import cz.lastaapps.ui.settings.ColorPickerDialogSetting
-import cz.lastaapps.ui.settings.DropdownSettings
-import cz.lastaapps.ui.settings.SettingsGroup
-import cz.lastaapps.ui.settings.SettingsGroupColumn
+import cz.lastaapps.ui.settings.*
 
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 internal fun WallpaperOptionsLayout(modifier: Modifier = Modifier) {
 
-    val sideMargins = 8.dp
+    CompositionLocalProvider(LocalContentAlpha provides .7f) {
 
-    ConstraintLayout(modifier = modifier.padding(sideMargins)) {
-
-        val viewModel = viewModel()
-        val res = LocalContext.current.resources.configuration
-        remember(res) {
-            viewModel.setIsLand(res.orientation % 2 == 1)
-        }
-
-        val (switchesConst, settingsConst) = createRefs()
-
-        Switches(
-            modifier = Modifier.constrainAs(switchesConst) {
-                top.linkTo(parent.top)
-                centerHorizontallyTo(parent)
-            }
-        )
+        val sideMargins = 8.dp
 
         var expanded by rememberMutableSaveable { mutableStateOf(true) }
 
-        val maxHeightGuide = createGuidelineFromTop(.3f)
+        ConstraintLayout(modifier = modifier.padding(sideMargins)) {
 
-        ExpandableBottomLayout(
-            expanded = expanded,
-            onExpanded = { expanded = it },
-            modifier = Modifier.constrainAs(settingsConst) {
-                top.linkTo(maxHeightGuide)
-                bottom.linkTo(parent.bottom, sideMargins)
-                centerHorizontallyTo(parent)
-
-                width = Dimension.fillToConstraints
-                height = Dimension.fillToConstraints
+            val viewModel = viewModel()
+            val res = LocalContext.current.resources.configuration
+            remember(res) {
+                viewModel.setIsLand(res.orientation % 2 == 1)
             }
-        ) {
-            val scroll = rememberScrollState()
 
-            Column(
-                modifier = Modifier
-                    .padding(start = 8.dp, end = 8.dp)
-                    .verticalScroll(scroll),
-                verticalArrangement = Arrangement.Bottom
+            val (switchesConst, settingsConst) = createRefs()
+
+            AnimatedVisibility(
+                visible = expanded,
+                enter = slideInVertically({ it * -2 }),
+                exit = slideOutVertically({ it * -2 }),
+                modifier = Modifier.constrainAs(switchesConst) {
+                    top.linkTo(parent.top)
+                    centerHorizontallyTo(parent)
+                },
             ) {
+                Switches()
+            }
 
-                val groupSpading = Modifier.padding(top = (8 / 2).dp, bottom = (8 / 2).dp)
-                val maxWidthMod = Modifier.fillMaxWidth()
+            val maxHeightGuide = createGuidelineFromTop(.3f)
 
-                SettingsGroupColumn(
-                    modifier = groupSpading,
-                    border = BorderStroke(0.dp, Color.Transparent),
-                    backgroundColor = semitransparentBackground().surface,
-                ) {
-                    RotationFixSwitch(maxWidthMod)
-                    UIModeSelection(maxWidthMod)
+            ExpandableBottomLayout(
+                expanded = expanded,
+                onExpanded = { expanded = it },
+                modifier = Modifier.constrainAs(settingsConst) {
+                    top.linkTo(maxHeightGuide)
+                    bottom.linkTo(parent.bottom, sideMargins)
+                    centerHorizontallyTo(parent)
+
+                    width = Dimension.fillToConstraints
+                    height = Dimension.fillToConstraints
                 }
+            ) {
+                val scroll = rememberScrollState()
 
-                SettingsGroupColumn(
-                    modifier = groupSpading,
-                    border = BorderStroke(0.dp, Color.Transparent),
-                    backgroundColor = semitransparentBackground().surface,
+                Column(
+                    modifier = Modifier
+                        .padding(start = 8.dp, end = 8.dp)
+                        .verticalScroll(scroll),
+                    verticalArrangement = Arrangement.Bottom
                 ) {
-                    ScaleSlider(maxWidthMod)
-                    VerticalBiasSlider(maxWidthMod)
-                    HorizontalBiasSlider(maxWidthMod)
-                }
 
-                SettingsGroupColumn(
-                    modifier = groupSpading,
-                    border = BorderStroke(0.dp, Color.Transparent),
-                    backgroundColor = semitransparentBackground().surface,
-                ) {
-                    ForegroundPicker(maxWidthMod)
-                    BackgroundPicker(maxWidthMod)
+                    val groupSpading = Modifier.padding(top = (8 / 2).dp, bottom = (8 / 2).dp)
+                    val maxWidthMod = Modifier.fillMaxWidth()
+
+                    SettingsGroupColumn(
+                        modifier = groupSpading,
+                        border = BorderStroke(0.dp, Color.Transparent),
+                    ) {
+                        RotationFixSwitch(maxWidthMod)
+                        UIModeSelection(maxWidthMod)
+                    }
+
+                    SettingsGroupColumn(
+                        modifier = groupSpading,
+                        border = BorderStroke(0.dp, Color.Transparent),
+                    ) {
+                        ScaleSlider(maxWidthMod)
+                        VerticalBiasSlider(maxWidthMod)
+                        HorizontalBiasSlider(maxWidthMod)
+                    }
+
+                    SettingsGroupColumn(
+                        modifier = groupSpading,
+                        border = BorderStroke(0.dp, Color.Transparent),
+                    ) {
+                        ForegroundPicker(maxWidthMod)
+                        BackgroundPicker(maxWidthMod)
+                    }
                 }
             }
         }
@@ -141,7 +146,6 @@ private fun Switches(modifier: Modifier = Modifier) {
     SettingsGroup(
         modifier = modifier,
         border = BorderStroke(0.dp, Color.Transparent),
-        backgroundColor = semitransparentBackground().surface,
     ) {
         Row {
             val alignCenterModifier = Modifier.align(Alignment.CenterVertically)
@@ -203,58 +207,54 @@ private fun SetAsWallpaper(modifier: Modifier = Modifier) {
 
 @Composable
 private fun RotationFixSwitch(modifier: Modifier = Modifier) {
+
     val viewModel = viewModel()
     val state by viewModel.rotationFix.collectAsState()
 
-    ConstraintLayout(modifier = modifier) {
+    var showDialog by rememberMutableSaveable { mutableStateOf(false) }
 
-        val spading = 8.dp
-        val (textConst, switchConst) = createRefs()
+    RotationFixHelpDialog(showDialog) { showDialog = it }
 
-        var showDialog by rememberMutableSaveable { mutableStateOf(false) }
-
-        Row(
-            modifier = Modifier.constrainAs(textConst) {
-                centerVerticallyTo(parent)
-                start.linkTo(parent.start)
-                end.linkTo(switchConst.end, spading)
-                width = Dimension.fillToConstraints
-            }
-        ) {
-            Text(
-                text = stringResource(id = R.string.ui_rotation_fix),
-                modifier = Modifier.align(Alignment.CenterVertically)
-            )
-            IconButton(
-                onClick = { showDialog = true },
-                modifier = Modifier
-                    .align(Alignment.CenterVertically)
-                    .padding(start = 4.dp)
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Help,
-                    contentDescription = stringResource(id = R.string.content_description_hide)
-                )
-            }
-        }
-        Switch(
-            checked = state,
-            onCheckedChange = { viewModel.setRotationFix(it) },
-            colors = SwitchDefaults.colors(
-                checkedThumbColor = MaterialTheme.colors.primaryVariant,
-                checkedTrackColor = MaterialTheme.colors.primary,
-                uncheckedThumbColor = MaterialTheme.colors.secondary,
-                uncheckedTrackColor = MaterialTheme.colors.onSecondary,
-            ),
-            modifier = Modifier.constrainAs(switchConst) {
-                centerVerticallyTo(parent)
-                end.linkTo(parent.end)
-                width = Dimension.wrapContent
-            }
-        )
-
-        RotationFixHelpDialog(showDialog) { showDialog = it }
+    val onClick = {
+        viewModel.setRotationFix(!state)
     }
+
+    CustomSettings(
+        modifier = modifier,
+        onClick = onClick,
+        title = {
+            Row {
+                SettingsTitle(
+                    text = stringResource(id = R.string.ui_rotation_fix),
+                    modifier = Modifier.align(Alignment.CenterVertically)
+                )
+                IconButton(
+                    onClick = { showDialog = true },
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .padding(start = 4.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Help,
+                        contentDescription = stringResource(id = R.string.content_description_hide)
+                    )
+                }
+            }
+        },
+        content = {
+            Switch(
+                checked = state,
+                onCheckedChange = { onClick() },
+                colors = SwitchDefaults.colors(
+                    checkedThumbColor = MaterialTheme.colors.primaryVariant,
+                    checkedTrackColor = MaterialTheme.colors.primary,
+                    uncheckedThumbColor = MaterialTheme.colors.secondary,
+                    uncheckedTrackColor = MaterialTheme.colors.onSecondary,
+                )
+            )
+        },
+        useDivider = false,
+    )
 }
 
 @Composable
@@ -344,8 +344,4 @@ private fun BackgroundPicker(modifier: Modifier = Modifier) {
         alphaEnabled = false,
     )
 }
-
-@Composable
-private fun semitransparentBackground() =
-    MaterialTheme.colors.run { copy(surface = surface.copy(alpha = .3f)) }
 

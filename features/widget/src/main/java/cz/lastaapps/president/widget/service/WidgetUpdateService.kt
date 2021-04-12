@@ -123,6 +123,9 @@ internal class WidgetUpdateService : Service() {
 
         Log.i(TAG, "Starting service")
 
+        //TODO check if it solves startForeground not called error
+        startForeground(NOTIFICATION_ID, notifications.createBasicNotification())
+
         return START_STICKY
     }
 

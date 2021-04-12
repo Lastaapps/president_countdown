@@ -44,19 +44,19 @@ fun Color.inverted(): Color {
  * Animates colors between states - themes and ui modes
  * */
 @Composable
-fun animatedColors(colors: Colors): Colors =
+fun Colors.animated(): Colors =
     Colors(
-        primary = animateColorAsState(colors.primary).value,
-        primaryVariant = animateColorAsState(colors.primaryVariant).value,
-        secondary = animateColorAsState(colors.secondary).value,
-        secondaryVariant = animateColorAsState(colors.secondaryVariant).value,
-        background = animateColorAsState(colors.background).value,
-        surface = animateColorAsState(colors.surface).value,
-        error = animateColorAsState(colors.error).value,
-        onPrimary = animateColorAsState(colors.onPrimary).value,
-        onSecondary = animateColorAsState(colors.onSecondary).value,
-        onBackground = animateColorAsState(colors.onBackground).value,
-        onSurface = animateColorAsState(colors.onSurface).value,
-        onError = animateColorAsState(colors.onError).value,
-        colors.isLight,
+        primary = animateColorAsState(primary).value,
+        primaryVariant = animateColorAsState(primaryVariant).value,
+        secondary = animateColorAsState(secondary).value,
+        secondaryVariant = animateColorAsState(secondaryVariant).value,
+        background = animateColorAsState(background).value,
+        surface = animateColorAsState(surface).value,
+        error = animateColorAsState(error).value,
+        onPrimary = animateColorAsState(onPrimary).value,
+        onSecondary = animateColorAsState(onSecondary).value,
+        onBackground = animateColorAsState(onBackground).value,
+        onSurface = animateColorAsState(onSurface).value,
+        onError = animateColorAsState(onError).value,
+        isLight = isLight,
     )

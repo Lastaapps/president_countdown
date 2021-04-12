@@ -18,7 +18,7 @@
  *
  */
 
-package cz.lastaapps.president.notifications.settings.ui
+package cz.lastaapps.president.notifications.ui.settings
 
 import android.content.Intent
 import android.os.Build
@@ -35,6 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import cz.lastaapps.battery.BatteryWarning
 import cz.lastaapps.president.clock.ClockLayout
 import cz.lastaapps.president.notifications.R
 import cz.lastaapps.ui.settings.SettingsGroup
@@ -70,7 +71,17 @@ fun NotificationSettings(modifier: Modifier = Modifier) {
                         Permanent(fillWidth)
                     }
 
-                    OpenSystemSettings(fillWidth)
+                    Row(
+                        modifier = fillWidth,
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(
+                            4.dp,
+                            Alignment.CenterHorizontally
+                        ),
+                    ) {
+                        OpenSystemSettings()
+                        BatteryWarning()
+                    }
                 }
             }
         } else {

@@ -26,7 +26,7 @@ import android.os.StrictMode
 import android.util.Log
 import androidx.annotation.Keep
 import androidx.startup.Initializer
-import cz.lastaapps.president.core.BuildConfig
+import cz.lastaapps.president.app.BuildConfig
 import cz.lastaapps.president.core.InitializerTemplate
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

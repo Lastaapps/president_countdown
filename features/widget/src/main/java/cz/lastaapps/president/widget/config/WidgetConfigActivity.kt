@@ -31,6 +31,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
 import cz.lastaapps.president.widget.R
+import cz.lastaapps.president.widget.service.WidgetUpdateService
 import cz.lastaapps.ui.common.themes.MainTheme
 
 internal class WidgetConfigActivity : AppCompatActivity() {
@@ -50,6 +51,8 @@ internal class WidgetConfigActivity : AppCompatActivity() {
 
         //sets transparent background
         setTheme(R.style.Theme_President_Transparent)
+
+        WidgetUpdateService.startService(applicationContext)
 
         //gets data inputted
         widgetId = intent.getIntExtra(
@@ -93,5 +96,14 @@ internal class WidgetConfigActivity : AppCompatActivity() {
         }
         setResult(Activity.RESULT_OK, resultValue)
         finishAndRemoveTask()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        if (isFinishing) {
+            WidgetUpdateService.startService(applicationContext)
+            finishAndRemoveTask()
+        }
     }
 }

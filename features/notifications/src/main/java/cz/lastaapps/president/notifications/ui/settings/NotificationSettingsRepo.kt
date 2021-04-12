@@ -18,7 +18,7 @@
  *
  */
 
-package cz.lastaapps.president.notifications.settings
+package cz.lastaapps.president.notifications.ui.settings
 
 import android.content.Context
 import androidx.datastore.preferences.core.Preferences
@@ -28,22 +28,24 @@ import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import cz.lastaapps.president.core.coroutines.mapState
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.time.LocalTime
 
-internal class Settings private constructor(
+internal class NotificationSettingsRepo private constructor(
     private val context: Context,
-    private val scope: CoroutineScope
 ) {
+    private val scope: CoroutineScope = GlobalScope
 
     companion object {
 
-        suspend fun getInstance(context: Context, scope: CoroutineScope): Settings {
-            return Settings(context, scope).apply {
+        suspend fun getInstance(context: Context): NotificationSettingsRepo {
+            return NotificationSettingsRepo(context).apply {
                 initialize()
             }
         }
@@ -69,7 +71,7 @@ internal class Settings private constructor(
         dataStore.data.map { it[key] ?: default }.distinctUntilChanged().stateIn(scope)
 
     private fun <T> update(key: Preferences.Key<T>, value: T) {
-        scope.launch {
+        runBlocking(Dispatchers.Default) {
             dataStore.edit {
                 it[key] = value
             }

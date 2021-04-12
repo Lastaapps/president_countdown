@@ -26,6 +26,8 @@ import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.ui.Modifier
 import androidx.lifecycle.lifecycleScope
 import cz.lastaapps.president.app.ui.main.MainActivityRoot
 import cz.lastaapps.president.firebase.MyAnalytics
@@ -67,7 +69,7 @@ class MainActivity : AppCompatActivity() {
 
         //set the Main UI
         setContent {
-            MainActivityRoot()
+            MainActivityRoot(Modifier.fillMaxSize())
         }
     }
 }

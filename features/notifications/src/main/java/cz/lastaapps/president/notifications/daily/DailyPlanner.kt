@@ -26,7 +26,7 @@ import android.content.Context
 import android.content.Intent
 import cz.lastaapps.president.core.functionality.CET
 import cz.lastaapps.president.core.functionality.PendingIntentCompat
-import cz.lastaapps.president.notifications.settings.Settings
+import cz.lastaapps.president.notifications.ui.settings.NotificationSettingsRepo
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.ZonedDateTime
@@ -36,7 +36,7 @@ import java.time.ZonedDateTime
  * */
 internal class DailyPlanner(private val context: Context) {
 
-    fun plan(settings: Settings) {
+    fun plan(settings: NotificationSettingsRepo) {
 
         //creates a notification channel
         DailyNotifications(context)

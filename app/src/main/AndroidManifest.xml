@@ -53,11 +53,6 @@
         </activity>
 
         <provider
-            android:name="androidx.work.impl.WorkManagerInitializer"
-            android:authorities="${applicationId}.workmanager-init"
-            tools:node="remove" />
-
-        <provider
             android:name="androidx.startup.InitializationProvider"
             android:authorities="${applicationId}.androidx-startup"
             android:exported="false"
@@ -81,10 +76,6 @@
             <meta-data
                 android:name="cz.lastaapps.president.app.initializers.WidgetInitializer"
                 android:value="androidx.startup" />
-            <meta-data
-                android:name="cz.lastaapps.president.app.initializers.WorkManagerInitializer"
-                android:value="androidx.startup" />
         </provider>
     </application>
-
 </manifest>

@@ -18,32 +18,18 @@
  *
  */
 
-package cz.lastaapps.president.app.initializers
+package cz.lastaapps.president.widget.service
 
+import android.content.BroadcastReceiver
 import android.content.Context
-import androidx.startup.Initializer
-import androidx.work.Configuration
-import androidx.work.WorkManager
-import cz.lastaapps.president.core.InitializerTemplate
+import android.content.Intent
 
 /**
- * Runs at app start
- * Initializes work manager before some other dependencies
+ * Starts widget update service if required
  * */
-class WorkManagerInitializer : InitializerTemplate<WorkManager> {
+class BootWidgetUpdateReceiver : BroadcastReceiver() {
 
-    override fun create(context: Context): WorkManager {
-        logCreate()
-
-        WorkManager.initialize(context, Configuration.Builder().build())
-
-        return WorkManager.getInstance(context)
-    }
-
-    override fun dependencies(): List<Class<out Initializer<*>>> {
-        logDependencies()
-
-        return emptyList()
+    override fun onReceive(context: Context, intent: Intent) {
+        WidgetUpdateService.startService(context)
     }
 }
-

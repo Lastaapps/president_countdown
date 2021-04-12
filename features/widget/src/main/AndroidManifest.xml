@@ -22,29 +22,33 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cz.lastaapps.president.widget">
 
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
     <application>
+        <receiver
+            android:name=".service.BootWidgetUpdateReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
 
         <activity
             android:name=".config.WidgetConfigActivity"
             android:exported="true"
             android:theme="@style/Theme.SplashScreen">
-
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
 
-
-        <activity
-            android:name=".widget.WidgetClickedActivity"
-            android:exported="false"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
         <service android:name=".service.WidgetUpdateService" />
 
         <receiver
             android:name=".widget.PresidentWidget"
-            android:exported="true">
+            android:exported="true"
+            android:excludeFromRecents="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -57,7 +61,6 @@
             <meta-data
                 android:name="android.appwidget.provider.semConfigureActivity"
                 android:value="cz.lastaapps.president.widget.config.WidgetConfigActivity" />
-
         </receiver>
     </application>
 

@@ -26,8 +26,7 @@ import android.content.Intent
 import android.util.Log
 import androidx.core.app.NotificationManagerCompat
 import cz.lastaapps.president.notifications.announcements.AnnouncementType.Companion.getAnnouncedTypeExtra
-import cz.lastaapps.president.notifications.settings.Settings
-import kotlinx.coroutines.CoroutineScope
+import cz.lastaapps.president.notifications.ui.settings.NotificationSettingsRepo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 
@@ -72,9 +71,8 @@ internal class AnnouncementsReceiver : BroadcastReceiver() {
         }
 
         //reschedules the events
-        val scope = CoroutineScope(Dispatchers.Default)
         val settings = runBlocking(Dispatchers.Default) {
-            Settings.getInstance(context, scope)
+            NotificationSettingsRepo.getInstance(context)
         }
 
         AnnouncementsPlanner(context).plan(settings)

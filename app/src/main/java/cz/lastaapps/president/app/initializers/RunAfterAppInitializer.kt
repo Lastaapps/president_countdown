@@ -40,11 +40,11 @@ class RunAfterAppInitializer : InitializerTemplate<Any> {
 
         App.afterAppInitialization.addAll(
             listOf(
-                { context, scope ->
+                { context, _ ->
                     //lazy init
                     delay(5000)
 
-                    NotificationsConfig.initAll(context, scope)
+                    NotificationsConfig.initAll(context)
                 },
                 { _, _ -> },
             )

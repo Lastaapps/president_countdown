@@ -21,13 +21,11 @@
 package cz.lastaapps.ui.common.themes
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import cz.lastaapps.ui.common.extencions.animatedColors
-import cz.lastaapps.ui.common.extencions.updateStatusBar
+import cz.lastaapps.ui.common.extencions.animated
 
 
 //light theme
@@ -51,6 +49,7 @@ private val lightColors = lightColors(
     onSurface = Color.Black,
     onError = Color.White,
 )
+private val lightExtendedColors = lightExtendedColors()
 
 //dark theme
 private val orange800 = Color(0xffef6c00)
@@ -74,6 +73,7 @@ private val darkColors = darkColors(
     onSurface = Color.White,
     onError = Color.Black,
 )
+private val darkExtendedColors = darkExtendedColors()
 
 @Composable
 fun MainTheme(
@@ -81,14 +81,10 @@ fun MainTheme(
     content: @Composable () -> Unit
 ) {
 
-    val colors = if (lightTheme) lightColors else darkColors
-    val animatedColors = animatedColors(colors = colors)
+    val colors = (if (lightTheme) lightColors else darkColors).animated()
+    val extended = (if (lightTheme) lightExtendedColors else darkExtendedColors).animated()
 
-    MaterialTheme(
-        colors = animatedColors,
-    ) {
-        updateStatusBar()
-
+    CommonTheme(colors = colors, extended = extended) {
         content()
     }
 }

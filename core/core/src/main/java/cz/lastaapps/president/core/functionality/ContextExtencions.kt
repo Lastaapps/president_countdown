@@ -43,6 +43,7 @@ fun Context.getLocale(): Locale {
     return if (Build.VERSION.SDK_INT >= 24) {
         resources.configuration.locales[0]
     } else {
+        @Suppress("DEPRECATION")
         resources.configuration.locale
     }
 }

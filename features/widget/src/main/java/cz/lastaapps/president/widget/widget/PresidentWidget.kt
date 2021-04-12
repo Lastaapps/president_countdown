@@ -24,9 +24,7 @@ import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
-import android.os.Build
 import android.util.Log
-import android.widget.RemoteViews
 import cz.lastaapps.president.core.App
 import cz.lastaapps.president.core.president.CurrentState
 import cz.lastaapps.president.widget.config.WidgetState
@@ -61,9 +59,6 @@ internal class PresidentWidget : AppWidgetProvider() {
         appWidgetIds: IntArray
     ) {
         Log.v(TAG, "Updating widgets")
-
-        //TODO Not enabled in Android 12
-        WidgetUpdateService.startService(context)
 
         //creates a transparent placeholder
         val views = RemoteViewUpdater.createPlaceholder(context)
@@ -105,7 +100,7 @@ internal class PresidentWidget : AppWidgetProvider() {
         /**
          * Updates the widgets given corresponding to the state given
          * */
-        internal fun updateWithState(
+        private fun updateWithState(
             context: Context,
             ids: IntArray,
             state: CurrentState,
@@ -113,28 +108,18 @@ internal class PresidentWidget : AppWidgetProvider() {
         ) {
             try {
                 val mgr = AppWidgetManager.getInstance(context)
+                val defaultTheme by lazy { WidgetState.createDefault(AppWidgetManager.INVALID_APPWIDGET_ID) }
 
-                val baseViews = RemoteViewUpdater.createRemoteViews(context)
-                RemoteViewUpdater.updateState(context, baseViews, state)
+                for (widgetId in ids) {
 
-                for (id in ids) {
+                    val widgetViews = RemoteViewUpdater.createRemoteViews(context, widgetId)
+                    RemoteViewUpdater.updateState(context, widgetViews, state)
 
-                    val theme = themes.getById(id)
+                    val theme = themes.getById(widgetId) ?: defaultTheme
 
-                    val themed = if (theme != null) {
-                        @Suppress("DEPRECATION")
-                        val views = if (Build.VERSION.SDK_INT >= 28)
-                            RemoteViews(baseViews) else baseViews.clone()
+                    RemoteViewUpdater.updateColors(context, widgetViews, theme)
 
-                        RemoteViewUpdater.updateColors(context, views, theme)
-
-                        views
-                    } else {
-                        Log.e(TAG, "Skipping widget $id! No theme found.")
-                        baseViews
-                    }
-
-                    mgr.updateAppWidget(id, themed)
+                    mgr.updateAppWidget(widgetId, widgetViews)
                 }
 
             } catch (e: Exception) {

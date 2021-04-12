@@ -20,7 +20,6 @@
 
 package cz.lastaapps.president.widget
 
-import android.app.Activity
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
@@ -33,7 +32,6 @@ import cz.lastaapps.president.widget.config.WidgetConfigActivity
 import cz.lastaapps.president.widget.service.WidgetUpdateService
 import cz.lastaapps.president.widget.widget.DebugSettings
 import cz.lastaapps.president.widget.widget.PresidentWidget
-import kotlin.reflect.KClass
 
 /**
  * Entry point for the module
@@ -71,9 +69,6 @@ object WidgetConfig {
 
         } else false
     }
-
-    /**Reference to MainActivity should be put there, because it isn't accessible otherwise*/
-    var mainActivity: KClass<out Activity>? = null
 
     fun updateService(context: Context) {
         WidgetUpdateService.startService(context)
