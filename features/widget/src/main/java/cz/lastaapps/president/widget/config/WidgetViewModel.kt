@@ -61,6 +61,9 @@ internal class WidgetViewModel(private val app: Application) : AndroidViewModel(
 
     private var databaseCollectionJob: Job? = null
 
+    /**
+     * Load configs from a database for widget given
+     * */
     fun setWidgetId(widgetId: Int) {
 
         if (this.widgetId == widgetId)
@@ -80,9 +83,9 @@ internal class WidgetViewModel(private val app: Application) : AndroidViewModel(
             }
 
             //loads default preview theme - light or dark - based on saved data or current ui state
-            launch {
+            launch database@{
 
-                val databaseState = repo.getById(widgetId).first() ?: return@launch
+                val databaseState = repo.getById(widgetId).first() ?: return@database
 
                 setIsLightPreview(
                     when (databaseState.theme) {
@@ -90,19 +93,28 @@ internal class WidgetViewModel(private val app: Application) : AndroidViewModel(
                         WidgetThemeMode.NIGHT -> false
                         WidgetThemeMode.SYSTEM ->
                             context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_YES == 0
-                        else -> return@launch
+                        else -> return@database
                     }
                 )
             }
         }
     }
 
+    /**
+     * User's progress in setting up a widget
+     * */
     val configProgressState = MutableStateFlow<@UIStage Int>(UIStage.CONFIG)
 
+    /**
+     * Cancel button pressed
+     * */
     fun cancel() {
         configProgressState.tryEmit(UIStage.CANCEL)
     }
 
+    /**
+     * Ok button pressed
+     * */
     fun ok() {
         configProgressState.tryEmit(UIStage.PROCESSING)
 

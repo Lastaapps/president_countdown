@@ -39,7 +39,6 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
-import cz.lastaapps.common.Communication
 import cz.lastaapps.president.core.functionality.getLocale
 import cz.lastaapps.president.core.president.President
 
@@ -103,17 +102,12 @@ private fun ThankYou(modifier: Modifier = Modifier) {
         toAnnotatedString()
     }
 
-    val context = LocalContext.current
-    Box(
-        modifier = modifier.clickable {
-            Communication.openFacebookPage(context, "https://www.facebook.com/regionalnihodnoty/")
-        }
-    ) {
-        Text(
-            text,
-            textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.caption,
-            modifier = Modifier.padding(4.dp),
-        )
-    }
+    Text(
+        text,
+        textAlign = TextAlign.Center,
+        style = MaterialTheme.typography.caption,
+        modifier = Modifier
+            .padding(4.dp)
+            .then(modifier),
+    )
 }

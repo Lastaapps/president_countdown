@@ -18,19 +18,19 @@
  *
  */
 
-package cz.lastaapps.president.widget.service
+package cz.lastaapps.president.wallpaper.settings.options
 
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-
-/**
- * Starts widget update service if required
- * */
-class BootWidgetUpdateReceiver : BroadcastReceiver() {
-
-    override fun onReceive(context: Context, intent: Intent) {
-        if (intent.action == Intent.ACTION_BOOT_COMPLETED)
-            WidgetUpdateService.startService(context)
+data class ClockLayoutOptions(
+    val verticalBias: Float,
+    val horizontalBias: Float,
+    val scale: Float,
+) {
+    companion object {
+        val default
+            get() = ClockLayoutOptions(
+                verticalBias = .5f,
+                horizontalBias = .5f,
+                scale = 1f,
+            )
     }
 }

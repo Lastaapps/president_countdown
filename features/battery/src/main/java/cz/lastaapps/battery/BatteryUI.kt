@@ -34,12 +34,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import cz.lastaapps.president.core.coroutines.loopingStateFlow
 import cz.lastaapps.ui.common.extencions.rememberMutableSaveable
 import cz.lastaapps.ui.common.themes.extended
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flow
 
 
+/**
+ * Informs user about background restrictions risks and gives him options to change it
+ * */
 @Composable
 internal fun BatteryOptimizationDialog(shown: Boolean, onShownChanged: (Boolean) -> Unit) {
     if (shown) {
@@ -81,13 +85,20 @@ internal fun BatteryOptimizationDialog(shown: Boolean, onShownChanged: (Boolean)
     }
 }
 
+/**
+ * Blinking triangle indicating background usage is disabled
+ * */
 @Composable
 fun BatteryWarning(modifier: Modifier = Modifier) {
 
     val context = LocalContext.current
-    val enabled by remember {
-        mutableStateOf(shouldShowBatteryOptimizationDialog(context))
-    }
+    val scope = rememberCoroutineScope()
+    //if background usage is disabled and updates every second
+    val enabled by remember(context) {
+        loopingStateFlow(scope) {
+            shouldShowBatteryOptimizationDialog(context)
+        }
+    }.collectAsState()
 
     var dialogShown by rememberMutableSaveable {
         mutableStateOf(enabled)

@@ -24,10 +24,7 @@ import android.app.WallpaperManager
 import android.content.ComponentName
 import android.content.Intent
 import android.content.res.Configuration
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.*
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -47,12 +44,17 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import cz.lastaapps.president.wallpaper.R
 import cz.lastaapps.president.wallpaper.service.PresidentWallpaperService
+import cz.lastaapps.president.wallpaper.settings.help.WallpaperHelpIcon
 import cz.lastaapps.ui.common.components.TextSwitch
 import cz.lastaapps.ui.common.extencions.rememberMutableSaveable
 import cz.lastaapps.ui.common.layouts.ExpandableBottomLayout
+import cz.lastaapps.ui.common.layouts.FlexRow
 import cz.lastaapps.ui.settings.*
 
 
+/**
+ * Root with all the settings for a wallpaper
+ * */
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 internal fun WallpaperOptionsLayout(modifier: Modifier = Modifier) {
@@ -64,12 +66,6 @@ internal fun WallpaperOptionsLayout(modifier: Modifier = Modifier) {
         var expanded by rememberMutableSaveable { mutableStateOf(true) }
 
         ConstraintLayout(modifier = modifier.padding(sideMargins)) {
-
-            val viewModel = viewModel()
-            val res = LocalContext.current.resources.configuration
-            remember(res) {
-                viewModel.setIsLand(res.orientation % 2 == 1)
-            }
 
             val (switchesConst, settingsConst) = createRefs()
 
@@ -105,35 +101,28 @@ internal fun WallpaperOptionsLayout(modifier: Modifier = Modifier) {
                     modifier = Modifier
                         .padding(start = 8.dp, end = 8.dp)
                         .verticalScroll(scroll),
-                    verticalArrangement = Arrangement.Bottom
+                    verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.Bottom)
                 ) {
 
-                    val groupSpading = Modifier.padding(top = (8 / 2).dp, bottom = (8 / 2).dp)
                     val maxWidthMod = Modifier.fillMaxWidth()
 
-                    SettingsGroupColumn(
-                        modifier = groupSpading,
-                        border = BorderStroke(0.dp, Color.Transparent),
-                    ) {
+                    SettingsGroupColumn {
                         RotationFixSwitch(maxWidthMod)
                         UIModeSelection(maxWidthMod)
                     }
 
-                    SettingsGroupColumn(
-                        modifier = groupSpading,
-                        border = BorderStroke(0.dp, Color.Transparent),
-                    ) {
+                    SettingsGroupColumn {
                         ScaleSlider(maxWidthMod)
                         VerticalBiasSlider(maxWidthMod)
                         HorizontalBiasSlider(maxWidthMod)
                     }
 
-                    SettingsGroupColumn(
-                        modifier = groupSpading,
-                        border = BorderStroke(0.dp, Color.Transparent),
-                    ) {
-                        ForegroundPicker(maxWidthMod)
-                        BackgroundPicker(maxWidthMod)
+                    SettingsGroup {
+                        Pickers(maxWidthMod)
+                    }
+
+                    SettingsGroup {
+                        WallpaperConfigs(maxWidthMod)
                     }
                 }
             }
@@ -141,49 +130,75 @@ internal fun WallpaperOptionsLayout(modifier: Modifier = Modifier) {
     }
 }
 
+/**
+ * Preview options in the top of a screen
+ * */
 @Composable
 private fun Switches(modifier: Modifier = Modifier) {
     SettingsGroup(
         modifier = modifier,
         border = BorderStroke(0.dp, Color.Transparent),
     ) {
-        Row {
-            val alignCenterModifier = Modifier.align(Alignment.CenterVertically)
-            ThemeSwitch(alignCenterModifier)
-            OrientationSwitch(alignCenterModifier)
-            SetAsWallpaper(alignCenterModifier)
+        FlexRow(
+            rowsArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterVertically),
+            horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterHorizontally),
+            itemsAlignment = Alignment.CenterVertically,
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(4.dp),
+            ) {
+                ThemeSwitch()
+                OrientationSwitch()
+            }
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(4.dp),
+            ) {
+                SetAsWallpaper()
+                WallpaperHelpIcon()
+            }
         }
     }
 }
 
+/**
+ * Changes preview theme
+ * */
 @Composable
 private fun ThemeSwitch(modifier: Modifier = Modifier) {
 
-    val viewModel = viewModel()
+    val viewModel = wallpaperViewModel()
     val isDay by viewModel.isDayPreview.collectAsState()
 
     TextSwitch(
         text = stringResource(id = if (isDay) R.string.ui_theme_day else R.string.ui_theme_night),
         value = isDay,
         onCheckedChange = { viewModel.setIsDay(it) },
-        modifier
+        modifier = modifier,
     )
 }
 
+/**
+ * changes the preview orientation
+ * */
 @Composable
 private fun OrientationSwitch(modifier: Modifier = Modifier) {
 
-    val viewModel = viewModel()
-    val isPortrait by viewModel.orientationPortrait.collectAsState()
+    val viewModel = wallpaperViewModel()
+    val isPortrait by viewModel.isPortrait.collectAsState()
 
     TextSwitch(
         text = stringResource(if (isPortrait) R.string.ui_portrait else R.string.ui_landscape),
         value = isPortrait,
-        onCheckedChange = { viewModel.setOrientation(it) },
-        modifier
+        onCheckedChange = { viewModel.setIsPortrait(it) },
+        modifier = modifier,
     )
 }
 
+/**
+ * Show system set as wallpaper dialog
+ * */
 @Composable
 private fun SetAsWallpaper(modifier: Modifier = Modifier) {
     val context = LocalContext.current
@@ -196,7 +211,7 @@ private fun SetAsWallpaper(modifier: Modifier = Modifier) {
             )
             context.startActivity(intent)
         },
-        modifier = modifier
+        modifier = modifier,
     ) {
         Icon(
             Icons.Default.OpenInNew,
@@ -205,10 +220,13 @@ private fun SetAsWallpaper(modifier: Modifier = Modifier) {
     }
 }
 
+/**
+ * On some devices landscape mode doesn't behave correctly - fix can be enabled
+ * */
 @Composable
 private fun RotationFixSwitch(modifier: Modifier = Modifier) {
 
-    val viewModel = viewModel()
+    val viewModel = wallpaperViewModel()
     val state by viewModel.rotationFix.collectAsState()
 
     var showDialog by rememberMutableSaveable { mutableStateOf(false) }
@@ -257,6 +275,9 @@ private fun RotationFixSwitch(modifier: Modifier = Modifier) {
     )
 }
 
+/**
+ * Describes what rotation fix is
+ * */
 @Composable
 private fun RotationFixHelpDialog(showDialog: Boolean, onStateChanged: (Boolean) -> Unit) {
     if (showDialog) {
@@ -284,10 +305,13 @@ private fun RotationFixHelpDialog(showDialog: Boolean, onStateChanged: (Boolean)
     }
 }
 
+/**
+ * Selects theme of wallpaper - system, light, dark
+ * */
 @Composable
 private fun UIModeSelection(modifier: Modifier = Modifier) {
 
-    val viewModel = viewModel()
+    val viewModel = wallpaperViewModel()
     val selectedMode by remember { viewModel.uiMode }.collectAsState()
 
     DropdownSettings(
@@ -315,33 +339,124 @@ private fun uiStateName(state: Int): String {
     )
 }
 
+/**
+ * Foreground and background color pickers
+ * */
 @Composable
-private fun ForegroundPicker(modifier: Modifier = Modifier) {
+private fun Pickers(modifier: Modifier = Modifier) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(4.dp),
+    ) {
 
-    val viewModel = viewModel()
-    val color by remember { viewModel.foregroundColor }.collectAsState()
+        var expanded by rememberMutableSaveable {
+            mutableStateOf(0)
+        }
 
-    ColorPickerDialogSetting(
+        ForegroundPicker(
+            expanded = expanded == 1,
+            onExpendedRequest = {
+                expanded = if (expanded != 1) 1 else 0
+            },
+            modifier = Modifier.fillMaxWidth(),
+        )
+
+        BackgroundPicker(
+            expanded = expanded == 2,
+            onExpendedRequest = {
+                expanded = if (expanded != 2) 2 else 0
+            },
+            modifier = Modifier.fillMaxWidth(),
+        )
+
+        DifferYear(Modifier.fillMaxWidth())
+    }
+}
+
+/**
+ * Choose text color
+ * */
+@Composable
+private fun ForegroundPicker(
+    expanded: Boolean,
+    onExpendedRequest: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+
+    val viewModel = wallpaperViewModel()
+    val options by viewModel.themeOptions.collectAsState()
+    val color = options.foreground
+
+    ColorPickerSetting(
         text = stringResource(id = R.string.ui_foreground),
         color = color,
-        onColorChanged = { viewModel.setForegroundColor(it) },
+        onColorChanged = { viewModel.setThemeOptions(options.copy(foreground = it)) },
         modifier = modifier,
         alphaEnabled = true,
+        expanded = expanded,
+        onExpandedChanged = { onExpendedRequest() },
     )
 }
 
+/**
+ * Choose background color
+ * */
 @Composable
-private fun BackgroundPicker(modifier: Modifier = Modifier) {
+private fun BackgroundPicker(
+    expanded: Boolean,
+    onExpendedRequest: () -> Unit,
+    modifier: Modifier = Modifier
+) {
 
-    val viewModel = viewModel()
-    val color by remember { viewModel.backgroundColor }.collectAsState()
+    val viewModel = wallpaperViewModel()
+    val options by viewModel.themeOptions.collectAsState()
+    val color = options.background
 
-    ColorPickerDialogSetting(
+    ColorPickerSetting(
         text = stringResource(id = R.string.ui_background),
         color = color,
-        onColorChanged = { viewModel.setBackgroundColor(it) },
+        onColorChanged = { viewModel.setThemeOptions(options.copy(background = it)) },
         modifier = modifier,
         alphaEnabled = false,
+        expanded = expanded,
+        onExpandedChanged = { onExpendedRequest() },
     )
+}
+
+/**
+ * If year digit should have different color
+ * */
+@Composable
+private fun DifferYear(modifier: Modifier = Modifier) {
+
+    val viewModel = wallpaperViewModel()
+    val options by viewModel.themeOptions.collectAsState()
+    val diffEnabled = options.differYear
+    val yearColor = options.yearColor
+
+    Column(modifier.animateContentSize()) {
+
+        SwitchSettings(
+            text = stringResource(id = R.string.ui_differ_year),
+            checked = diffEnabled,
+            onChange = { viewModel.setThemeOptions(options.copy(differYear = !diffEnabled)) },
+            modifier = Modifier.fillMaxWidth(),
+        )
+
+        if (diffEnabled) {
+
+            var expanded by rememberMutableSaveable { mutableStateOf(false) }
+
+            ColorPickerSetting(
+                text = stringResource(id = R.string.ui_differ_year_color),
+                color = yearColor,
+                onColorChanged = { viewModel.setThemeOptions(options.copy(yearColor = it)) },
+                modifier = Modifier.fillMaxWidth(),
+                alphaEnabled = true,
+                expanded = expanded,
+                onExpandedChanged = { expanded = !expanded },
+            )
+        }
+    }
 }
 

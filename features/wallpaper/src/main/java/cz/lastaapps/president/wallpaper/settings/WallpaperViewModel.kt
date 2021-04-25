@@ -20,21 +20,35 @@
 
 package cz.lastaapps.president.wallpaper.settings
 
+import android.Manifest
 import android.app.Application
+import android.app.WallpaperManager
 import android.content.res.Configuration
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Rect
+import android.net.Uri
 import android.util.Log
-import androidx.compose.ui.graphics.Color
+import androidx.annotation.RequiresPermission
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import cz.lastaapps.president.core.coroutines.collectAsync
 import cz.lastaapps.president.core.coroutines.moveTo
 import cz.lastaapps.president.core.president.CurrentState
 import cz.lastaapps.president.wallpaper.WallpaperViewBitmapCreator
-import kotlinx.coroutines.*
+import cz.lastaapps.president.wallpaper.settings.files.ImageRepo
+import cz.lastaapps.president.wallpaper.settings.options.ClockLayoutOptions
+import cz.lastaapps.president.wallpaper.settings.options.ClockThemeOptions
+import cz.lastaapps.president.wallpaper.settings.options.WallpaperOptions
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
+import java.io.InputStream
 
 private typealias Sett = SettingsRepo
 
@@ -48,15 +62,19 @@ internal class WallpaperViewModel(private val app: Application) : AndroidViewMod
     }
 
     //settings relevant to settings, no to the actual wallpaper
-    val orientationPortrait = MutableStateFlow(true)
     val isDayPreview =
         MutableStateFlow(app.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_NO > 0)
-    private val isLand = MutableStateFlow(false)
+    val isPortrait = MutableStateFlow(true)
+
+    //if the device is physically in the portrait mode
+    private val isDevicePortrait = MutableStateFlow(true)
+
+    //output bitmap size
     private val canvasSize = MutableStateFlow(Rect(0, 0, 1, 1))
 
-    fun setOrientation(isPortrait: Boolean) = orientationPortrait.tryEmit(isPortrait)
     fun setIsDay(isDay: Boolean) = isDayPreview.tryEmit(isDay)
-    fun setIsLand(value: Boolean) = isLand.tryEmit(value)
+    fun setIsPortrait(value: Boolean) = isPortrait.tryEmit(value)
+    fun setIsDevicePortrait(value: Boolean) = isDevicePortrait.tryEmit(value)
     fun setCanvasSize(size: Rect) {
         if (!size.isEmpty)
             canvasSize.tryEmit(size)
@@ -65,9 +83,7 @@ internal class WallpaperViewModel(private val app: Application) : AndroidViewMod
     }
 
     //values fetched from settings based on the orientation
-    val vertical = MutableStateFlow(.5f)
-    val horizontal = MutableStateFlow(.5f)
-    val scale = MutableStateFlow(1f)
+    val layoutOptions = MutableStateFlow(ClockLayoutOptions.default)
 
     init {
         viewModelScope.launch(Dispatchers.Default) {
@@ -75,55 +91,24 @@ internal class WallpaperViewModel(private val app: Application) : AndroidViewMod
             var job: Job? = null
 
             //fetches data from settings based on the current orientation
-            orientationPortrait.collect { state ->
+            isPortrait.collect { state ->
 
                 job?.cancel()
                 job = launch {
-                    if (state) {
-                        //portrait
-                        Sett.biasVertPort.moveTo(this, vertical)
-                        Sett.biasHorzPort.moveTo(this, horizontal)
-                        Sett.scalePort.moveTo(this, scale)
-                    } else {
-                        //landscape
-                        Sett.biasVertLand.moveTo(this, vertical)
-                        Sett.biasHorzLand.moveTo(this, horizontal)
-                        Sett.scaleLand.moveTo(this, scale)
-                    }
+                    Sett.getClockLayoutOptions(state).moveTo(this, layoutOptions)
                 }
             }
         }
     }
 
-    /**
-     * set scale for the current orientation
-     * */
-    fun setScale(value: Float) = viewModelScope.launch {
-        if (orientationPortrait.value)
-            Sett.setScalePort(value)
-        else
-            Sett.setScaleLand(value)
+    fun setLayoutOptions(value: ClockLayoutOptions) = viewModelScope.launch {
+        viewModelScope.launch {
+            Sett.setClockLayoutOptions(value, isPortrait.value)
+        }
     }
 
-    /**
-     * set vertical bias for the current orientation
-     * */
-    fun setBiasVertical(value: Float) = viewModelScope.launch {
-        if (orientationPortrait.value)
-            Sett.setBiasVertPort(value)
-        else
-            Sett.setBiasVertLand(value)
-    }
 
-    /**
-     * set horizontal bias for the current orientation
-     * */
-    fun setBiasHorizontal(value: Float) = viewModelScope.launch {
-        if (orientationPortrait.value)
-            Sett.setBiasHorzPort(value)
-        else
-            Sett.setBiasHorzLand(value)
-    }
+    /* ----- Others ----------------------------------------------------------------------------- */
 
     //isDark
     val uiMode = Sett.uiMode
@@ -139,8 +124,10 @@ internal class WallpaperViewModel(private val app: Application) : AndroidViewMod
         viewModelScope.launch { Sett.setRotationFix(state) }
     }
 
-    val foregroundColor = MutableStateFlow(Color(0x00000000))
-    val backgroundColor = MutableStateFlow(Color(0x00000000))
+
+    /* ----- Colors ----------------------------------------------------------------------------- */
+
+    val themeOptions = MutableStateFlow(ClockThemeOptions.defaultLight)
 
     init {
         viewModelScope.launch(Dispatchers.Default) {
@@ -148,79 +135,153 @@ internal class WallpaperViewModel(private val app: Application) : AndroidViewMod
             var job: Job? = null
 
             //fetches data from settings based on the current orientation
-            isDayPreview.collect { state ->
+            isDayPreview.combine(isPortrait) { v1, v2 -> v1 to v2 }.collect { state ->
+
+                job?.cancel()
+                job = launch {
+                    Sett.getClockThemeOptions(state.first, state.second).moveTo(this, themeOptions)
+                }
+            }
+        }
+    }
+
+    fun setThemeOptions(value: ClockThemeOptions) {
+        viewModelScope.launch {
+            Sett.setClockThemeOptions(value, isDayPreview.value, isPortrait.value)
+        }
+    }
+
+
+    /* ----- Wallpaper -------------------------------------------------------------------------- */
+    val wallpaperOptions = MutableStateFlow(WallpaperOptions.default)
+
+    init {
+        viewModelScope.launch(Dispatchers.Default) {
+
+            var job: Job? = null
+
+            //fetches data from settings based on the current orientation
+            isPortrait.collect { state ->
 
                 job?.cancel()
                 job = launch {
                     if (state) {
-                        //day theme
-                        Sett.foregroundLight.moveTo(this, foregroundColor)
-                        Sett.backgroundLight.moveTo(this, backgroundColor)
+                        Sett.wallpaperPortrait.moveTo(this, wallpaperOptions)
                     } else {
-                        //night theme
-                        Sett.foregroundDark.moveTo(this, foregroundColor)
-                        Sett.backgroundDark.moveTo(this, backgroundColor)
+                        Sett.wallpaperLandscape.moveTo(this, wallpaperOptions)
                     }
                 }
             }
         }
     }
 
-    fun setForegroundColor(color: Color) {
-        if (isDayPreview.value)
-            Sett.setForegroundLight(color)
+    fun setWallpaperOptions(value: WallpaperOptions) {
+
+        var correctedValue = value
+
+        if (correctedValue.rotate > 3)
+            correctedValue = correctedValue.copy(rotate = 0)
+        if (correctedValue.rotate < 0)
+            correctedValue = correctedValue.copy(rotate = 3)
+
+        if (isPortrait.value)
+            Sett.setWallpaperPortrait(correctedValue)
         else
-            Sett.setForegroundDark(color)
+            Sett.setWallpaperLandscape(correctedValue)
     }
 
-    fun setBackgroundColor(color: Color) {
-        if (isDayPreview.value)
-            Sett.setBackgroundLight(color)
-        else
-            Sett.setBackgroundDark(color)
+    /**
+     * Handles when an user has selected an image
+     * */
+    fun handleUri(uri: Uri) {
+        viewModelScope.launch {
+            try {
+                val input: InputStream = app.contentResolver!!.openInputStream(uri)!!
+                val bitmap = BitmapFactory.decodeStream(input)
+                handleBitmap(bitmap)
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
     }
+
+    /**
+     * load system background
+     * */
+    @RequiresPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+    fun handleSystemBackground() {
+        viewModelScope.launch {
+            try {
+                val bitmap = WallpaperManager.getInstance(app).drawable?.toBitmap()!!
+                handleBitmap(bitmap)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    /**
+     * New bitmap requested as background
+     * */
+    private fun handleBitmap(bitmap: Bitmap) {
+        ImageRepo.setBitmaps(app, bitmap, isPortrait.value)
+    }
+
+    /**
+     * Copy settings and wallpaper bitmap from the other mode
+     * */
+    fun copyWallpaperFromTheOtherMode() {
+        ImageRepo.copyToOther(app, !isPortrait.value)
+
+        if (!isPortrait.value)
+            Sett.setWallpaperLandscape(wallpaperOptions.value)
+        else
+            Sett.setWallpaperPortrait(wallpaperOptions.value)
+    }
+
+
+    /* ----- Generating bitmaps ----------------------------------------------------------------- */
 
     /**
      * generates new bitmap every second
      * */
     fun subscribeForBitmap(scope: CoroutineScope): StateFlow<ImageBitmap> {
 
+        //creates bitmaps and stores settings
         val bitmapCreator = WallpaperViewBitmapCreator()
 
-        var configUpdated = true
+        //triggered when any config changes
+        val configUpdated = MutableStateFlow(Any())
 
-        val collector: suspend (value: Any) -> Unit = {
-            configUpdated = true
+        val collector: suspend (value: Any?) -> Unit = {
+            configUpdated.emit(Any())
         }
 
         //observes for the changes
-        listOf(
-            orientationPortrait,
-            vertical, horizontal, scale,
-            isDayPreview,
-            foregroundColor, backgroundColor,
-        ).forEach {
+        Sett.listAllVariables().toMutableList().also {
+            it.addAll(ImageRepo.listAllVariables(app))
+            it.addAll(listOf(isDayPreview, isPortrait, isDevicePortrait, canvasSize))
+        }.forEach {
             it.collectAsync(scope, collector)
         }
 
         val output = MutableStateFlow(ImageBitmap(1, 1))
         val states = CurrentState.getCurrentBuffered(scope)
 
+        //updates configs when changed
         scope.launch {
-            while (true) {
-                if (configUpdated) {
-                    configUpdated = false
+            configUpdated.collectLatest {
 
-                    onConfigChanged(bitmapCreator)
+                onConfigChanged(bitmapCreator)
 
-                    states.replayCache.getOrNull(0)?.let {
-                        output.emit(createBitmap(bitmapCreator, it))
-                    }
+                states.replayCache.getOrNull(0)?.let {
+                    output.emit(createBitmap(bitmapCreator, it))
                 }
-                delay(50)
             }
         }
 
+        //updates with the current time
         scope.launch {
             states.collect {
                 output.emit(createBitmap(bitmapCreator, it))
@@ -241,24 +302,38 @@ internal class WallpaperViewModel(private val app: Application) : AndroidViewMod
         return bitmapCreator.createBitmap(state).asImageBitmap()
     }
 
+    /**
+     * Called when something changes
+     * */
     private suspend fun onConfigChanged(bitmapCreator: WallpaperViewBitmapCreator) {
-        val orientation =
-            if (isLand.value) orientationPortrait.value else !orientationPortrait.value
+
+        val showPortrait =
+            if (!isDevicePortrait.value) isPortrait.value else !isPortrait.value
+
+        val wallpaper = if (isPortrait.value)
+            if (wallpaperOptions.value.enabled)
+                ImageRepo.getBitmaps(app, true).value
+            else
+                null
+        else
+            if (wallpaperOptions.value.enabled)
+                ImageRepo.getBitmaps(app, false).value
+            else
+                null
 
         bitmapCreator.updateConfig(
             app,
             rect = canvasSize.value.let {
-                if (orientation) it
+                if (showPortrait) it
                 else Rect(0, 0, it.height(), it.width())
             },
-            scale = scale.value,
             rotationFix = true,
-            verticalBias = vertical.value,
-            horizontalBias = horizontal.value,
-            rotation = if (orientation) 0 else 3,
+            rotation = if (showPortrait) 0 else 3,
             uiMode = if (isDayPreview.value) Configuration.UI_MODE_NIGHT_NO else Configuration.UI_MODE_NIGHT_YES,
-            foregroundColor = foregroundColor.value,
-            backgroundColor = backgroundColor.value,
+            layoutOptions = layoutOptions.value,
+            themeOptions = themeOptions.value,
+            wallpaperBitmap = wallpaper,
+            wallpaperOptions = wallpaperOptions.value,
         )
     }
 }

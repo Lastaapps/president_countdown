@@ -32,7 +32,7 @@ import androidx.compose.ui.platform.LocalContext
  * */
 object LocalActivity {
 
-    const val indexMax = 64
+    const val indexMax = 128
 
     /**
      * @return Activity of the given type in which is the compose placed
@@ -61,5 +61,8 @@ object LocalActivity {
 
     @Composable
     fun getCompat(): AppCompatActivity? = get()
+
+    @Composable
+    fun requireActivity() = getCompat() ?: error("No activity instance found!")
 
 }

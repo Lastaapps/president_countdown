@@ -29,9 +29,9 @@ import android.graphics.Rect
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.view.ContextThemeWrapper
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.constraintlayout.helper.widget.Flow
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -40,8 +40,12 @@ import androidx.core.text.HtmlCompat
 import cz.lastaapps.president.core.president.CurrentState
 import cz.lastaapps.president.core.president.TimePlurals
 import cz.lastaapps.president.core.president.get
+import cz.lastaapps.president.wallpaper.settings.options.ClockLayoutOptions
+import cz.lastaapps.president.wallpaper.settings.options.ClockThemeOptions
+import cz.lastaapps.president.wallpaper.settings.options.WallpaperOptions
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import kotlin.math.roundToInt
 
 /**
  * Creates bitmaps of the clock view based on options inputted
@@ -71,14 +75,13 @@ internal class WallpaperViewBitmapCreator {
     suspend fun updateConfig(
         context: Context,
         rect: Rect,
-        scale: Float,
-        rotationFix: Boolean,
-        verticalBias: Float,
-        horizontalBias: Float,
         rotation: Int,
+        rotationFix: Boolean,
         uiMode: Int,
-        foregroundColor: Color,
-        backgroundColor: Color,
+        layoutOptions: ClockLayoutOptions,
+        themeOptions: ClockThemeOptions,
+        wallpaperBitmap: Bitmap?,
+        wallpaperOptions: WallpaperOptions,
     ) = mutex.withLock {
 
         //input validation
@@ -105,14 +108,14 @@ internal class WallpaperViewBitmapCreator {
             //clocks bias position
             val constraintSet = ConstraintSet()
             constraintSet.clone(this)
-            constraintSet.setVerticalBias(R.id.clock_include, verticalBias)
-            constraintSet.setHorizontalBias(R.id.clock_include, horizontalBias)
+            constraintSet.setVerticalBias(R.id.clock_include, layoutOptions.verticalBias)
+            constraintSet.setHorizontalBias(R.id.clock_include, layoutOptions.horizontalBias)
             constraintSet.applyTo(this)
         }
         //scales the view
         mView.findViewById<View>(R.id.clock_include).apply {
-            scaleX = scale
-            scaleY = scale
+            scaleX = layoutOptions.scale
+            scaleY = layoutOptions.scale
         }
 
         mRect = rect
@@ -121,7 +124,9 @@ internal class WallpaperViewBitmapCreator {
         mRotation = (rotation % 4) * 90f * if (rotationFix) 1 else 0
         mRotationFix = rotationFix
 
-        updateWallpaperColors(mView, foregroundColor, backgroundColor)
+        updateWallpaperColors(mView, themeOptions)
+
+        updateWallpaperWallpaper(mView, wallpaperBitmap, wallpaperOptions, mRect)
 
         initialized = true
     }
@@ -136,7 +141,7 @@ internal class WallpaperViewBitmapCreator {
         val view = mView
 
         //applies the state to the view
-        updateWallpaperView(view, state)
+        updateWallpaperState(view, state)
 
         //layout the view
         val vWidth: Int = mRect.width()
@@ -170,6 +175,8 @@ private fun View.getViewsBitmap(width: Int, height: Int): Bitmap {
  * @return Bitmap rotated by degrees given
  * */
 private fun Bitmap.rotate(degrees: Float): Bitmap {
+    if (degrees == 0f) return this
+
     val matrix = Matrix().apply { postRotate(degrees) }
     return Bitmap.createBitmap(this, 0, 0, width, height, matrix, true)
 }
@@ -178,22 +185,25 @@ private fun Bitmap.rotate(degrees: Float): Bitmap {
 private val values = listOf(R.id.yv, R.id.dv, R.id.hv, R.id.mv, R.id.sv)
 private val units = listOf(R.id.yu, R.id.du, R.id.hu, R.id.mu, R.id.su)
 
-private fun updateWallpaperColors(view: View, foregroundColor: Color, backgroundColor: Color) {
-    //ignores the first red digit
-    values.filter { it != R.id.yv }.forEach {
-        view.findViewById<TextView>(it).setTextColor(foregroundColor.toArgb())
+private fun updateWallpaperColors(view: View, themeOptions: ClockThemeOptions) {
+
+    values.forEach {
+        view.findViewById<TextView>(it).setTextColor(themeOptions.foreground.toArgb())
     }
     units.forEach {
-        view.findViewById<TextView>(it).setTextColor(foregroundColor.toArgb())
+        view.findViewById<TextView>(it).setTextColor(themeOptions.foreground.toArgb())
     }
 
-    view.setBackgroundColor(backgroundColor.toArgb())
+    if (themeOptions.differYear)
+        view.findViewById<TextView>(R.id.yv).setTextColor(themeOptions.yearColor.toArgb())
+
+    view.setBackgroundColor(themeOptions.background.toArgb())
 }
 
 /**
  * Updates view given with state given
  *  */
-private fun updateWallpaperView(view: View, state: CurrentState) {
+private fun updateWallpaperState(view: View, state: CurrentState) {
     val timeRoot = view.findViewById<Flow>(R.id.time_root)
     val stateTV = view.findViewById<TextView>(R.id.state)
 
@@ -218,4 +228,55 @@ private fun updateWallpaperView(view: View, state: CurrentState) {
             HtmlCompat.FROM_HTML_MODE_LEGACY
         )
     }
+}
+
+/**
+ * Set view bitmap background based on configs given
+ * */
+private fun updateWallpaperWallpaper(
+    view: View,
+    bitmap: Bitmap?,
+    options: WallpaperOptions,
+    display: Rect
+) {
+    val imgView = view.findViewById<ImageView>(R.id.wallpaper_background)
+
+    if (bitmap == null) {
+        imgView.setImageBitmap(null)
+        return
+    }
+
+    var newBitmap = bitmap
+
+    //rotate
+    newBitmap = newBitmap.rotate(options.rotate * 90f)
+
+    //creates bitmap with the display ratio
+    val xRation = 1f * newBitmap.width / display.width()
+    val yRation = 1f * newBitmap.height / display.height()
+
+    val width: Float
+    val height: Float
+    if (xRation > yRation) {
+        width = display.width() * yRation
+        height = newBitmap.height.toFloat()
+    } else {
+        width = newBitmap.width.toFloat()
+        height = display.height() * xRation
+    }
+
+    val zoomedWidth = width / options.zoom
+    val zoomedHeight = height / options.zoom
+
+    //selects only a part of the bitmap
+    val startX = (newBitmap.width - zoomedWidth) * options.horizontalBias
+    val startY = (newBitmap.height - zoomedHeight) * options.verticalBias
+
+    newBitmap = Bitmap.createBitmap(
+        newBitmap,
+        startX.roundToInt(), startY.roundToInt(),
+        zoomedWidth.roundToInt(), zoomedHeight.roundToInt(),
+    )
+
+    imgView.setImageBitmap(newBitmap)
 }

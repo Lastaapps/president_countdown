@@ -123,7 +123,6 @@ internal class WidgetUpdateService : Service() {
 
         Log.i(TAG, "Starting service")
 
-        //TODO check if it solves startForeground not called error
         startForeground(NOTIFICATION_ID, notifications.createBasicNotification())
 
         return START_STICKY
@@ -137,6 +136,9 @@ internal class WidgetUpdateService : Service() {
         startJob()
     }
 
+    /**
+     * Starts widgets updating job
+     * */
     private fun startJob() {
         Log.i(TAG, "Starting update job")
 
@@ -193,15 +195,23 @@ internal class WidgetUpdateService : Service() {
                 )
             }
 
+            //for smooth transition from an initial or random lag
             delay(200)
         }
     }
 
+    /**
+     * Continues when a screen is on
+     * */
     private val screenOnReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             startJob()
         }
     }
+
+    /**
+     * Stops when a screen is off
+     * */
     private val screenOffReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             stopJob()

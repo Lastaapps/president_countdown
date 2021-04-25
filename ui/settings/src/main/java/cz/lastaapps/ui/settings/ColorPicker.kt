@@ -57,7 +57,7 @@ fun ColorPickerSetting(
             title = text,
             onClick = { onExpandedChanged(!expanded) },
             modifier = Modifier.fillMaxWidth(),
-            useDivider = true,
+            useDivider = false,
         ) {
             ColorPreview(color = color, preferredSize = 32.dp)
         }

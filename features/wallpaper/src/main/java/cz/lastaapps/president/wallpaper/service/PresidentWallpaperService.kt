@@ -35,6 +35,7 @@ import cz.lastaapps.president.core.coroutines.collectAsync
 import cz.lastaapps.president.core.president.CurrentState
 import cz.lastaapps.president.wallpaper.WallpaperViewBitmapCreator
 import cz.lastaapps.president.wallpaper.settings.*
+import cz.lastaapps.president.wallpaper.settings.files.ImageRepo
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
 
@@ -114,18 +115,12 @@ class PresidentWallpaperService : WallpaperService() {
             //reduces the first wave of vales flow from settings
             var enabled = false
 
-            val collector: suspend ((Any) -> Unit) = { _ -> if (enabled) displayChanged() }
+            val collector: suspend ((Any?) -> Unit) = { _ -> if (enabled) displayChanged() }
 
             //observers for the changes in settings
-            listOf(
-                Sett.scalePort, Sett.scaleLand,
-                Sett.biasVertPort, Sett.biasVertLand,
-                Sett.biasHorzPort, Sett.biasHorzLand,
-                Sett.rotationFix,
-                Sett.uiMode,
-                Sett.foregroundLight, Sett.foregroundDark,
-                Sett.backgroundLight, Sett.backgroundDark,
-            ).forEach {
+            Sett.listAllVariables().toMutableList().also {
+                it.addAll(ImageRepo.listAllVariables(this@PresidentWallpaperService))
+            }.forEach {
                 it.collectAsync(scope, collector)
             }
 
@@ -159,8 +154,8 @@ class PresidentWallpaperService : WallpaperService() {
                 }
             }
 
-            val isLandscape =
-                display.rotation in listOf(Surface.ROTATION_90, Surface.ROTATION_270)
+            val isPortrait =
+                display.rotation in listOf(Surface.ROTATION_0, Surface.ROTATION_180)
 
             val userPreferredMode = Sett.uiMode.value
             val actualMode = when {
@@ -169,17 +164,30 @@ class PresidentWallpaperService : WallpaperService() {
                 else -> config.uiMode
             }
 
+            val wallpaperOptions =
+                if (isPortrait) Sett.wallpaperPortrait else Sett.wallpaperLandscape
+
+            val wallpaper = if (isPortrait)
+                if (wallpaperOptions.value.enabled)
+                    ImageRepo.getBitmaps(this@PresidentWallpaperService, true).value
+                else
+                    null
+            else
+                if (wallpaperOptions.value.enabled)
+                    ImageRepo.getBitmaps(this@PresidentWallpaperService, false).value
+                else
+                    null
+
             bitmapGenerator.updateConfig(
                 this@PresidentWallpaperService,
                 rect = rect,
-                scale = Sett.getScale(!isLandscape).value,
                 rotationFix = Sett.rotationFix.value,
-                verticalBias = Sett.getVerticalBias(!isLandscape).value,
-                horizontalBias = Sett.getHorizontalBias(!isLandscape).value,
                 rotation = display.rotation,
                 uiMode = actualMode,
-                foregroundColor = Sett.getForegroundColor(actualMode).value,
-                backgroundColor = Sett.getBackgroundColor(actualMode).value,
+                layoutOptions = Sett.getClockLayoutOptions(isPortrait).value,
+                themeOptions = Sett.getClockThemeOptions(actualMode, isPortrait).value,
+                wallpaperBitmap = wallpaper,
+                wallpaperOptions = wallpaperOptions.value,
             )
 
             //updates colors

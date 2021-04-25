@@ -18,19 +18,23 @@
  *
  */
 
-package cz.lastaapps.president.widget.service
+package cz.lastaapps.president.wallpaper.settings.options
 
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-
-/**
- * Starts widget update service if required
- * */
-class BootWidgetUpdateReceiver : BroadcastReceiver() {
-
-    override fun onReceive(context: Context, intent: Intent) {
-        if (intent.action == Intent.ACTION_BOOT_COMPLETED)
-            WidgetUpdateService.startService(context)
+data class WallpaperOptions(
+    val enabled: Boolean,
+    val zoom: Float,
+    val verticalBias: Float,
+    val horizontalBias: Float,
+    val rotate: Int,
+) {
+    companion object {
+        val default
+            get() = WallpaperOptions(
+                enabled = false,
+                zoom = 1f,
+                verticalBias = .5f,
+                horizontalBias = .5f,
+                rotate = 0,
+            )
     }
 }

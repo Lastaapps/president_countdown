@@ -27,16 +27,25 @@ import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 
+/**
+ * Opens app info system screen
+ * */
 internal fun showAppInfo(context: Context) {
     val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
     intent.data = Uri.parse("package:${context.packageName}")
     context.startActivity(intent)
 }
 
+/**
+ * Opens settings - user can than navigate into a battery settings
+ * */
 internal fun showBatterySettings(context: Context) {
     context.startActivity(Intent(Settings.ACTION_SETTINGS))
 }
 
+/**
+ * @return if the app is restricted from background battery usage
+ * */
 internal fun shouldShowBatteryOptimizationDialog(context: Context): Boolean {
 
     val mgr = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
@@ -44,14 +53,5 @@ internal fun shouldShowBatteryOptimizationDialog(context: Context): Boolean {
         mgr.isBackgroundRestricted
     else
         false
-
-    //TODO test on pre Pie devices
-    /*val pm: PowerManager? = context.getSystemService(POWER_SERVICE) as PowerManager?
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-        if (pm != null && !pm.isIgnoringBatteryOptimizations(context.packageName)) {
-            return true
-        }
-    }
-    return false*/
 }
 

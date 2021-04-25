@@ -23,7 +23,7 @@ package cz.lastaapps.president.app.initializers
 import android.content.Context
 import androidx.annotation.Keep
 import androidx.startup.Initializer
-import androidx.work.impl.WorkManagerInitializer
+import androidx.work.WorkManagerInitializer
 import cz.lastaapps.president.app.workers.WorkersManager
 import cz.lastaapps.president.core.InitializerTemplate
 

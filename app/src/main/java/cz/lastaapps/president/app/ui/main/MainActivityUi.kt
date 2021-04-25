@@ -78,7 +78,7 @@ internal fun MainActivityRoot(modifier: Modifier = Modifier) {
             if (checkPrivacyPolicy()) {
 
                 //shows whats new
-                checkWhatsNew()
+                CheckWhatsNew()
 
                 //navigation between parts of the app
                 val navController = rememberNavController()
@@ -122,7 +122,7 @@ private fun checkPrivacyPolicy(): Boolean {
 }
 
 @Composable
-private fun checkWhatsNew() {
+private fun CheckWhatsNew() {
 
     val context = LocalContext.current
     val scope = rememberCoroutineScope()

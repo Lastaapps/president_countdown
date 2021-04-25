@@ -18,19 +18,30 @@
  *
  */
 
-package cz.lastaapps.president.widget.service
+package cz.lastaapps.president.wallpaper.settings.options
 
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
+import androidx.compose.ui.graphics.Color
 
-/**
- * Starts widget update service if required
- * */
-class BootWidgetUpdateReceiver : BroadcastReceiver() {
-
-    override fun onReceive(context: Context, intent: Intent) {
-        if (intent.action == Intent.ACTION_BOOT_COMPLETED)
-            WidgetUpdateService.startService(context)
+data class ClockThemeOptions(
+    val foreground: Color,
+    val background: Color,
+    val differYear: Boolean,
+    val yearColor: Color,
+) {
+    companion object {
+        val defaultLight
+            get() = ClockThemeOptions(
+                foreground = Color(0xff000000),
+                background = Color(0xffffffff),
+                differYear = true,
+                yearColor = Color(0xffff0000),
+            )
+        val defaultDark
+            get() = ClockThemeOptions(
+                foreground = Color(0xffffffff),
+                background = Color(0xff333333),
+                differYear = true,
+                yearColor = Color(0xffff0000),
+            )
     }
 }

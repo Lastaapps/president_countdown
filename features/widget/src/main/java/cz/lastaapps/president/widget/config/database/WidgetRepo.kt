@@ -29,6 +29,9 @@ import cz.lastaapps.president.widget.widget.PresidentWidget
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 
+/**
+ * Maps DAO's to be accesible for the rest of the app in a meaningful way
+ * */
 internal class WidgetRepo(private val database: WidgetDatabase, private val dao: StateDao) {
 
     companion object {

@@ -46,6 +46,9 @@ internal class Notifications(private val context: Context) {
         createChannel()
     }
 
+    /**
+     * Creates notification channel
+     * */
     private fun createChannel() {
         val channel = NotificationChannelCompat.Builder(
             channelId,

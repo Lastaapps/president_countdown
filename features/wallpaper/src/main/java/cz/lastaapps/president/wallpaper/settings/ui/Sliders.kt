@@ -20,34 +20,27 @@
 
 package cz.lastaapps.president.wallpaper.settings.ui
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.BoxWithConstraints
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Slider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.max
+import androidx.compose.ui.res.stringResource
+import cz.lastaapps.president.wallpaper.R
+import cz.lastaapps.ui.common.components.SliderTextField
 import kotlin.math.round
 
 
 @Composable
 internal fun ScaleSlider(modifier: Modifier = Modifier) {
 
-    val viewModel = viewModel()
-    val value by viewModel.scale.collectAsState()
+    val viewModel = wallpaperViewModel()
+    val options by viewModel.layoutOptions.collectAsState()
+    val value = options.scale
 
-    TextSlider(
+    SliderTextField(
+        text = stringResource(id = R.string.ui_layout_scale),
         value = value,
-        onValueChanged = { viewModel.setScale(it) },
+        onValueChanged = { viewModel.setLayoutOptions(options.copy(scale = it)) },
         modifier = modifier,
         range = 0.25f..1.75f,
         valueToText = { (round(it * 100) / 100).toString() },
@@ -58,12 +51,14 @@ internal fun ScaleSlider(modifier: Modifier = Modifier) {
 @Composable
 internal fun VerticalBiasSlider(modifier: Modifier = Modifier) {
 
-    val viewModel = viewModel()
-    val value by viewModel.vertical.collectAsState()
+    val viewModel = wallpaperViewModel()
+    val options by viewModel.layoutOptions.collectAsState()
+    val value = options.verticalBias
 
-    TextSlider(
+    SliderTextField(
+        text = stringResource(id = R.string.ui_layout_vertical),
         value = value,
-        onValueChanged = { viewModel.setBiasVertical(it) },
+        onValueChanged = { viewModel.setLayoutOptions(options.copy(verticalBias = it)) },
         modifier = modifier
     )
 }
@@ -71,76 +66,16 @@ internal fun VerticalBiasSlider(modifier: Modifier = Modifier) {
 @Composable
 internal fun HorizontalBiasSlider(modifier: Modifier = Modifier) {
 
-    val viewModel = viewModel()
-    val value by viewModel.horizontal.collectAsState()
+    val viewModel = wallpaperViewModel()
+    val options by viewModel.layoutOptions.collectAsState()
+    val value = options.horizontalBias
 
-    TextSlider(
+    SliderTextField(
+        text = stringResource(id = R.string.ui_layout_horizontal),
         value = value,
-        onValueChanged = { viewModel.setBiasHorizontal(it) },
+        onValueChanged = { viewModel.setLayoutOptions(options.copy(horizontalBias = it)) },
         modifier = modifier
     )
-}
-
-@Composable
-private fun TextSlider(
-    value: Float,
-    onValueChanged: ((Float) -> Unit),
-    modifier: Modifier = Modifier,
-    range: ClosedFloatingPointRange<Float> = 0f..1f,
-    valueToText: (Float) -> String = { (it * 100).toInt().toString() },
-    textToValue: (String) -> Float = { (it.toFloat() / 100) },
-    smartZeroInput: Boolean = true,
-    textFieldSize: Dp = 72.dp,
-) {
-    BoxWithConstraints(modifier = modifier) {
-
-        val spacing = 8.dp
-        val sliderWidth = max(0.dp, maxWidth - textFieldSize - spacing)
-
-        Row(horizontalArrangement = Arrangement.spacedBy(spacing)) {
-            Slider(
-                value = value,
-                onValueChange = { onValueChanged(it) },
-                valueRange = range,
-                modifier = Modifier.width(sliderWidth),
-            )
-
-            OutlinedTextField(
-                value = valueToText(value),
-                onValueChange = {
-                    onValueChanged(
-                        try {
-                            if (it == "") range.start
-                            else {
-                                val numberValue = if (!(smartZeroInput && value == 0f)) {
-                                    textToValue(it)
-                                } else {
-                                    textToValue(it) / 10
-                                }
-
-                                when (numberValue) {
-                                    in range.start..range.endInclusive -> numberValue
-                                    in Float.MIN_VALUE..range.start -> range.start
-                                    else -> range.endInclusive
-                                }
-                            }
-                        } catch (e: Exception) {
-                            //protects from a wrong input
-                            e.printStackTrace()
-                            range.start
-                        }
-                    )
-                },
-                //textStyle = AmbientTextStyle.current.copy(textAlign = TextAlign.Center),
-                singleLine = true,
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Number,
-                    imeAction = ImeAction.Done,
-                ),
-                modifier = Modifier.width(textFieldSize)
-            )
-        }
-    }
 }
 
 

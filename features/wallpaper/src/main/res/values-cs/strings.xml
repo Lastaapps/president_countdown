@@ -42,4 +42,39 @@
     <string name="ui_background">Barva pozadí</string>
     <string name="ui_theme_day">Světlé</string>
     <string name="ui_theme_night">Tmavé</string>
+    <string name="ui_wallpaper_enabled">Použít obrázek na pozadí</string>
+    <string name="ui_system_wallpaper">Načíst systímové pozadí</string>
+    <string name="ui_choose_image">Vybrat obrázek</string>
+    <string name="ui_rotate">Otočit</string>
+    <string name="ui_copy_from_other_mode">Kopírovat z reřimu %s</string>
+    <string name="ui_copy_from_other_mode_portrait">na výšku</string>
+    <string name="ui_copy_from_other_mode_landscape">na šířku</string>
+    <string name="ui_differ_year">Odlišit barvu let</string>
+    <string name="ui_differ_year_color">Barva číslic let</string>
+    <string name="ui_wallpaper_zoom">Přiblížení</string>
+    <string name="ui_wallpaper_horizontal">Horizontální</string>
+    <string name="ui_wallpaper_vertical">Vertikální</string>
+    <string name="ui_layout_horizontal">Horizontální</string>
+    <string name="ui_layout_vertical">Vertikální</string>
+    <string name="ui_layout_scale">Zvětšení</string>
+    <string name="perm_cancel">Zrušit</string>
+    <string name="perm_setting">Opevřít nastavení</string>
+    <string name="perm_system">Udělit</string>
+    <string name="perm_title">Potřebujeme vaše svolení</string>
+    <string name="perm_text">Abychom mohli načíst obrázky z úložiště nebo aktuálního pozadí plohy, potřebujeme obrávnění k čtení úložiště.</string>
+    <string name="help_title">Nápověda</string>
+    <string name="help_text">
+        Vítejte v náhledu a nastavení živého pozadí plochy. Nahoře můžete změnit nastavení náhledu
+        jako světlý či tmavý mód a orientaci na výšku či šířku.
+        \n\n
+        V nastaveních níže můžete změnit umístění hodin, jejich zvětšení a barvu. Dokonce si můžete
+        jako pozadí plochy nastavit vlastní obrázek.
+        \n\n
+        Nastavení pozice hodin a pozadí plochy se uchovává zvlášť pro 2 režimy - na výšku a na šířku.
+        To neplatí pro barvy, kde máte hned 4 možné kombinace - na výšku a šířku a světlý a tmavý režim.
+        Pokud změníte jeden mód, nastavení se NEPŘESUNOU do jiného, proto si prosím změňte všechny
+        kombinace, co denně používáte, na vám vyhovující stav. Užívejte!
+    </string>
+    <string name="help_ok">OK</string>
+    <string name="help_content_description">Nápověda k nastavení pozadí</string>
 </resources>

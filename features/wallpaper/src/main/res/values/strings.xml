@@ -41,4 +41,40 @@
     </string>
     <string name="ui_foreground">Text color</string>
     <string name="ui_background">Background color</string>
+    <string name="ui_wallpaper_enabled">Use a image as the background</string>
+    <string name="ui_system_wallpaper">Load system wallpaper</string>
+    <string name="ui_choose_image">Choose an image</string>
+    <string name="ui_rotate">Rotate</string>
+    <string name="ui_copy_from_other_mode">Copy from %s mode</string>
+    <string name="ui_copy_from_other_mode_portrait">portrait</string>
+    <string name="ui_copy_from_other_mode_landscape">landscape</string>
+    <string name="ui_differ_year">Differ year color</string>
+    <string name="ui_differ_year_color">Year digit color</string>
+    <string name="ui_wallpaper_zoom">Zoom</string>
+    <string name="ui_wallpaper_horizontal">Horizontal</string>
+    <string name="ui_wallpaper_vertical">Vertical</string>
+    <string name="ui_layout_horizontal">Horizontal</string>
+    <string name="ui_layout_vertical">Vertical</string>
+    <string name="ui_layout_scale">Scale</string>
+
+    <string name="perm_cancel">Cancel</string>
+    <string name="perm_setting">Open settings</string>
+    <string name="perm_system">Grant</string>
+    <string name="perm_title">Permission required</string>
+    <string name="perm_text">To read images from the storage or the current wallpaper, we need read storage permission.</string>
+    <string name="help_title">Help</string>
+    <string name="help_text">
+        Welcome to the wallpaper preview and settings page. In the top, you can change preview only
+        options - you can customize light or dark theme and portrait and landscape mode.
+        \n\n
+        In the configs below you can change clock\'s position, scale and color. You can even use
+        a custom picture as your wallpaper background.
+        \n\n
+        You can set up clock\'s position and wallpaper image into 2 modes - portrait × landscape.
+        For color on the other hand you have 4 options - portrait × landscape and light × dark mode.
+        If you change one mode, your changes WON\'T propagate to any other mode - so make sure
+        you have set up all the variants you are actively using. Enjoy!
+    </string>
+    <string name="help_ok">OK</string>
+    <string name="help_content_description">Wallpaper options help</string>
 </resources>

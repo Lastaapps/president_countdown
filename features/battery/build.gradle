@@ -61,6 +61,7 @@ android {
 
 dependencies {
 
+    implementation project(":core:core")
     implementation project(":ui:common")
     implementation project(":ui:composeimpl")
 

@@ -25,7 +25,7 @@ import cz.lastaapps.president.core.App
 import kotlinx.coroutines.flow.MutableStateFlow
 
 /**
- * Stores widget settings
+ * Stores widget debug settings
  * */
 internal object DebugSettings {
 

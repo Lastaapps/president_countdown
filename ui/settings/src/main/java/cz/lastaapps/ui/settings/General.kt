@@ -48,7 +48,7 @@ fun SwitchSettings(
     text: String,
     checked: Boolean,
     modifier: Modifier = Modifier,
-    useDivider: Boolean = true,
+    useDivider: Boolean = false,
     description: String? = null,
     onChange: () -> Unit,
 ) {
@@ -221,7 +221,7 @@ fun SettingsGroup(
         backgroundColor = MaterialTheme.colors.surface.copy(alpha = LocalContentAlpha.current),
         border = border,
     ) {
-        Column(Modifier.padding(8.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
             categoryName?.let {
                 SettingsCategoryName(text = it)
             }

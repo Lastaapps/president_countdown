@@ -33,6 +33,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 
+private const val DividerAlpha = 0.12f
+
 /**
  * A divider is a thin line that groups content in lists and layouts
  *
@@ -40,8 +42,6 @@ import androidx.compose.ui.unit.dp
  * @param thickness thickness of the divider line, 1 dp is used by default
  * @param startIndent start offset of this line, no offset by default
  */
-private const val DividerAlpha = 0.12f
-
 @Composable
 fun VerticalDivider(
     modifier: Modifier = Modifier,

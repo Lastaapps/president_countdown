@@ -18,19 +18,27 @@
  *
  */
 
-package cz.lastaapps.president.widget.service
+package cz.lastaapps.president.wallpaper.settings.help
 
-import android.content.BroadcastReceiver
 import android.content.Context
-import android.content.Intent
+import cz.lastaapps.president.core.App
+import kotlinx.coroutines.flow.MutableStateFlow
 
-/**
- * Starts widget update service if required
- * */
-class BootWidgetUpdateReceiver : BroadcastReceiver() {
 
-    override fun onReceive(context: Context, intent: Intent) {
-        if (intent.action == Intent.ACTION_BOOT_COMPLETED)
-            WidgetUpdateService.startService(context)
-    }
+internal object HelpShownStorage {
+
+    private const val SP_NAME = "WALLPAPER_SETTINGS_HELP"
+    private const val KEY_DEBUG = "SHOWN"
+
+    private val sp get() = App.context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE)
+
+    //debug mode prints notification updates about updating the widget - is the service running?
+    var shown: Boolean
+        get() = sp.getBoolean(KEY_DEBUG, false)
+        set(value) {
+            sp.edit().putBoolean(KEY_DEBUG, value).apply()
+            shownFlow.tryEmit(value)
+        }
+    val shownFlow by lazy { MutableStateFlow(shown) }
+
 }

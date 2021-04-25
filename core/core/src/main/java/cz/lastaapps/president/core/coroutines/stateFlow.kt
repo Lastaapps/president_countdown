@@ -18,19 +18,23 @@
  *
  */
 
-package cz.lastaapps.president.widget.service
+package cz.lastaapps.president.core.coroutines
 
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.stateIn
 
 /**
- * Starts widget update service if required
+ * while(true) loop calling tick block periodically with delay
  * */
-class BootWidgetUpdateReceiver : BroadcastReceiver() {
-
-    override fun onReceive(context: Context, intent: Intent) {
-        if (intent.action == Intent.ACTION_BOOT_COMPLETED)
-            WidgetUpdateService.startService(context)
-    }
+fun <T> loopingStateFlow(scope: CoroutineScope, delay: Long = 1000, tick: () -> T): StateFlow<T> {
+    return flow {
+        while (true) {
+            delay(delay)
+            emit(tick())
+        }
+    }.stateIn(scope, SharingStarted.WhileSubscribed(), tick())
 }

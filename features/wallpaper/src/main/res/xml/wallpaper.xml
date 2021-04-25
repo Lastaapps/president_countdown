@@ -20,4 +20,4 @@
 
 <wallpaper xmlns:android="http://schemas.android.com/apk/res/android"
     android:label="@string/app_name"
-    android:thumbnail="@mipmap/ic_launcher"></wallpaper>
+    android:thumbnail="@mipmap/ic_launcher" />

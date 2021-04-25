@@ -38,20 +38,22 @@ import androidx.constraintlayout.compose.Dimension
 import androidx.lifecycle.ViewModelProvider
 import cz.lastaapps.president.wallpaper.settings.WallpaperViewModel
 import cz.lastaapps.ui.common.extencions.centerToWithPadding
+import cz.lastaapps.ui.common.extencions.viewModelKt
 import cz.lastaapps.ui.common.themes.MainTheme
 
-private const val TAG = "WallpaperSettingsUI"
-
+/**
+ * All the settings and preview for wallpaper
+ * */
 @Composable
 fun WallpaperSettings(modifier: Modifier = Modifier) {
 
     val sideMargins = 8.dp
-    val viewModel = viewModel()
+    val viewModel = wallpaperViewModel()
     val isDay by viewModel.isDayPreview.collectAsState()
 
     val config = LocalConfiguration.current
     remember(config) {
-        viewModel.setIsLand(config.orientation % 2 == 1)
+        viewModel.setIsDevicePortrait(config.orientation % 2 == 0)
         viewModel.setIsDay(config.uiMode and Configuration.UI_MODE_NIGHT_YES == 0)
     }
 
@@ -84,10 +86,13 @@ fun WallpaperSettings(modifier: Modifier = Modifier) {
     }
 }
 
+/**
+ * Draws wallpaper preview generated from the current options
+ * */
 @Composable
 private fun WallpaperCanvas(modifier: Modifier = Modifier) {
 
-    val viewModel = viewModel()
+    val viewModel = wallpaperViewModel()
     val scope = rememberCoroutineScope()
     val flow by remember { mutableStateOf(viewModel.subscribeForBitmap(scope)) }
     val bitmap by flow.collectAsState()
@@ -107,9 +112,11 @@ private fun WallpaperCanvas(modifier: Modifier = Modifier) {
     )
 }
 
+/**
+ * shortcut for WallpaperViewModel
+ * */
 @Composable
-internal fun viewModel(
+internal fun wallpaperViewModel(
     key: String? = null,
     factory: ViewModelProvider.Factory? = null
-): WallpaperViewModel =
-    cz.lastaapps.ui.common.extencions.viewModelKt(WallpaperViewModel::class, key, factory)
+): WallpaperViewModel = viewModelKt(WallpaperViewModel::class, key, factory)

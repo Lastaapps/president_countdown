@@ -22,6 +22,14 @@
 
 <!-- type values: alpha, beta, release-->
 <versions>
+    <version name="1.0.0-alpha06" type="alpha" build="1000006" released="2021-04-25">
+        <en-US>
+            You can now use custom wallpaper background image.
+        </en-US>
+        <cs-CZ>
+            Nyní můžete nastavit obrázek vlastní volby jako pozadí plochy
+        </cs-CZ>
+    </version>
     <version name="1.0.0-alpha05" type="alpha" build="1000005" released="2021-04-12">
         <en-US>
             Widget config bux fixes.

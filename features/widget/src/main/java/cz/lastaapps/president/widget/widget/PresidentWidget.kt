@@ -64,20 +64,11 @@ internal class PresidentWidget : AppWidgetProvider() {
         val views = RemoteViewUpdater.createPlaceholder(context)
         appWidgetManager.updateAppWidget(appWidgetIds, views)
 
+        //makes sure widgets get updated
         GlobalScope.launch {
             delay(2000)
             WidgetDatabase.createDatabase(App.context).configRepo.updateWidgets(App.context)
         }
-        //loads actual content
-        //waits until service updates the widgets instead
-        /*GlobalScope.launch {
-            updateWithState(
-                App.context,
-                appWidgetIds,
-                CurrentState.getCurrentState(this).value,
-                WidgetDatabase.createDatabase(App.context).configDao().getByIds(appWidgetIds).first(),
-            )
-        }*/
     }
 
     companion object {
