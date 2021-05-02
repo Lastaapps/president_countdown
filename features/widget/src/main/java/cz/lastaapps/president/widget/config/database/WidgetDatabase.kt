@@ -23,6 +23,7 @@ package cz.lastaapps.president.widget.config.database
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -32,7 +33,7 @@ import java.util.concurrent.TimeUnit
 
 @Database(
     entities = [WidgetState::class],
-    version = 3,
+    version = 4,
     exportSchema = true,
 )
 internal abstract class WidgetDatabase : RoomDatabase() {

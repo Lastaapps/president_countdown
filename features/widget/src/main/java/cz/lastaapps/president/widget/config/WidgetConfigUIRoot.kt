@@ -52,6 +52,7 @@ import cz.lastaapps.ui.common.extencions.viewModelKt
 import cz.lastaapps.ui.common.layouts.BorderLayout
 import cz.lastaapps.ui.common.layouts.WidthLimitingLayout
 import cz.lastaapps.ui.settings.ColorPickerSetting
+import cz.lastaapps.ui.settings.SettingsGroup
 import cz.lastaapps.ui.settings.SettingsGroupColumn
 import cz.lastaapps.ui.settings.SwitchSettings
 import kotlin.math.round
@@ -68,7 +69,7 @@ internal fun WidgetConfigRoot(
 ) {
 
     //puts widgetId into a viewModel
-    val viewModel = viewModel()
+    val viewModel = widgetViewModel()
     remember {
         viewModel.setWidgetId(widgetId)
         null
@@ -135,7 +136,7 @@ internal fun WidgetConfigRoot(
                 ) {
                     BorderLayout(
                         modifier = Modifier.padding(8.dp),
-                        centerContent = {
+                        center = {
                             //all the widget options
                             SettingsContent(
                                 modifier = Modifier.verticalScroll(rememberScrollState()),
@@ -145,7 +146,7 @@ internal fun WidgetConfigRoot(
                                 onLightPreviewChanged = { viewModel.setIsLightPreview(it) }
                             )
                         },
-                        bottomContent = {
+                        bottom = {
                             ConfirmButtons()
                         },
                         spaceBy = 8.dp,
@@ -205,7 +206,7 @@ private fun WidgetPreview(
         }
 
         remember(isLightPreview, theme) {
-            RemoteViewUpdater.updateColors(isLightPreview, views, theme)
+            RemoteViewUpdater.updateColors(isLightPreview, views, theme, null)
             null
         }
 
@@ -260,6 +261,11 @@ private fun SettingsContent(
             onStateChanged = onStateChanged,
             isLightPreview = isLightPreview,
             onLightPreviewChanged = onLightPreviewChanged,
+        )
+        EnableFrameSwitch(
+            state = state,
+            onStateChanged = onStateChanged,
+            modifier = Modifier.fillMaxWidth(),
         )
         DifferYear(
             state = state,
@@ -437,6 +443,29 @@ private fun ThemedOptions(
     }
 }
 
+@Composable
+private fun EnableFrameSwitch(
+    state: WidgetState,
+    onStateChanged: (WidgetState) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+
+    val isFrameEnabled = state.frameEnabled
+
+    SettingsGroup(
+        modifier = modifier,
+    ) {
+        SwitchSettings(
+            text = stringResource(id = R.string.frame_enabled),
+            checked = isFrameEnabled,
+            onChange = {
+                onStateChanged(state.copy(frameEnabled = !isFrameEnabled))
+            },
+            modifier = Modifier.fillMaxWidth(),
+        )
+    }
+}
+
 /**
  * If the years digit should have different color for the theme selected
  * */
@@ -500,7 +529,7 @@ private fun ConfirmButtons(modifier: Modifier = Modifier) {
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        val viewModel = viewModel()
+        val viewModel = widgetViewModel()
 
         //buttons are disabled when the data are processed to prevent multiple calls
         val uiStage by viewModel.configProgressState.collectAsState()
@@ -526,5 +555,5 @@ private fun ConfirmButtons(modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun viewModel() = viewModelKt(WidgetViewModel::class)
+private fun widgetViewModel() = viewModelKt(WidgetViewModel::class)
 

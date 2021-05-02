@@ -33,11 +33,18 @@
 
     <string name="other_resources">Other resources</string>
 
-    <string name="content_description_hrad">Link to hrad.cz</string>
+    <string name="wikipedia">Wikipedia</string>
+    <string name="web">Web version</string>
+    <string name="hrad">Hrad.cz</string>
+    <string name="jmzsn">Is Miloš Zeman still alive?</string>
+    <string name="jmzdp">Is Miloš Zeman a good president?</string>
+    <string name="surprise">Surprise!</string>
+    <string name="content_description_web">Link to the web version</string>
     <string name="content_description_wikipedia">Link to Wikipedia to the article about the President</string>
+    <string name="content_description_hrad">Link to hrad.cz</string>
     <string name="content_description_jmzsn">Link to Facebook page controlling if the President is still alive</string>
     <string name="content_description_jmzdp">Link to one funny app with presidents theme</string>
-    <string name="content_description_surprice">Click me and see</string>
+    <string name="content_description_surprise">Click me and see</string>
     <string name="whats_new">What\'s new</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="buggy_ok">OK</string>
@@ -49,5 +56,10 @@
     </string>
     <string name="buggy_title">Buggy app?</string>
     <string name="buggy_button">Buggy app?</string>
+    <string name="ads_title">\"Ads\" disclaimer</string>
+    <string name="ads_text">The links below aren\'t paid ads in any way! The app developer finds them useful or funny.</string>
+    <string name="ads_ok">I understand</string>
+    <string name="ads_icon_content_description">Ads disclaimer</string>
+
 
 </resources>

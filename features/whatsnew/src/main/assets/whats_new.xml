@@ -22,6 +22,14 @@
 
 <!-- type values: alpha, beta, release-->
 <versions>
+    <version name="1.0.0-alpha07" type="alpha" build="1000007" released="2021-04-25">
+        <en-US>
+            About screen "ads" update.
+        </en-US>
+        <cs-CZ>
+            Předělání zobrazení "reklam" v informacích o aplikaci.
+        </cs-CZ>
+    </version>
     <version name="1.0.0-alpha06" type="alpha" build="1000006" released="2021-04-25">
         <en-US>
             You can now use custom wallpaper background image.

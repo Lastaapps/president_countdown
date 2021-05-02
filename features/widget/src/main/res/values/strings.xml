@@ -41,5 +41,6 @@
     <string name="cancel">Cancel</string>
     <string name="ok">OK</string>
     <string name="differ_year">Differ the year\'s color</string>
+    <string name="frame_enabled">Show a frame</string>
 
 </resources>

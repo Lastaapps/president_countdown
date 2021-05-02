@@ -20,10 +20,12 @@
 
 package cz.lastaapps.ui.common.layouts
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.Placeable
 import androidx.compose.ui.platform.LocalDensity
@@ -34,6 +36,7 @@ import kotlin.math.max
  * Like a normal row, but an overflow function is enabled - if you exceed row width, items continue
  * on the next line
  * */
+//TODO equal items per row
 @Composable
 fun FlexRow(
     modifier: Modifier = Modifier,
@@ -60,7 +63,7 @@ fun FlexRow(
         fun rowWidth(list: List<Placeable>): Int =
             max(list.sumBy { it.width + horizontalSpacing } - horizontalSpacing, 0)
 
-        fun rowHeight(list: List<Placeable>): Int = list.sumBy { it.height }
+        fun rowHeight(list: List<Placeable>): Int = list.maxOfOrNull { it.height } ?: 0
 
 
         val lines = mutableListOf<MutableList<Placeable>>()

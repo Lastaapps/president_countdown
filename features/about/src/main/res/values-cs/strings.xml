@@ -27,11 +27,12 @@
     <string name="licenses_title">Použité knihovny</string>
     <string name="unknown_version">Neznámá verze</string>
     <string name="other_resources">Další zdroje</string>
-    <string name="content_description_hrad">Odkaz na hrad.cz</string>
+    <string name="content_description_web">Odkaz na webovou verzi</string>
     <string name="content_description_wikipedia">Odkat na článek na Wikipedii o prezidentovi ČR</string>
+    <string name="content_description_hrad">Odkaz na hrad.cz</string>
     <string name="content_description_jmzsn">Odkaz na Facebookovou stránku hlídající stav pana prezidenta</string>
     <string name="content_description_jmzdp">Odkaz na další zábavnou aplikaci s prezidentskou tématikou</string>
-    <string name="content_description_surprice">Nech se překvapit</string>
+    <string name="content_description_surprise">Nech se překvapit</string>
     <string name="whats_new">Novinky</string>
     <string name="privacy_policy">Ochrana osobních údajů</string>
     <string name="buggy_ok">OK</string>
@@ -47,4 +48,14 @@
     </string>
     <string name="buggy_title">Sekám se?</string>
     <string name="buggy_button">Sekám se?</string>
+    <string name="wikipedia">Wikipedie</string>
+    <string name="web">Webová verze</string>
+    <string name="hrad">Hrad.cz</string>
+    <string name="jmzsn">Je Miloš Zeman stále na živu?</string>
+    <string name="jmzdp">Je Miloš Zeman dobrým prezidentem?</string>
+    <string name="surprise">Nech se překvapit!</string>
+    <string name="ads_title">Vyjádření k \"reklamám\"</string>
+    <string name="ads_ok">Chápu</string>
+    <string name="ads_icon_content_description">Vyjádření k reklamám</string>
+    <string name="ads_text">Odkazy níže nejsou placenou reklamou. Jde o odkazy na podle vývojáře zajímavé či zábavné místa.</string>
 </resources>

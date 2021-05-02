@@ -31,6 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -57,7 +58,7 @@ fun ImageTextRow(
  * */
 @Composable
 fun IconTextRow(
-    painter: ImageVector,
+    painter: Painter,
     text: String,
     modifier: Modifier = Modifier,
     contentDescription: String = text,
@@ -68,3 +69,19 @@ fun IconTextRow(
     Text(text, style = textStyle, modifier = Modifier.padding(start = 8.dp))
 }
 
+@Composable
+fun IconTextRow(
+    vector: ImageVector,
+    text: String,
+    modifier: Modifier = Modifier,
+    contentDescription: String = text,
+    iconSize: Dp = cz.lastaapps.ui.common.extencions.iconSize,
+    textStyle: TextStyle = TextStyle.Default,
+) = IconTextRow(
+    painter = rememberVectorPainter(vector),
+    text = text,
+    modifier = modifier,
+    contentDescription = contentDescription,
+    iconSize = iconSize,
+    textStyle = textStyle,
+)

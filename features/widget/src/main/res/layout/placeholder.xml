@@ -23,11 +23,11 @@
     android:layout_height="match_parent"
     android:background="@android:color/transparent">
 
-    <TextView
+    <!--TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="@string/widget_loading"
-        android:textColor="@android:color/primary_text_light" />
+        android:textColor="@android:color/primary_text_light" /-->
 
 </FrameLayout>

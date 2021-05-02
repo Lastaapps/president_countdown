@@ -37,6 +37,7 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -54,11 +55,11 @@ import cz.lastaapps.president.core.functionality.getVersionName
 import cz.lastaapps.president.core.president.President
 import cz.lastaapps.president.privacypolicy.PrivacyPolicy
 import cz.lastaapps.president.whatsnew.ui.WhatsNewDialog
-import cz.lastaapps.ui.common.components.IconTextRow
-import cz.lastaapps.ui.common.components.SocialButton
-import cz.lastaapps.ui.common.components.socialIconContent
-import cz.lastaapps.ui.common.components.socialImageContent
+import cz.lastaapps.ui.common.components.*
 import cz.lastaapps.ui.common.extencions.iconSize
+import cz.lastaapps.ui.common.extencions.rememberMutableSaveable
+import cz.lastaapps.ui.common.layouts.ExpandingIcons
+import cz.lastaapps.ui.common.layouts.LabelPainterActionData
 import cz.lastaapps.ui.socials.DeveloperNotice
 import cz.lastaapps.ui.socials.Socials
 
@@ -164,73 +165,114 @@ private fun PresidentWebLinks(modifier: Modifier = Modifier) {
         modifier = modifier,
         backgroundColor = MaterialTheme.colors.secondaryVariant,
     ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-
-            Text(text = stringResource(id = R.string.other_resources))
-
-            Row {
-
-                val context = LocalContext.current
-
-                SocialButton(
-                    onClick = { openWeb(context, President.getWikiLink(context.getLocale())) },
-                    socialImageContent(
-                        id = R.drawable.wikipedia,
-                        contentId = R.string.content_description_wikipedia
-                    )
-                )
-
-                SocialButton(
-                    onClick = { openWeb(context, "https://www.hrad.cz") },
-                    socialImageContent(
-                        id = R.drawable.hrad_cz,
-                        contentId = R.string.content_description_hrad
-                    )
-                )
-
-                SocialButton(
-                    onClick = {
-                        Communication.openFacebookPage(
-                            context,
-                            "https://www.facebook.com/KancelarPrezidentaRepubliky/"
-                        )
-                    },
-                    socialImageContent(
-                        id = R.drawable.je_milos_zeman_stale_nazivu,
-                        contentId = R.string.content_description_jmzsn
-                    )
-                )
-
-                SocialButton(
-                    onClick = {
-                        openWeb(
-                            context,
-                            "https://play.google.com/store/apps/details?id=cz.JMZDP.jemilozemandobrmprezidentem"
-                        )
-                    },
-                    socialImageContent(
-                        id = R.drawable.je_milos_zeman_dobrym_prezidentem,
-                        contentId = R.string.content_description_jmzdp
-                    )
-                )
-
-                SocialButton(
-                    onClick = {
-                        openWeb(
-                            context,
-                            "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-                        )
-                    },
-                    socialIconContent(
-                        Icons.Default.Lightbulb,
-                        contentId = R.string.content_description_surprice
-                    )
-                )
-
-            }
+        var expanded by rememberMutableSaveable() {
+            mutableStateOf(false)
         }
+
+        val context = LocalContext.current
+        val items = listOf(
+
+            //TODO remove after the end of the mandate of Miloš Zeman
+            LabelPainterActionData(
+                isIcon = true,
+                painter = rememberVectorPainter(Icons.Default.Language),
+                label = stringResource(id = R.string.web),
+                contentDescription = stringResource(id = R.string.content_description_web)
+            ) {
+                openWeb(context, "https://www.zemancountdown.cz")
+            },
+            LabelPainterActionData.fromResources(
+                isIcon = false,
+                imageId = R.drawable.wikipedia,
+                textId = R.string.wikipedia,
+                contentId = R.string.content_description_wikipedia
+            ) {
+                openWeb(context, President.getWikiLink(context.getLocale()))
+            },
+            LabelPainterActionData.fromResources(
+                isIcon = false,
+                imageId = R.drawable.hrad_cz,
+                textId = R.string.hrad,
+                contentId = R.string.content_description_hrad
+            ) {
+                openWeb(context, "https://www.hrad.cz")
+            },
+            LabelPainterActionData.fromResources(
+                isIcon = false,
+                imageId = R.drawable.je_milos_zeman_stale_nazivu,
+                textId = R.string.jmzsn,
+                contentId = R.string.content_description_jmzsn
+            ) {
+                Communication.openFacebookPage(
+                    context,
+                    "https://www.facebook.com/KancelarPrezidentaRepubliky/"
+                )
+            },
+            LabelPainterActionData.fromResources(
+                isIcon = false,
+                imageId = R.drawable.je_milos_zeman_dobrym_prezidentem,
+                textId = R.string.jmzdp,
+                contentId = R.string.content_description_jmzdp
+            ) {
+                openWeb(
+                    context,
+                    "https://play.google.com/store/apps/details?id=cz.JMZDP.jemilozemandobrmprezidentem"
+                )
+            },
+            LabelPainterActionData(
+                isIcon = true,
+                painter = rememberVectorPainter(Icons.Default.Lightbulb),
+                label = stringResource(id = R.string.surprise),
+                contentDescription = stringResource(id = R.string.content_description_surprise)
+            ) {
+                openWeb(context, "https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+            },
+        )
+
+        ExpandingIcons(
+            expanded = expanded,
+            onExpanded = { expanded = !expanded },
+            items = items,
+            label = stringResource(id = R.string.other_resources),
+            otherIcons = {
+                LinksHelp()
+            },
+        )
+
+        return@Card
+    }
+}
+
+@Composable
+private fun LinksHelp(modifier: Modifier = Modifier) {
+
+    var dialogShown by rememberMutableSaveable() { mutableStateOf(false) }
+
+    IconButton(
+        onClick = { dialogShown = !dialogShown },
+        modifier = modifier
+    ) {
+        Icon(
+            imageVector = Icons.Default.Help,
+            contentDescription = stringResource(id = R.string.ads_icon_content_description)
+        )
+    }
+
+    if (dialogShown) {
+        AlertDialog(
+            onDismissRequest = { dialogShown = false },
+            title = {
+                Text(text = stringResource(R.string.ads_title))
+            },
+            text = {
+                Text(text = stringResource(R.string.ads_text))
+            },
+            confirmButton = {
+                Button(onClick = { dialogShown = false }) {
+                    Text(text = stringResource(id = R.string.ads_ok))
+                }
+            },
+        )
     }
 }
 

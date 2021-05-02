@@ -25,6 +25,7 @@ import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import android.util.Log
+import android.util.Size
 import cz.lastaapps.president.core.App
 import cz.lastaapps.president.core.president.CurrentState
 import cz.lastaapps.president.widget.config.WidgetState
@@ -33,7 +34,6 @@ import cz.lastaapps.president.widget.config.getById
 import cz.lastaapps.president.widget.config.updateColors
 import cz.lastaapps.president.widget.service.WidgetUpdateService
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 /**
@@ -66,7 +66,6 @@ internal class PresidentWidget : AppWidgetProvider() {
 
         //makes sure widgets get updated
         GlobalScope.launch {
-            delay(2000)
             WidgetDatabase.createDatabase(App.context).configRepo.updateWidgets(App.context)
         }
     }
@@ -108,7 +107,12 @@ internal class PresidentWidget : AppWidgetProvider() {
 
                     val theme = themes.getById(widgetId) ?: defaultTheme
 
-                    RemoteViewUpdater.updateColors(context, widgetViews, theme)
+                    RemoteViewUpdater.updateColors(
+                        context,
+                        widgetViews,
+                        theme,
+                        mgr.getWidgetSize(widgetId),
+                    )
 
                     mgr.updateAppWidget(widgetId, widgetViews)
                 }
@@ -118,4 +122,12 @@ internal class PresidentWidget : AppWidgetProvider() {
             }
         }
     }
+}
+
+private fun AppWidgetManager.getWidgetSize(widgetId: Int): Size =
+    getAppWidgetOptions(widgetId).run {
+        Size(
+            getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH),
+            getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH),
+        )
 }

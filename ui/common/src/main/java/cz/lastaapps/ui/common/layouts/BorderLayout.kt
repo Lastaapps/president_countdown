@@ -44,23 +44,23 @@ private fun Preview() {
             .height(IntrinsicSize.Min)
             .padding(8.dp),
 
-        topContent = { Box(
+        top = { Box(
             Modifier
                 .size(80.dp, 20.dp)
                 .background(Color.Red)) },
-        bottomContent = { Box(
+        bottom = { Box(
             Modifier
                 .size(20.dp, 30.dp)
                 .background(Color.Green)) },
-        startContent = { Box(
+        start = { Box(
             Modifier
                 .size(30.dp, 40.dp)
                 .background(Color.Yellow)) },
-        endContent = { Box(
+        end = { Box(
             Modifier
                 .size(50.dp, 160.dp)
                 .background(Color.Blue)) },
-        centerContent = { Box(
+        center = { Box(
             Modifier
                 .size(60.dp, 70.dp)
                 .background(Color.Magenta)) },
@@ -68,8 +68,28 @@ private fun Preview() {
     )
 }
 
+//just renames the input parameters to make the API simpler
 @Composable
 fun BorderLayout(
+    modifier: Modifier = Modifier,
+    top: (@Composable () -> Unit)? = null,
+    bottom: (@Composable () -> Unit)? = null,
+    start: (@Composable () -> Unit)? = null,
+    end: (@Composable () -> Unit)? = null,
+    center: (@Composable () -> Unit)? = null,
+    spaceBy: Dp = 0.dp,
+) = BorderLayoutImpl(
+    modifier = modifier,
+    topContent = top,
+    bottomContent = bottom,
+    centerContent = center,
+    startContent = start,
+    endContent = end,
+    spaceBy = spaceBy,
+)
+
+@Composable
+private fun BorderLayoutImpl(
     modifier: Modifier = Modifier,
     topContent: (@Composable () -> Unit)? = null,
     bottomContent: (@Composable () -> Unit)? = null,

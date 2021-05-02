@@ -35,6 +35,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import cz.lastaapps.ui.common.R
+import cz.lastaapps.ui.common.components.ExpandSwitchIconButton
 import cz.lastaapps.ui.common.extencions.iconSize
 
 //TODO redo with MotionLayout
@@ -55,20 +56,10 @@ fun ExpandableBottomLayout(
             //Switch icon
             @Composable
             fun switch() {
-                IconButton(
-                    onClick = { onExpanded(!expanded) },
-                ) {
-                    Icon(
-                        if (expanded) Icons.Default.ExpandMore else Icons.Default.ExpandLess,
-                        contentDescription = stringResource(
-                            if (expanded)
-                                R.string.content_description_hide
-                            else
-                                R.string.content_description_show
-                        ),
-                        modifier = Modifier.size(iconSize)
-                    )
-                }
+                ExpandSwitchIconButton(
+                    expanded = !expanded,
+                    onExpanded = { onExpanded(!expanded) }
+                )
             }
 
             //singe switch

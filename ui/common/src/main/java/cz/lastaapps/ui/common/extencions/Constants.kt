@@ -22,5 +22,5 @@ package cz.lastaapps.ui.common.extencions
 
 import androidx.compose.ui.unit.dp
 
-
+val iconButtonSize = 48.dp
 val iconSize = 24.dp

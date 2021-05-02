@@ -22,5 +22,7 @@
     <dimen name="valueSize">28sp</dimen>
     <dimen name="unitSize">13sp</dimen>
 
+    <dimen name="hide_unit_limit">64sp</dimen>
+
     <dimen name="border_width">2dp</dimen>
 </resources>

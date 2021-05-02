@@ -28,14 +28,20 @@ import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Language
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import cz.lastaapps.common.Communication
 import cz.lastaapps.president.constants.githubProjectName
 import cz.lastaapps.ui.common.components.SocialButton
 import cz.lastaapps.ui.common.components.socialIconContent
 import cz.lastaapps.ui.common.components.socialImageContent
+import cz.lastaapps.ui.common.extencions.rememberMutableSaveable
+import cz.lastaapps.ui.common.layouts.ExpandingIcons
+import cz.lastaapps.ui.common.layouts.LabelPainterActionData
+import cz.lastaapps.common.R as CommR
 
 /**
  * Shows icons with links to Lasta apps socials
@@ -49,77 +55,52 @@ fun Socials(
         modifier = modifier,
         backgroundColor = backgroundColor
     ) {
-        Row(horizontalArrangement = Arrangement.Center) {
-            Web()
-            Facebook()
-            Github()
-            OtherApps()
-            Telegram()
-        }
+
+        var expanded by rememberMutableSaveable { mutableStateOf(false) }
+
+        val context = LocalContext.current
+        val items = listOf(
+            LabelPainterActionData.fromResources(
+                isIcon = false,
+                imageId = CommR.drawable.ic_facebook,
+                textId = CommR.string.facebook,
+                contentId = CommR.string.content_description_facebook,
+            ) {
+                Communication.openProjectsGithub(context, githubProjectName)
+            },
+            LabelPainterActionData.fromResources(
+                isIcon = false,
+                imageId = CommR.drawable.ic_github,
+                textId = CommR.string.github_project,
+                contentId = CommR.string.content_description_github_project,
+            ) {
+                Communication.openProjectsGithub(context, githubProjectName)
+            },
+            LabelPainterActionData.fromResources(
+                isIcon = false,
+                imageId = CommR.drawable.ic_play_store,
+                textId = CommR.string.play_store,
+                contentId = CommR.string.content_description_play_store,
+            ) {
+                Communication.openPlayStore(context)
+            },
+            LabelPainterActionData.fromResources(
+                isIcon = false,
+                imageId = CommR.drawable.ic_telegram,
+                textId = CommR.string.telegram,
+                contentId = CommR.string.content_description_telegram,
+            ) {
+                Communication.openTelegram(context)
+            },
+        )
+
+        ExpandingIcons(
+            label = stringResource(id = R.string.socials_label),
+            items = items,
+            expanded = expanded,
+            onExpanded = { expanded = !expanded }
+        )
+
+        return@Card
     }
-}
-
-//TODO remove after the end of the mandate of Miloš Zeman
-@Composable
-private fun Web(modifier: Modifier = Modifier) {
-    SocialButton(
-        onClick = {
-            val intent = Intent(Intent.ACTION_VIEW)
-            intent.data = Uri.parse("https://www.zemancountdown.cz")
-            it.startActivity(intent)
-        },
-        socialIconContent(
-            vector = Icons.Default.Language,
-            contentId = R.string.content_description_web,
-        ),
-        modifier = modifier
-    )
-}
-
-@Composable
-private fun Facebook(modifier: Modifier = Modifier) {
-    SocialButton(
-        onClick = { Communication.openFacebook(it) },
-        socialImageContent(
-            id = cz.lastaapps.common.R.drawable.ic_facebook,
-            contentId = cz.lastaapps.common.R.string.content_description_facebook,
-        ),
-        modifier = modifier
-    )
-}
-
-@Composable
-private fun Github(modifier: Modifier = Modifier) {
-    SocialButton(
-        onClick = { Communication.openProjectsGithub(it, githubProjectName) },
-        socialImageContent(
-            id = cz.lastaapps.common.R.drawable.ic_github,
-            contentId = cz.lastaapps.common.R.string.content_description_github_project,
-        ),
-        modifier = modifier
-    )
-}
-
-@Composable
-private fun OtherApps(modifier: Modifier = Modifier) {
-    SocialButton(
-        onClick = { Communication.openPlayStore(it) },
-        socialImageContent(
-            id = cz.lastaapps.common.R.drawable.ic_play_store,
-            contentId = cz.lastaapps.common.R.string.content_description_play_store,
-        ),
-        modifier = modifier
-    )
-}
-
-@Composable
-private fun Telegram(modifier: Modifier = Modifier) {
-    SocialButton(
-        onClick = { Communication.openTelegram(it) },
-        socialImageContent(
-            id = cz.lastaapps.common.R.drawable.ic_telegram,
-            contentId = cz.lastaapps.common.R.string.content_description_telegram,
-        ),
-        modifier = modifier
-    )
 }

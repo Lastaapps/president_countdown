@@ -88,7 +88,7 @@
     <string name="permanent_over_title">It\'s over</string>
 
 
-    <string name="sett_time">Time, when you will receive notification</string>
+    <string name="sett_time">Time when you will receive notifications</string>
     <string name="sett_time_CET_timezone">CET</string>
     <string name="sett_announcements">Important announcements</string>
     <string name="sett_daily">Send progress update every morning</string>

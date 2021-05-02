@@ -131,7 +131,7 @@ internal class WidgetViewModel(private val app: Application) : AndroidViewModel(
                 val countdownState = CurrentState.getCurrentState(this).value
 
                 RemoteViewUpdater.updateState(context, views, countdownState)
-                RemoteViewUpdater.updateColors(context, views, state)
+                RemoteViewUpdater.updateColors(context, views, state, null)
 
                 appWidgetManager.updateAppWidget(widgetId, views)
             }

@@ -310,10 +310,10 @@ internal fun SettingsRepo.setClockThemeOptions(
     isLight: Boolean,
     isPortrait: Boolean
 ) {
-    if (isLight)
-        if (isPortrait) setThemeLightPortrait(value) else setThemeDarkPortrait(value)
+    if (isPortrait)
+        if (isLight) setThemeLightPortrait(value) else setThemeDarkPortrait(value)
     else
-        if (isPortrait) setThemeLightLandscape(value) else setThemeDarkLandscape(value)
+        if (isLight) setThemeLightLandscape(value) else setThemeDarkLandscape(value)
 }
 
 

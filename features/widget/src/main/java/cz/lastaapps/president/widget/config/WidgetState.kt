@@ -21,6 +21,7 @@
 package cz.lastaapps.president.widget.config
 
 import android.content.Context
+import android.util.Size
 import android.widget.RemoteViews
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
@@ -34,6 +35,7 @@ import cz.lastaapps.president.widget.widget.RemoteViewUpdater
 internal data class WidgetState(
     @ColumnInfo(name = "id") @PrimaryKey val id: Int,
     @ColumnInfo(name = "theme") @WidgetThemeMode val theme: Int,
+    @ColumnInfo(name = "frame_enabled") val frameEnabled:Boolean,
     @ColumnInfo(name = "light_foreground") val lightForeground: Int,
     @ColumnInfo(name = "dark_foreground") val darkForeground: Int,
     @ColumnInfo(name = "light_background") val lightBackground: Int,
@@ -50,6 +52,7 @@ internal data class WidgetState(
             WidgetState(
                 id = id,
                 theme = WidgetThemeMode.SYSTEM,
+                frameEnabled = true,
                 lightForeground = Color(0xff000000).toArgb(),
                 lightBackground = Color(0xffffffff).toArgb(),
                 darkForeground = Color(0xffffffff).toArgb(),
@@ -100,25 +103,31 @@ internal fun List<WidgetState>.getById(id: Int): WidgetState? {
 internal fun RemoteViewUpdater.updateColors(
     isLight: Boolean,
     views: RemoteViews,
-    state: WidgetState
+    state: WidgetState,
+    size: Size?,
 ) {
     updateColors(
         views,
         state.getForeground(isLight),
         state.getBackground(isLight),
-        state.getYearColor(isLight)
+        state.getYearColor(isLight),
+        state.frameEnabled,
+        size,
     )
 }
 
 internal fun RemoteViewUpdater.updateColors(
     context: Context,
     views: RemoteViews,
-    state: WidgetState
+    state: WidgetState,
+    size: Size?,
 ) {
     updateColors(
         views,
         state.getForeground(context),
         state.getBackground(context),
-        state.getYearColor(context)
+        state.getYearColor(context),
+        state.frameEnabled,
+        size,
     )
 }

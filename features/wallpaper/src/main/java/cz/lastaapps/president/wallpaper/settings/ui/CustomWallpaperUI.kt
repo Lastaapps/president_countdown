@@ -36,6 +36,7 @@ import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -224,7 +225,7 @@ private fun WallpaperOptionsUI(modifier: Modifier = Modifier) {
             onClick = { viewModel.setWallpaperOptions(options.copy(rotate = options.rotate - 1)) },
         ) {
             IconTextRow(
-                painter = Icons.Default.Refresh,
+                painter = rememberVectorPainter(Icons.Default.Refresh),
                 text = stringResource(id = R.string.ui_rotate),
             )
         }

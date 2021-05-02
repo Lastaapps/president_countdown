@@ -22,8 +22,8 @@
 buildscript {
     ext {
 
-        app_version_code = 1000005 // 1x major . 2x minor . 2x path . 2x build diff
-        app_version_name = "1.0.0-alpha05"
+        app_version_code = 1000007 // 1x major . 2x minor . 2x path . 2x build diff
+        app_version_name = "1.0.0-alpha07"
         app_is_alpha = true
         app_is_beta = false
 
@@ -32,7 +32,7 @@ buildscript {
 
         //latest version, may be preview
         compile_sdk_version = 'android-S'
-        build_tools_version = '31.0.0 rc1'
+        build_tools_version = '31.0.0 rc3'
         target_sdk_version = 'S'
 
         //legacy version, last released android version
@@ -86,9 +86,9 @@ buildscript {
         google_truth_version = '1.1.2'
 
         //root class paths
-        gradle_version = '7.0.0-alpha14'
+        gradle_version = '7.0.0-alpha15'
         google_services_version = '4.3.5'
-        firebase_gradle_crashlytics_version = '2.4.1'
+        firebase_gradle_crashlytics_version = '2.5.2'
         oss_license_plugin_version = '0.10.4'
 
     }

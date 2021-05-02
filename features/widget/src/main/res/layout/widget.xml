@@ -29,7 +29,10 @@
         android:id="@+id/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/border_width"
+        android:layout_marginStart="@dimen/border_width"
+        android:layout_marginTop="@dimen/border_width"
+        android:layout_marginEnd="@dimen/border_width"
+        android:layout_marginBottom="@dimen/border_width"
         android:padding="4dp"
         tools:background="#FFF">
 

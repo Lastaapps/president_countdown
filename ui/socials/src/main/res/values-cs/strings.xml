@@ -19,5 +19,5 @@
   -->
 
 <resources>
-    <string name="content_description_web">Odkaz na webovou verzi</string>
+    <string name="socials_label">Vývojářovy kontakty</string>
 </resources>

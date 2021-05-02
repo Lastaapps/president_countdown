@@ -24,9 +24,12 @@ import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.Intent
+import android.util.Size
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.RemoteViews
 import androidx.core.text.HtmlCompat
+import cz.lastaapps.president.core.App
 import cz.lastaapps.president.core.functionality.PendingIntentCompat
 import cz.lastaapps.president.core.president.CurrentState
 import cz.lastaapps.president.core.president.TimePlurals
@@ -119,7 +122,14 @@ internal object RemoteViewUpdater {
     /**
      * Changes foreground and background colors of remote views
      * */
-    fun updateColors(views: RemoteViews, foreground: Int, background: Int, firstColor: Int?) {
+    fun updateColors(
+        views: RemoteViews,
+        foreground: Int,
+        background: Int,
+        firstColor: Int?,
+        frameEnabled: Boolean,
+        size: Size?,
+    ) {
 
         //foreground
         values.forEach { id ->
@@ -129,10 +139,14 @@ internal object RemoteViewUpdater {
             views.setTextColor(id, foreground)
         }
         views.setTextColor(R.id.state, foreground)
-        views.setInt(R.id.border_top, "setBackgroundColor", foreground)
-        views.setInt(R.id.border_bottom, "setBackgroundColor", foreground)
-        views.setInt(R.id.border_start, "setBackgroundColor", foreground)
-        views.setInt(R.id.border_end, "setBackgroundColor", foreground)
+
+        listOf(R.id.border_top, R.id.border_bottom, R.id.border_start, R.id.border_end).forEach {
+            if (frameEnabled) {
+                views.setViewVisibility(it, View.VISIBLE)
+                views.setInt(it, "setBackgroundColor", foreground)
+            } else
+                views.setViewVisibility(it, View.GONE)
+        }
 
         firstColor?.let {
             views.setTextColor(R.id.yv, it)
@@ -141,6 +155,14 @@ internal object RemoteViewUpdater {
         //background
         views.setInt(R.id.background, "setBackgroundColor", background)
 
+        size?.let {
+            if (size.height < hideUnitLimit) {
+                units.forEach {
+                    views.setViewVisibility(it, View.GONE)
+                }
+            }
+        }
     }
 
+    private val hideUnitLimit by lazy { App.context.resources.getDimensionPixelSize(R.dimen.hide_unit_limit) }
 }

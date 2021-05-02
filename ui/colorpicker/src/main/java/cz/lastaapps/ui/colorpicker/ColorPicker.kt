@@ -20,6 +20,7 @@
 
 package cz.lastaapps.ui.colorpicker
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -27,12 +28,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
+import androidx.constraintlayout.compose.atLeastWrapContent
 import cz.lastaapps.ui.common.components.ColorPreview
 import cz.lastaapps.ui.common.components.ColorPreviewConstants
 import cz.lastaapps.ui.common.components.GeneralDialog
-import cz.lastaapps.ui.common.extencions.rememberMutableSaveable
+import cz.lastaapps.ui.common.themes.MainTheme
 import kotlin.math.roundToInt
 
 internal val alpha = Color(0xff000000)
@@ -89,6 +94,17 @@ fun ColorPickerDialog(
     )
 }
 
+@Preview(showBackground = true)
+@Composable
+private fun Preview() {
+    MainTheme(true) {
+        var color by remember {
+            mutableStateOf(Color.Red)
+        }
+        ColorPicker(color = color, onColorChanged = { color = it })
+    }
+}
+
 @Composable
 fun ColorPicker(
     color: Color,
@@ -102,7 +118,6 @@ fun ColorPicker(
 
         if (alphaEnabled)
             ColorSlider(alpha, color.alpha, { onColorChanged(color.copy(alpha = it)) })
-
         ColorSlider(red, color.red, { onColorChanged(color.copy(red = it)) })
         ColorSlider(green, color.green, { onColorChanged(color.copy(green = it)) })
         ColorSlider(blue, color.blue, { onColorChanged(color.copy(blue = it)) })
@@ -147,92 +162,19 @@ internal fun ColorSlider(
     onValueChange: (Float) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    //val inverted = sliderColor.inverted().copy(alpha = SliderDefaults.InactiveTrackAlpha)
-
-    Slider(
-        value = value,
-        onValueChange = onValueChange,
-        valueRange = 0f..1f,
-        steps = 256 + 1,
-        colors = SliderDefaults.colors(
-            thumbColor = sliderColor,
-            //activeTrackColor = sliderColor,
-            activeTickColor = sliderColor,
-            //inactiveTrackColor = inverted,
-        ),
-        modifier = modifier,
-    )
-}
-
-@Composable
-internal fun HexField(
-    color: Color,
-    onColorChanged: (Color) -> Unit,
-    modifier: Modifier = Modifier,
-    alphaEnabled: Boolean = true,
-) {
-    var text by rememberMutableSaveable(color) { mutableStateOf(color.toHexColor(alphaEnabled)) }
-
-    TextField(
-        value = text,
-        onValueChange = {
-            text = it
-            val parsed = parseHexColor(it, alphaEnabled) ?: return@TextField
-            onColorChanged(parsed)
-        },
-        singleLine = true,
-        label = { Text(stringResource(id = R.string.label_hex)) },
-        leadingIcon = { Text(text = "#") },
-        modifier = modifier.width(((if (alphaEnabled) 8 else 6) * 24).dp),
-    )
-}
-
-internal fun Color.toHexColor(includeAlpha: Boolean = true): String {
-    var text = ""
-
-    if (includeAlpha)
-        text += (alpha * 255).roundToInt().toString(16)
-
-    text += (red * 255).roundToInt().toString(16)
-    text += (green * 255).roundToInt().toString(16)
-    text += (blue * 255).roundToInt().toString(16)
-
-    return text.toUpperCase()
-}
-
-internal fun parseHexColor(
-    hex: String,
-    alphaEnabled: Boolean = true,
-    acceptShort: Boolean = false
-): Color? {
-
-    //removes #
-    @Suppress("NAME_SHADOWING")
-    var hex = hex.filter { it != '#' }
-
-    if (acceptShort) {
-        //converts #ABC -> #AABBCC or #ABCD -> #AABBCCDD
-        if (hex.length in listOf(3, 4)) {
-            var completeHex = ""
-            hex.forEach { completeHex += "$it$it" }
-            hex = completeHex
-        }
-    }
-
-    if (alphaEnabled) {
-        if (hex.length != 8) return null
-    } else {
-        if (hex.length != 6) return null
-        hex = "ff$hex"
-    }
-
-    return try {
-        Color(hex.toLong(16))
-    } catch (e: Exception) {
-        e.printStackTrace()
-        null
+    Row(modifier = modifier) {
+        Slider(
+            value = value,
+            onValueChange = onValueChange,
+            valueRange = 0f..1f,
+            steps = 256 + 1,
+            colors = SliderDefaults.colors(
+                thumbColor = sliderColor,
+                activeTrackColor = sliderColor,
+                activeTickColor = Color.Transparent,
+                //inactiveTrackColor = ,
+                inactiveTickColor = Color.Transparent,
+            ),
+        )
     }
 }
-
-
-

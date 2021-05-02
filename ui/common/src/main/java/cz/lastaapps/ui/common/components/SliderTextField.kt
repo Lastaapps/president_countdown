@@ -46,7 +46,7 @@ fun SliderTextField(
     valueToText: (Float) -> String = { (it * 100).toInt().toString() },
     textToValue: (String) -> Float = { (it.toFloat() / 100) },
     smartZeroInput: Boolean = true,
-    textFieldSize: Dp = 64.dp,
+    textFieldSize: Dp = 72.dp,
 ) {
     BoxWithConstraints(modifier = modifier) {
 
