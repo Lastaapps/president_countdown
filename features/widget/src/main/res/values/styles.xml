@@ -20,8 +20,7 @@
 
 <resources>
 
-    <style name="Label" parent="">
-    </style>
+    <style name="Label" parent=""></style>
 
     <style name="Value" parent="Label">
         <item name="android:textSize">@dimen/valueSize</item>

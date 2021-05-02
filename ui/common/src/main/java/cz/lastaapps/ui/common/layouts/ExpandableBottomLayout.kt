@@ -24,19 +24,10 @@ import androidx.compose.animation.*
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.size
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ExpandLess
-import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import cz.lastaapps.ui.common.R
 import cz.lastaapps.ui.common.components.ExpandSwitchIconButton
-import cz.lastaapps.ui.common.extencions.iconSize
 
 //TODO redo with MotionLayout
 @ExperimentalAnimationApi

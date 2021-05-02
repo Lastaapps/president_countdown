@@ -44,26 +44,41 @@ private fun Preview() {
             .height(IntrinsicSize.Min)
             .padding(8.dp),
 
-        top = { Box(
-            Modifier
-                .size(80.dp, 20.dp)
-                .background(Color.Red)) },
-        bottom = { Box(
-            Modifier
-                .size(20.dp, 30.dp)
-                .background(Color.Green)) },
-        start = { Box(
-            Modifier
-                .size(30.dp, 40.dp)
-                .background(Color.Yellow)) },
-        end = { Box(
-            Modifier
-                .size(50.dp, 160.dp)
-                .background(Color.Blue)) },
-        center = { Box(
-            Modifier
-                .size(60.dp, 70.dp)
-                .background(Color.Magenta)) },
+        top = {
+            Box(
+                Modifier
+                    .size(80.dp, 20.dp)
+                    .background(Color.Red)
+            )
+        },
+        bottom = {
+            Box(
+                Modifier
+                    .size(20.dp, 30.dp)
+                    .background(Color.Green)
+            )
+        },
+        start = {
+            Box(
+                Modifier
+                    .size(30.dp, 40.dp)
+                    .background(Color.Yellow)
+            )
+        },
+        end = {
+            Box(
+                Modifier
+                    .size(50.dp, 160.dp)
+                    .background(Color.Blue)
+            )
+        },
+        center = {
+            Box(
+                Modifier
+                    .size(60.dp, 70.dp)
+                    .background(Color.Magenta)
+            )
+        },
         spaceBy = 0.dp
     )
 }

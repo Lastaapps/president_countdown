@@ -130,4 +130,4 @@ private fun AppWidgetManager.getWidgetSize(widgetId: Int): Size =
             getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH),
             getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH),
         )
-}
+    }

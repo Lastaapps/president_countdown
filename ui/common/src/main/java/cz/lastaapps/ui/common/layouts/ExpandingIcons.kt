@@ -23,26 +23,26 @@ package cz.lastaapps.ui.common.layouts
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.animation.*
-import androidx.compose.foundation.*
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.constraintlayout.compose.Dimension
-import androidx.constraintlayout.compose.atLeastWrapContent
-import cz.lastaapps.ui.common.components.*
+import cz.lastaapps.ui.common.components.ExpandSwitchIconButton
+import cz.lastaapps.ui.common.components.IconTextRow
+import cz.lastaapps.ui.common.components.ImageTextRow
 import cz.lastaapps.ui.common.extencions.iconSize
-import kotlin.math.min
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable

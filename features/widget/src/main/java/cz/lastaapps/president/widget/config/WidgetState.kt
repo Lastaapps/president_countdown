@@ -35,7 +35,7 @@ import cz.lastaapps.president.widget.widget.RemoteViewUpdater
 internal data class WidgetState(
     @ColumnInfo(name = "id") @PrimaryKey val id: Int,
     @ColumnInfo(name = "theme") @WidgetThemeMode val theme: Int,
-    @ColumnInfo(name = "frame_enabled") val frameEnabled:Boolean,
+    @ColumnInfo(name = "frame_enabled") val frameEnabled: Boolean,
     @ColumnInfo(name = "light_foreground") val lightForeground: Int,
     @ColumnInfo(name = "dark_foreground") val darkForeground: Int,
     @ColumnInfo(name = "light_background") val lightBackground: Int,

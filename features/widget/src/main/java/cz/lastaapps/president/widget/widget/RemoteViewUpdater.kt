@@ -26,7 +26,6 @@ import android.content.Context
 import android.content.Intent
 import android.util.Size
 import android.view.View
-import android.widget.LinearLayout
 import android.widget.RemoteViews
 import androidx.core.text.HtmlCompat
 import cz.lastaapps.president.core.App

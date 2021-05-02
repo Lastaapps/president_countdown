@@ -20,14 +20,8 @@
 
 package cz.lastaapps.ui.socials
 
-import android.content.Intent
-import android.net.Uri
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Language
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -35,9 +29,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import cz.lastaapps.common.Communication
 import cz.lastaapps.president.constants.githubProjectName
-import cz.lastaapps.ui.common.components.SocialButton
-import cz.lastaapps.ui.common.components.socialIconContent
-import cz.lastaapps.ui.common.components.socialImageContent
 import cz.lastaapps.ui.common.extencions.rememberMutableSaveable
 import cz.lastaapps.ui.common.layouts.ExpandingIcons
 import cz.lastaapps.ui.common.layouts.LabelPainterActionData
