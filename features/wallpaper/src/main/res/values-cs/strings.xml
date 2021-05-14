@@ -77,4 +77,5 @@
     </string>
     <string name="help_ok">OK</string>
     <string name="help_content_description">Nápověda k nastavení pozadí</string>
+    <string name="wallpaper_error">Interní chyba pozadí plochy: %s</string>
 </resources>

@@ -39,7 +39,22 @@ internal data class Version(
 ) : Comparable<Version> {
 
     override fun compareTo(other: Version): Int {
-        return -1 * releasedDate.compareTo(other.releasedDate)
+
+        val dateComparison = -1 * releasedDate.compareTo(other.releasedDate)
+
+        if (dateComparison != 0) return dateComparison
+
+        when {
+            isAlpha && !other.isAlpha -> return -1
+            !isAlpha && other.isAlpha -> return 1
+        }
+
+        when {
+            isBeta && !other.isBeta -> return -1
+            !isBeta && other.isBeta -> return 1
+        }
+
+        return 0
     }
 
     fun getLocalizedContent(context: Context): String {

@@ -103,7 +103,7 @@ private fun Wallpaper(navController: NavController, modifier: Modifier = Modifie
 @Composable
 private fun Widget(modifier: Modifier = Modifier) {
     val context = LocalContext.current
-    val viewModel = viewModel()
+    val viewModel = mainViewModel()
 
     //used to enable the onLongClick functionality
     ClickableButton(

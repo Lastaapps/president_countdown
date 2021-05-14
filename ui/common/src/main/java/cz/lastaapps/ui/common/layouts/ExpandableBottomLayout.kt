@@ -27,6 +27,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import cz.lastaapps.ui.common.components.BlinkingIndicator
 import cz.lastaapps.ui.common.components.ExpandSwitchIconButton
 
 //TODO redo with MotionLayout
@@ -36,6 +37,7 @@ fun ExpandableBottomLayout(
     expanded: Boolean,
     onExpanded: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
+    switchBlinking: Boolean = false,
     content: @Composable () -> Unit,
 ) {
     Box(
@@ -47,10 +49,12 @@ fun ExpandableBottomLayout(
             //Switch icon
             @Composable
             fun switch() {
-                ExpandSwitchIconButton(
-                    expanded = !expanded,
-                    onExpanded = { onExpanded(!expanded) }
-                )
+                BlinkingIndicator(enabled = switchBlinking) {
+                    ExpandSwitchIconButton(
+                        expanded = !expanded,
+                        onExpanded = { onExpanded(!expanded) }
+                    )
+                }
             }
 
             //singe switch

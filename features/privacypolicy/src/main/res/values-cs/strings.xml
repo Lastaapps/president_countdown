@@ -21,7 +21,7 @@
 <resources>
     <string name="dialog_title">Ochrana osobních údajů</string>
     <string name="dialog_license">Licencováno pod GNU GPL 3</string>
-    <string name="dialog_nutshell">Jednoduše řečeno, aplikace sbírá pouze základní anonymní informace o tom jak ji používáte a o chybáh pomocí služby Firebase. Tyto informace jsou prakticky nezbytné ke kvalitnímu vývoji aplikace. Klidně se koukněte na zdrojový kód, pokud nevěříte ;)</string>
+    <string name="dialog_nutshell">Jednoduše řečeno, aplikace sbírá pouze základní anonymní informace o tom, jak ji používáte, a o chybách pomocí služby Firebase. Tyto informace jsou prakticky nezbytné ke kvalitnímu vývoji aplikace. Klidně se koukněte na zdrojový kód, pokud nevěříte ;)</string>
     <string name="dialog_read_button">Přečíst si vyjádření o ochraně soukromí (anglicky)</string>
     <string name="dialog_have_read">Mám přečteno</string>
     <string name="dialog_disagree">Nesouhlasím</string>

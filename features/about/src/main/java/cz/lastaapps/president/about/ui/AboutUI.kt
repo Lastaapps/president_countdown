@@ -25,9 +25,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager.NameNotFoundException
-import android.net.Uri
-import android.os.Build
-import android.widget.Toast
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -44,8 +41,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
-import com.google.android.play.core.review.ReviewManagerFactory
 import cz.lastaapps.common.Communication
+import cz.lastaapps.common.PlayStoreReview
 import cz.lastaapps.president.about.R
 import cz.lastaapps.president.clock.ClockLayout
 import cz.lastaapps.president.constants.playStoreLink
@@ -165,7 +162,7 @@ private fun PresidentWebLinks(modifier: Modifier = Modifier) {
         modifier = modifier,
         backgroundColor = MaterialTheme.colors.secondaryVariant,
     ) {
-        var expanded by rememberMutableSaveable() {
+        var expanded by rememberMutableSaveable {
             mutableStateOf(false)
         }
 
@@ -246,7 +243,7 @@ private fun PresidentWebLinks(modifier: Modifier = Modifier) {
 @Composable
 private fun LinksHelp(modifier: Modifier = Modifier) {
 
-    var dialogShown by rememberMutableSaveable() { mutableStateOf(false) }
+    var dialogShown by rememberMutableSaveable { mutableStateOf(false) }
 
     IconButton(
         onClick = { dialogShown = !dialogShown },
@@ -364,36 +361,7 @@ private fun Licenses(modifier: Modifier = Modifier) {
 
 @SuppressLint("ObsoleteSdkInt")
 private fun rateAction(context: Context) {
-    val manager = ReviewManagerFactory.create(context)
-
-    //redirects to the play store, required under LOLLIPOP 5.0 and when Google play
-    //API fails
-    val oldRequest = {
-        val url = playStoreLink
-        val uri = Uri.parse(url)
-        context.startActivity(Intent(Intent.ACTION_VIEW, uri))
-    }
-
-    //version check
-    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-        oldRequest()
-        return
-    }
-
-    //Google play in app review
-    val request = manager.requestReviewFlow()
-    request.addOnCompleteListener { response ->
-        if (response.isSuccessful) {
-
-            val reviewInfo = response.result
-            val flow = manager.launchReviewFlow(context as Activity, reviewInfo)
-            flow.addOnCompleteListener {
-                Toast.makeText(context, R.string.thank_review, Toast.LENGTH_LONG).show()
-            }
-        } else {
-            oldRequest()
-        }
-    }
+    PlayStoreReview.doInAppReview(context as Activity)
 }
 
 private fun shareAction(context: Context) {

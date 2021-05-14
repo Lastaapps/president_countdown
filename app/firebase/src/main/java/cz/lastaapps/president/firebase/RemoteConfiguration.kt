@@ -35,7 +35,7 @@ import kotlin.coroutines.resume
 object RemoteConfiguration {
 
     private val TAG = RemoteConfiguration::class.simpleName
-    private const val STATE_ID = "stateID"
+    private const val STATE_ID = "state_id_zeman_milos"
     private const val FETCH_INTERVAL = 6 * 3600L
 
     private val mFirebaseRemoteConfig: FirebaseRemoteConfig

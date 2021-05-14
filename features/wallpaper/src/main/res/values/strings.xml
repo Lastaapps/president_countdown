@@ -29,7 +29,7 @@
     <string name="content_description_hide">Hide</string>
     <string name="ui_rotation_help_title">Rotation fix</string>
     <string name="ui_rotation_help_understand">I understand</string>
-    <string name="ui_wallpaper_theme">Choose the homescreen\'s wallpaper theme</string>
+    <string name="ui_wallpaper_theme">Choose the home screen wallpaper theme</string>
     <string name="ui_system">System</string>
     <string name="ui_day">Day</string>
     <string name="ui_night">Night</string>
@@ -61,7 +61,7 @@
     <string name="perm_setting">Open settings</string>
     <string name="perm_system">Grant</string>
     <string name="perm_title">Permission required</string>
-    <string name="perm_text">To read images from the storage or the system wallpaper, we need the read storage permission.</string>
+    <string name="perm_text">To read images from the storage, or the system wallpaper, we need the read storage permission.</string>
     <string name="help_title">Help</string>
     <string name="help_text">
         Welcome to the wallpaper preview and settings page. In the top, you can change preview only
@@ -77,4 +77,5 @@
     </string>
     <string name="help_ok">OK</string>
     <string name="help_content_description">Wallpaper options help</string>
+    <string name="wallpaper_error">An internal wallpaper error: %s</string>
 </resources>

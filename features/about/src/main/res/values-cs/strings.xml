@@ -20,9 +20,8 @@
 
 <resources>
     <string name="share">Sdílet</string>
-    <string name="share_message">Nazdar, netrpíš náhodou nedostatkem znechucení či dokonce deprese? Jestli jo, tak si stáhni tuhle skvělou appku, 100% pomůže. No a kdyby jsi náhodou nedostatkem ne trpěl, stejně neuděláš chybu.</string>
+    <string name="share_message">Nazdar, netrpíš náhodou nedostatkem znechucení či dokonce deprese? Jestli jo, tak si stáhni tuhle skvělou appku, 100% pomůže. No a kdyby jsi náhodou nedostatkem netrpěl, stejně neuděláš chybu.</string>
     <string name="rate">Ohodnoťte nás</string>
-    <string name="thank_review">Děkujeme za Váš čas</string>
     <string name="license_notices">Použité knihovny</string>
     <string name="licenses_title">Použité knihovny</string>
     <string name="unknown_version">Neznámá verze</string>
@@ -57,5 +56,5 @@
     <string name="ads_title">Vyjádření k \"reklamám\"</string>
     <string name="ads_ok">Chápu</string>
     <string name="ads_icon_content_description">Vyjádření k reklamám</string>
-    <string name="ads_text">Odkazy níže nejsou placenou reklamou. Jde o odkazy na podle vývojáře zajímavé či zábavné místa.</string>
+    <string name="ads_text">Odkazy níže nejsou placenou reklamou. Jde o odkazy na podle vývojáře zajímavá či zábavná místa.</string>
 </resources>

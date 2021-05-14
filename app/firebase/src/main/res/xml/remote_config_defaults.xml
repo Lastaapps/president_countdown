@@ -21,7 +21,7 @@
 <!-- START xml_defaults -->
 <defaultsMap>
     <entry>
-        <key>stateID</key>
+        <key>state_id_zeman_milos</key>
         <value>0</value>
     </entry>
 </defaultsMap><!-- END xml_defaults -->

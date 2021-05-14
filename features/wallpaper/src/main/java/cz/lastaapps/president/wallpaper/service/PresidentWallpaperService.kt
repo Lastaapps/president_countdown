@@ -30,9 +30,11 @@ import android.util.DisplayMetrics
 import android.util.Log
 import android.view.*
 import android.view.Surface
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import cz.lastaapps.president.core.coroutines.collectAsync
 import cz.lastaapps.president.core.president.CurrentState
+import cz.lastaapps.president.wallpaper.R
 import cz.lastaapps.president.wallpaper.WallpaperViewBitmapCreator
 import cz.lastaapps.president.wallpaper.settings.*
 import cz.lastaapps.president.wallpaper.settings.files.ImageRepo
@@ -225,26 +227,43 @@ class PresidentWallpaperService : WallpaperService() {
         private fun draw() = scope.launch(Dispatchers.Default) {
             Log.d(TAG, "Drawing")
 
-            CurrentState.getCurrentBuffered(scope)
-                .collect { state ->
+            try {
+                CurrentState.getCurrentBuffered(scope).collect { state ->
 
                     val bitmap = bitmapGenerator.createBitmap(state)
 
                     lastBitmap = bitmap
 
-                    //Translate the Canvas into position and draw it
-                    val canvas = surfaceHolder.lockCanvas()
-                    canvas.save()
-                    canvas.translate(0f, 0f)
+                    yield()
 
-                    canvas.drawBitmap(bitmap, 0f, 0f, null)
-                    canvas.restore()
-                    surfaceHolder.unlockCanvasAndPost(canvas)
+                    //ensures canvas doesn't change
+                    withContext(Dispatchers.Main) {
+
+                        //Translate the Canvas into position and draw it
+                        val canvas = surfaceHolder.lockCanvas()
+                        canvas.save()
+                        canvas.translate(0f, 0f)
+
+                        canvas.drawBitmap(bitmap, 0f, 0f, null)
+                        canvas.restore()
+                        surfaceHolder.unlockCanvasAndPost(canvas)
+                    }
 
                     //If there is item skipped, it will be shown for a moment at least
                     delay(200)
                 }
-            Log.e(TAG, "Drawing ended unexpected!")
+                Log.e(TAG, "Drawing ended unexpected!")
+            } catch (e: Exception) {
+                Log.e(TAG, "Drawing ended with an error: ${e.message}!")
+
+                withContext(Dispatchers.Main) {
+                    val message = getString(R.string.wallpaper_error, e.message)
+                    Toast.makeText(this@PresidentWallpaperService, message, Toast.LENGTH_LONG)
+                        .show()
+                }
+
+                e.printStackTrace()
+            }
         }
 
         @RequiresApi(Build.VERSION_CODES.O_MR1)

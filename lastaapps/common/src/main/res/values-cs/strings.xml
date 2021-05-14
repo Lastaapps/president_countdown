@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
   ~   Copyright 2021, Petr Laštovička as Lasta apps, All rights reserved
   ~
   ~     This file is part of President Countdown.
@@ -30,4 +31,6 @@
     <string name="content_description_play_store">Další aplikace od vývojářě</string>
     <string name="content_description_telegram">Kontakt na vývojáře na platformě Telegram</string>
     <string name="content_description_github_project">Zdrojový kód projektu na Githubu</string>
+
+    <string name="thanks_review">Děkujeme za vaše hodnocení!</string>
 </resources>

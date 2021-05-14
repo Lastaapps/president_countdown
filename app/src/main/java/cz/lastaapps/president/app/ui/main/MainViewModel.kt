@@ -20,14 +20,19 @@
 
 package cz.lastaapps.president.app.ui.main
 
+import android.app.Application
 import android.content.Context
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
 import cz.lastaapps.president.app.BuildConfig
 import cz.lastaapps.president.app.R
 import cz.lastaapps.president.widget.WidgetConfig
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.launch
 
-class MainViewModel : ViewModel() {
+class MainViewModel(app: Application) : AndroidViewModel(app) {
 
     /**Holds the text between config changes*/
     val snackbarMessage: MutableStateFlow<String?> = MutableStateFlow(null)
@@ -44,6 +49,24 @@ class MainViewModel : ViewModel() {
             showSnackbar(
                 context.getString(if (newState) R.string.widget_debug_enabled else R.string.widget_debug_disabled)
             )
+        }
+    }
+
+    // shows user that there is a small arrow to open config menu
+    private val menuOpened = MenuOpened(app)
+    val isOpened = MutableStateFlow(false)
+
+    init {
+        viewModelScope.launch {
+            menuOpened.getState().distinctUntilChanged().collectLatest {
+                isOpened.tryEmit(it)
+            }
+        }
+    }
+
+    fun markOpened() {
+        viewModelScope.launch {
+            menuOpened.markOpened()
         }
     }
 }

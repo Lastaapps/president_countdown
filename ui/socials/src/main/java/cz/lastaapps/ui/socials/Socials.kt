@@ -57,7 +57,7 @@ fun Socials(
                 textId = CommR.string.facebook,
                 contentId = CommR.string.content_description_facebook,
             ) {
-                Communication.openProjectsGithub(context, githubProjectName)
+                Communication.openFacebook(context)
             },
             LabelPainterActionData.fromResources(
                 isIcon = false,

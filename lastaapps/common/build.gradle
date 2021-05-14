@@ -30,8 +30,8 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 10009
-        versionName "1.0.9"
+        versionCode 10100
+        versionName "1.1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -64,4 +64,6 @@ dependencies {
     coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:$desugar_version"
 
     implementation "androidx.appcompat:appcompat:$appcompat_version"
+    implementation "com.google.android.play:core-ktx:$play_version"
+
 }

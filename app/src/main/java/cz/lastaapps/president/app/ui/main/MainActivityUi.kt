@@ -51,6 +51,7 @@ import cz.lastaapps.president.wallpaper.settings.ui.WallpaperSettings
 import cz.lastaapps.president.whatsnew.WhatsNewProperties
 import cz.lastaapps.president.whatsnew.ui.WhatsNewDialog
 import cz.lastaapps.ui.common.extencions.rememberMutableSaveable
+import cz.lastaapps.ui.common.extencions.viewModelKt
 import cz.lastaapps.ui.common.layouts.ExpandableBottomLayout
 import cz.lastaapps.ui.common.themes.MainTheme
 import kotlinx.coroutines.delay
@@ -151,7 +152,7 @@ private fun MainScaffold(
 ) {
 
     val scaffoldState = rememberScaffoldState()
-    val viewModel = viewModel()
+    val viewModel = mainViewModel()
 
     //deletes snackbar message on config/orientation change
     remember(LocalContext.current.resources) {
@@ -244,8 +245,17 @@ private fun Content(
 
         val guideOverview = createGuidelineFromTop(0.3f)
 
+        val viewModel = mainViewModel()
+        val isOpened by viewModel.isOpened.collectAsState()
+
         ExpandableBottomLayout(
-            expanded = expanded, onExpanded = { expanded = it },
+            expanded = expanded,
+            onExpanded = {
+                expanded = it
+                if (it)
+                    viewModel.markOpened()
+            },
+            switchBlinking = !isOpened,
             modifier = Modifier
                 .constrainAs(overview) {
                     bottom.linkTo(parent.bottom)
@@ -305,8 +315,7 @@ private fun UIMode(expanded: Boolean, uiModeStorage: UIModeStorage, modifier: Mo
 }
 
 @Composable
-internal fun viewModel(
+internal fun mainViewModel(
     key: String? = null,
     factory: ViewModelProvider.Factory? = null
-): MainViewModel =
-    cz.lastaapps.ui.common.extencions.viewModelKt(MainViewModel::class, key, factory)
+): MainViewModel = viewModelKt(MainViewModel::class, key, factory)

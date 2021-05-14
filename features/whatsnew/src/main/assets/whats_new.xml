@@ -22,6 +22,14 @@
 
 <!-- type values: alpha, beta, release-->
 <versions>
+    <version name="1.0.0" type="release" build="1000099" released="2021-05-04">
+        <en-US>
+            The first release. Enjoy!
+        </en-US>
+        <cs-CZ>
+            První vydání. Užívejte!
+        </cs-CZ>
+    </version>
     <version name="1.0.0-alpha07" type="alpha" build="1000007" released="2021-04-25">
         <en-US>
             About screen "ads" update.
