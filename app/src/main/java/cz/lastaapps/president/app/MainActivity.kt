@@ -31,7 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.lifecycleScope
 import cz.lastaapps.president.app.ui.main.MainActivityRoot
 import cz.lastaapps.president.firebase.MyAnalytics
-import cz.lastaapps.president.widget.WidgetConfig
+import cz.lastaapps.president.widget.wrapper.WidgetConfig
 import kotlinx.coroutines.delay
 
 class MainActivity : AppCompatActivity() {

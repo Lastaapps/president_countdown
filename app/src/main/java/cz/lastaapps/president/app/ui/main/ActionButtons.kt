@@ -24,7 +24,6 @@ import android.app.WallpaperManager
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AlertDialog
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -35,6 +34,9 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -45,10 +47,11 @@ import androidx.navigation.compose.navigate
 import cz.lastaapps.president.app.R
 import cz.lastaapps.president.navigation.NavigationConstants
 import cz.lastaapps.president.wallpaper.service.PresidentWallpaperService
-import cz.lastaapps.president.widget.WidgetConfig
+import cz.lastaapps.president.widget.wrapper.PinWidgetDialog
 import cz.lastaapps.ui.common.components.ClickableButton
 import cz.lastaapps.ui.common.components.IconTextRow
 import cz.lastaapps.ui.common.extencions.iconSize
+import cz.lastaapps.ui.common.extencions.rememberMutableSaveable
 import cz.lastaapps.ui.socials.DeveloperNotice
 
 /**
@@ -105,9 +108,11 @@ private fun Widget(modifier: Modifier = Modifier) {
     val context = LocalContext.current
     val viewModel = mainViewModel()
 
+    var dialogShown by rememberMutableSaveable { mutableStateOf(false) }
+
     //used to enable the onLongClick functionality
     ClickableButton(
-        onClick = { widgetAction(context) },
+        onClick = { dialogShown = !dialogShown },
         onLongClick = { viewModel.toggleWidgetDebugging(context) },
         modifier = modifier
     ) {
@@ -117,6 +122,8 @@ private fun Widget(modifier: Modifier = Modifier) {
             iconSize = iconSize
         )
     }
+
+    PinWidgetDialog(shown = dialogShown, onDismissRequest = { dialogShown = false })
 }
 
 @Composable
@@ -148,25 +155,6 @@ private fun About(navController: NavController, modifier: Modifier = Modifier) {
             text = stringResource(id = R.string.about),
             iconSize = iconSize
         )
-    }
-}
-
-private fun widgetAction(context: Context) {
-
-    if (!WidgetConfig.requestWidgetPinning(context)) {
-        //show a dialog with help how to place a widget on the home screen
-        AlertDialog.Builder(context)
-            .setMessage(R.string.widget_help)
-            .setPositiveButton(android.R.string.ok) { dialog, _ ->
-                val startMain = Intent(Intent.ACTION_MAIN)
-                startMain.addCategory(Intent.CATEGORY_HOME)
-                startMain.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                context.startActivity(startMain)
-
-                dialog.dismiss()
-            }
-            .create()
-            .show()
     }
 }
 

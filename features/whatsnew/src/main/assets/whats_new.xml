@@ -22,12 +22,20 @@
 
 <!-- type values: alpha, beta, release-->
 <versions>
-    <version name="1.0.0" type="release" build="1000099" released="2021-05-04">
+    <version name="1.0.0" type="release" build="1000008" released="2021-05-18">
         <en-US>
             The first release. Enjoy!
         </en-US>
         <cs-CZ>
             První vydání. Užívejte!
+        </cs-CZ>
+    </version>
+    <version name="1.0.0" type="alpha" build="1000008" released="2021-05-18">
+        <en-US>
+            Small widget added.
+        </en-US>
+        <cs-CZ>
+            Přidán malý widget.
         </cs-CZ>
     </version>
     <version name="1.0.0-alpha07" type="alpha" build="1000007" released="2021-04-25">

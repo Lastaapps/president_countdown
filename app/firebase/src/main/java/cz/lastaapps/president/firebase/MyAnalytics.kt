@@ -26,7 +26,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 /**
  * Reports app usage statistics back to the developer
  * */
-class MyAnalytics(private val context: Context) {
+class MyAnalytics(context: Context) {
 
     private var mFirebaseAnalytics: FirebaseAnalytics = FirebaseAnalytics.getInstance(context)
 

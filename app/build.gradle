@@ -101,7 +101,7 @@ dependencies {
     implementation project(":features:privacypolicy")
     implementation project(":features:wallpaper")
     implementation project(":features:whatsnew")
-    implementation project(":features:widget")
+    implementation project(":features:widget:wrapper")
     implementation project(":lastaapps:common")
     implementation project(":ui:clock")
     implementation project(":ui:common")

@@ -38,7 +38,7 @@ import kotlinx.coroutines.runBlocking
 import java.time.LocalTime
 
 internal class NotificationSettingsRepo private constructor(
-    private val context: Context,
+    context: Context,
 ) {
     private val scope: CoroutineScope = GlobalScope
 

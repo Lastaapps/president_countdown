@@ -48,7 +48,7 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="buggy_ok">OK</string>
     <string name="buggy_text">
-        Have you seen some seconds skipped? This can unfortunately ocurre from time to time, mostly on lower-end devices.
+        Have you seen some seconds skipped? This can unfortunately happen from the time to time, mostly on lower-end devices.
         It\'s caused by the app trying to save as many resources - battery and performance. We are sorry for the inconvenience.
         \n
         If you have noticed another bugs, feel free to report them using Telegram below.

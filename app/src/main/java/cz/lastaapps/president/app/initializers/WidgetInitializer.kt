@@ -25,12 +25,11 @@ import androidx.annotation.Keep
 import androidx.startup.Initializer
 import cz.lastaapps.president.core.App
 import cz.lastaapps.president.core.InitializerTemplate
-import cz.lastaapps.president.widget.WidgetConfig
-import kotlinx.coroutines.delay
+import cz.lastaapps.president.widget.wrapper.WidgetConfig
 
 /**
  * Runs at app start
- * Notifies widget's and starts appropriate service in necessary
+ * Notifies core's and starts appropriate service in necessary
  * */
 @Keep
 class WidgetInitializer : InitializerTemplate<Any> {
@@ -40,8 +39,7 @@ class WidgetInitializer : InitializerTemplate<Any> {
 
         //delays launch to speedup startup time
         App.afterAppInitialization.add { appContext, _ ->
-            delay(5000)
-            WidgetConfig.updateService(appContext)
+            WidgetConfig.instantiateModule(appContext)
         }
 
         return Any()

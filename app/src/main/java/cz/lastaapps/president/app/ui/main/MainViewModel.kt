@@ -26,7 +26,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import cz.lastaapps.president.app.BuildConfig
 import cz.lastaapps.president.app.R
-import cz.lastaapps.president.widget.WidgetConfig
+import cz.lastaapps.president.widget.wrapper.WidgetConfig
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -41,7 +41,7 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
         snackbarMessage.tryEmit(message)
     }
 
-    /**Switches hidden widget debugging feature*/
+    /**Switches hidden core debugging feature*/
     fun toggleWidgetDebugging(context: Context) {
 
         if (BuildConfig.DEBUG) {

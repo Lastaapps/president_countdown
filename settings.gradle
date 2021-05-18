@@ -30,29 +30,31 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        jcenter() // Warning: this repository is going to shut down soon
     }
 }
 
 rootProject.name = "President Countdown"
 
 include ':app'
-include ':features:wallpaper'
-include ':features:widget'
-include ':core:core'
-include ':core:assets'
-include ':ui:clock'
-include ':ui:common'
-include ':features:notifications'
-include ':lastaapps:common'
-include ':ui:composeimpl'
-include ':features:about'
-include ':features:whatsnew'
-include ':ui:socials'
-include ':features:privacypolicy'
-include ':app:navigation'
-include ':core:constants'
 include ':app:firebase'
-include ':ui:colorpicker'
-include ':ui:settings'
+include ':app:navigation'
+include ':core:assets'
+include ':core:constants'
+include ':core:core'
+include ':features:about'
 include ':features:battery'
+include ':features:notifications'
+include ':features:privacypolicy'
+include ':features:wallpaper'
+include ':features:whatsnew'
+include ':features:widget:big'
+include ':features:widget:core'
+include ':features:widget:small'
+include ':features:widget:wrapper'
+include ':lastaapps:common'
+include ':ui:clock'
+include ':ui:colorpicker'
+include ':ui:common'
+include ':ui:composeimpl'
+include ':ui:settings'
+include ':ui:socials'

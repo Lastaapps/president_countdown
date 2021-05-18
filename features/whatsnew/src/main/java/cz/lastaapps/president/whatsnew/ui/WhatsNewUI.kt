@@ -206,7 +206,7 @@ private fun VersionItem(version: Version, modifier: Modifier = Modifier) {
 }
 
 /**
- * Loads version infos form storage
+ * Loads version information form the storage
  * */
 @Composable
 private fun loadVersions(): List<Version> {

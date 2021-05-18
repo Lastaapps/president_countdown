@@ -24,7 +24,7 @@ import android.content.Context
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class MenuOpened(private val context: Context) {
+class MenuOpened(context: Context) {
 
     private val name = "menu_opened"
     private val openedKey = "opened"

@@ -25,8 +25,6 @@
     <string name="notification">Notifications</string>
     <string name="about">About</string>
 
-    <string name="widget_help">On the home screen, long hold your finger until a menu appears. Then choose widgets and find our widget.</string>
-
     <string name="widget_debug_enabled">Debug mode enabled!</string>
     <string name="widget_debug_disabled">Debug mode disabled!</string>
 

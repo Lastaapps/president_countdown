@@ -23,8 +23,9 @@
     <string name="widget">Umístit widget</string>
     <string name="notification">Oznámení</string>
     <string name="about">O aplikaci</string>
-    <string name="widget_help">Na domonské obrazovce podržte prst, poté vyberte možnost „Nástroje“ nebo „Widgety“ a najděte ten náš.</string>
+
     <string name="widget_debug_enabled">Debug mód povolen!</string>
     <string name="widget_debug_disabled">Debug mód zakázán!</string>
+
     <string name="content_description_theme">Změní téma aplikace mezi světlým, tmavým a systémovým.</string>
 </resources>
