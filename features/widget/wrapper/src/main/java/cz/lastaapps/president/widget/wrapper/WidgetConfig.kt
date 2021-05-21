@@ -20,22 +20,35 @@
 
 package cz.lastaapps.president.widget.wrapper
 
+import android.app.Activity
 import android.content.ComponentName
 import android.content.Context
 import cz.lastaapps.president.widget.core.config.WidgetConfigActivity
+import cz.lastaapps.president.widget.core.widget.RemoteViewUpdater
 import cz.lastaapps.president.widget.core.widget.Widget
 import cz.lastaapps.president.widget.wrapper.service.DebugSettings
 import cz.lastaapps.president.widget.wrapper.service.WidgetUpdateService
 import kotlinx.coroutines.delay
+import kotlin.reflect.KClass
 
 /**
  * Entry point for the module
  * */
 object WidgetConfig {
 
-    suspend fun instantiateModule(context: Context) {
-        WidgetConfigActivity.startService = { updateService(it) }
+    /**
+     * Set default values
+     * */
+    fun instantiateModule(context: Context, onClickActivity: KClass<out Activity>) {
         Widget.allComponents = WidgetsCombiner.providers.map { ComponentName(context, it.java) }
+        WidgetConfigActivity.startService = { updateService(it) }
+        RemoteViewUpdater.onClickActivity = onClickActivity
+    }
+
+    /**
+     * Updates services
+     * */
+    suspend fun runModule(context: Context) {
 
         //saving startup resources
         delay(3000)

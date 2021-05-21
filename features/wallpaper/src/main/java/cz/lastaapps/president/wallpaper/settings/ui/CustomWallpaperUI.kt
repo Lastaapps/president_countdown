@@ -201,7 +201,7 @@ private fun WallpaperOptionsUI(modifier: Modifier = Modifier) {
             text = stringResource(id = R.string.ui_wallpaper_zoom),
             value = options.zoom,
             onValueChanged = { viewModel.setWallpaperOptions(options.copy(zoom = it)) },
-            range = 1f..4f,
+            range = 1f..2.5f,
             valueToText = { (round(it * 100) / 100).toString() },
             textToValue = { it.toFloat() },
             modifier = Modifier.fillMaxWidth(),

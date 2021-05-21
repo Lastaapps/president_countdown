@@ -43,7 +43,7 @@ import cz.lastaapps.president.about.ui.About
 import cz.lastaapps.president.app.ui.uimode.UIModeState
 import cz.lastaapps.president.app.ui.uimode.UIModeStorage
 import cz.lastaapps.president.app.ui.uimode.UIModeSwitch
-import cz.lastaapps.president.clock.CreateClock
+import cz.lastaapps.president.clock.Clock
 import cz.lastaapps.president.clock.WebMessages
 import cz.lastaapps.president.notifications.ui.settings.NotificationSettings
 import cz.lastaapps.president.privacypolicy.PrivacyPolicy
@@ -218,7 +218,8 @@ private fun Content(
 
         val guideClock = createGuidelineFromTop(0.3f)
         //Clock
-        CreateClock(
+        Clock(
+            state = mainViewModel().clockState.collectAsState().value,
             modifier = Modifier
                 .constrainAs(clock) {
                     if (!expanded) {

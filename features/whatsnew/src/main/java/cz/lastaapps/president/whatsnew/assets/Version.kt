@@ -64,6 +64,8 @@ internal data class Version(
 
         return contents[localeName] ?: contents[defaultLocale]!!
     }
+
+    val isRelease get() = !(isAlpha || isBeta)
 }
 
 internal fun List<Version>.filterAlpha() = filter { true }

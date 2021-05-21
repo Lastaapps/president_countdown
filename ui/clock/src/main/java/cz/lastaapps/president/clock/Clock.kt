@@ -49,8 +49,7 @@ fun CreateClock(modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun Clock(state: CurrentState, modifier: Modifier = Modifier) = Box(modifier = modifier) {
-
+fun Clock(state: CurrentState, modifier: Modifier = Modifier) {
     Box(modifier = modifier) {
         if (state.state.isTimeRemainingSupported) {
 

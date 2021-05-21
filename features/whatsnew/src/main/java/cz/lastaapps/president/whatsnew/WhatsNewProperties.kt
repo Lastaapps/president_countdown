@@ -50,6 +50,7 @@ class WhatsNewProperties private constructor(
         private const val DATASTORE_NAME = "whats_new_datastore"
         private val KEY_VERSION_READ = longPreferencesKey("date_read")
         private val KEY_AUTO_LAUNCH = booleanPreferencesKey("auto_launch")
+        private val KEY_SHOW_ADVANCED = booleanPreferencesKey("show_advanced")
 
         private val Context.dataStore by preferencesDataStore(DATASTORE_NAME)
 
@@ -68,6 +69,7 @@ class WhatsNewProperties private constructor(
     suspend fun initialize() {
         versionReadFlow = mapDataStore(KEY_VERSION_READ, 0)
         autoLaunchFlow = mapDataStore(KEY_AUTO_LAUNCH, false)
+        showAdvancedFlow = mapDataStore(KEY_SHOW_ADVANCED, false)
     }
 
     private suspend fun <T> mapDataStore(key: Preferences.Key<T>, default: T): StateFlow<T> =
@@ -91,6 +93,11 @@ class WhatsNewProperties private constructor(
         get() = autoLaunchFlow.value
         set(value) = update(KEY_AUTO_LAUNCH, value)
 
+    lateinit var showAdvancedFlow: StateFlow<Boolean>
+    var showAdvanced: Boolean
+        get() = showAdvancedFlow.value
+        set(value) = update(KEY_SHOW_ADVANCED, value)
+
     /**
      * The dialog has been shown, no need to show it again
      * */
@@ -106,6 +113,12 @@ class WhatsNewProperties private constructor(
     /**
      * @return if there is new version and user requires it
      * */
-    fun shouldAutoShow(): Boolean = autoLaunch && (versionRead < context.getVersionCode())
+    fun shouldAutoShow(): Boolean {
+        if (autoLaunch && (versionRead < context.getVersionCode())) {
+            if ((BuildConfig.isAlpha || BuildConfig.isBeta) == showAdvanced)
+                return true
+        }
+        return false
+    }
 
 }

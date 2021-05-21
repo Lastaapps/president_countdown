@@ -22,8 +22,8 @@ package cz.lastaapps.president.whatsnew.ui
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -37,11 +37,14 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import cz.lastaapps.common.Communication
 import cz.lastaapps.president.constants.githubProjectName
-import cz.lastaapps.president.whatsnew.BuildConfig
 import cz.lastaapps.president.whatsnew.R
 import cz.lastaapps.president.whatsnew.WhatsNewProperties
-import cz.lastaapps.president.whatsnew.assets.*
+import cz.lastaapps.president.whatsnew.assets.Loader
+import cz.lastaapps.president.whatsnew.assets.Version
+import cz.lastaapps.president.whatsnew.assets.filterGeneral
 import cz.lastaapps.ui.common.components.ImageTextRow
+import cz.lastaapps.ui.common.extencions.viewModelKt
+import cz.lastaapps.ui.settings.SettingsGroup
 import cz.lastaapps.ui.settings.SwitchSettings
 import java.time.format.DateTimeFormatter
 
@@ -94,34 +97,43 @@ private fun Content(
             style = MaterialTheme.typography.h5,
         )
 
-        val scroll = rememberScrollState()
-        VersionsContent(
-            modifier = paddingModifier
-                .verticalScroll(scroll)
-                .constrainAs(centerConst) {
+        viewModelKt(WhatsNewViewModel::class).settings.collectAsState().value?.let { settings ->
+
+            VersionsContent(
+                settings = settings,
+                modifier = paddingModifier.constrainAs(centerConst) {
                     centerHorizontallyTo(parent)
                     top.linkTo(topConst.bottom)
                     bottom.linkTo(bottomConst.top)
                     height = Dimension.preferredWrapContent
-                })
-
-        Column(
-            modifier = Modifier.constrainAs(bottomConst) {
-                centerHorizontallyTo(parent)
-                bottom.linkTo(parent.bottom)
-            }
-        ) {
-            ViewCommits(paddingModifier.fillMaxWidth())
-
-            AutoLaunchSettings(
-                modifier = paddingModifier.fillMaxWidth()
+                },
             )
 
-            TextButton(
-                onClick = { visibilityChanged(false) },
-                modifier = paddingModifier.align(Alignment.End),
+            Column(
+                modifier = Modifier.constrainAs(bottomConst) {
+                    centerHorizontallyTo(parent)
+                    bottom.linkTo(parent.bottom)
+                }
             ) {
-                Text(stringResource(id = R.string.whatsnew_dialog_ok))
+                ViewCommits(paddingModifier.fillMaxWidth())
+
+                SettingsGroup {
+                    ShowAdvancedSettings(
+                        settings = settings,
+                        modifier = paddingModifier.fillMaxWidth()
+                    )
+                    AutoLaunchSettings(
+                        settings = settings,
+                        modifier = paddingModifier.fillMaxWidth()
+                    )
+                }
+
+                TextButton(
+                    onClick = { visibilityChanged(false) },
+                    modifier = paddingModifier.align(Alignment.End),
+                ) {
+                    Text(stringResource(id = R.string.whatsnew_dialog_ok))
+                }
             }
         }
     }
@@ -144,40 +156,40 @@ private fun ViewCommits(modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun AutoLaunchSettings(modifier: Modifier = Modifier) {
+private fun ShowAdvancedSettings(settings: WhatsNewProperties, modifier: Modifier = Modifier) {
 
-    var settings: WhatsNewProperties? by remember { mutableStateOf(null) }
-    val context = LocalContext.current
-    val scope = rememberCoroutineScope()
+    val state by settings.showAdvancedFlow.collectAsState()
 
-    LaunchedEffect("") {
-        settings = WhatsNewProperties.getInstance(context, scope).also {
-            it.updateVersion()
-        }
-    }
-
-    settings?.let {
-
-        val state by it.autoLaunchFlow.collectAsState()
-
-        SwitchSettings(
-            text = stringResource(id = R.string.sett_auto_launch),
-            checked = state,
-            onChange = { it.autoLaunch = !state },
-            modifier = modifier,
-        )
-    }
+    SwitchSettings(
+        text = stringResource(id = R.string.sett_show_advanced),
+        checked = state,
+        onChange = { settings.showAdvanced = !state },
+        modifier = modifier,
+    )
 }
 
 @Composable
-private fun VersionsContent(modifier: Modifier = Modifier) {
+private fun AutoLaunchSettings(settings: WhatsNewProperties, modifier: Modifier = Modifier) {
 
-    val versions = loadVersions()
+    val state by settings.autoLaunchFlow.collectAsState()
 
-    Column(modifier) {
-        for (version in versions) {
+    SwitchSettings(
+        text = stringResource(id = R.string.sett_auto_launch),
+        checked = state,
+        onChange = { settings.autoLaunch = !state },
+        modifier = modifier,
+    )
+}
+
+@Composable
+private fun VersionsContent(settings: WhatsNewProperties, modifier: Modifier = Modifier) {
+
+    val versions = loadVersions(!settings.showAdvancedFlow.collectAsState().value)
+
+    LazyColumn(modifier) {
+        items(versions) {
             VersionItem(
-                version,
+                it,
                 Modifier
                     .padding(bottom = 8.dp)
                     .fillMaxWidth()
@@ -188,9 +200,14 @@ private fun VersionsContent(modifier: Modifier = Modifier) {
 
 @Composable
 private fun VersionItem(version: Version, modifier: Modifier = Modifier) {
+
+    val color = if (version.isRelease)
+        MaterialTheme.colors.primary
+    else
+        MaterialTheme.colors.secondary
+
     Card(
-        backgroundColor = MaterialTheme.colors.primary,
-        shape = MaterialTheme.shapes.large,
+        backgroundColor = color,
         modifier = modifier,
     ) {
         Column(Modifier.padding(8.dp)) {
@@ -209,18 +226,19 @@ private fun VersionItem(version: Version, modifier: Modifier = Modifier) {
  * Loads version information form the storage
  * */
 @Composable
-private fun loadVersions(): List<Version> {
+private fun loadVersions(releaseOnly: Boolean): List<Version> {
 
-    var list: List<Version> by remember { mutableStateOf(ArrayList()) }
+    var list: List<Version> by remember { mutableStateOf(listOf()) }
     val context = LocalContext.current
 
-    LaunchedEffect("") {
+    LaunchedEffect(releaseOnly) {
         list = Loader(context).load().let {
-            when {
+            if (releaseOnly) it.filterGeneral() else it
+            /*when {
                 BuildConfig.isAlpha -> it.filterAlpha()
                 BuildConfig.isBeta -> it.filterBeta()
                 else -> it.filterGeneral()
-            }
+            }*/
         }
     }
 

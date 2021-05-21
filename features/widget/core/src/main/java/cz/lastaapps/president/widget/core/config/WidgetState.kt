@@ -21,6 +21,7 @@
 package cz.lastaapps.president.widget.core.config
 
 import android.content.Context
+import android.os.Build
 import android.util.Size
 import android.widget.RemoteViews
 import androidx.compose.ui.graphics.Color
@@ -52,7 +53,8 @@ data class WidgetState(
             WidgetState(
                 id = id,
                 theme = WidgetThemeMode.SYSTEM,
-                frameEnabled = true,
+                // Android S has rounded widget corners - the border looks bad
+                frameEnabled = Build.VERSION.SDK_INT < Build.VERSION_CODES.S,
                 lightForeground = Color(0xff000000).toArgb(),
                 lightBackground = Color(0xffffffff).toArgb(),
                 darkForeground = Color(0xffffffff).toArgb(),

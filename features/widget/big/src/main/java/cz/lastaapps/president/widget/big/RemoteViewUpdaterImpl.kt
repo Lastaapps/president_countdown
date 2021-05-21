@@ -42,10 +42,10 @@ object RemoteViewUpdaterImpl : RemoteViewUpdater() {
 
     override val borders: List<Int> =
         listOf(R.id.border_top, R.id.border_bottom, R.id.border_start, R.id.border_end)
-    override val rootId: Int get() = R.id.root
+    override val rootId: Int get() = android.R.id.background
     override val stateId: Int get() = R.id.state
     override val timeId: Int get() = R.id.time
-    override val backgroundId: Int get() = R.id.background
+    override val backgroundId: Int get() = android.R.id.background
     override val yearId: Int get() = R.id.yv
 
 }

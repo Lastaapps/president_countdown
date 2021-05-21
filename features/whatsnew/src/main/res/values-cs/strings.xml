@@ -23,4 +23,5 @@
     <string name="whatsnew_dialog_ok">OK</string>
     <string name="sett_auto_launch">Zobrazit u nových verzí</string>
     <string name="view_commits">Commit zprávy</string>
+    <string name="sett_show_advanced">Zobrazit alfa verze</string>
 </resources>

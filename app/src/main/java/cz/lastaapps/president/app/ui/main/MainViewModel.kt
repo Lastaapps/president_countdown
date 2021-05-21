@@ -26,6 +26,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import cz.lastaapps.president.app.BuildConfig
 import cz.lastaapps.president.app.R
+import cz.lastaapps.president.core.president.CurrentState
 import cz.lastaapps.president.widget.wrapper.WidgetConfig
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -33,6 +34,8 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 
 class MainViewModel(app: Application) : AndroidViewModel(app) {
+
+    val clockState = CurrentState.getCurrentState(viewModelScope)
 
     /**Holds the text between config changes*/
     val snackbarMessage: MutableStateFlow<String?> = MutableStateFlow(null)

@@ -25,6 +25,7 @@ import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.util.Size
 import android.view.View
 import android.widget.RemoteViews
@@ -40,6 +41,10 @@ import kotlin.reflect.KClass
  * Manages all the work with remote view for the core
  * */
 abstract class RemoteViewUpdater {
+
+    companion object {
+        lateinit var onClickActivity: KClass<out Activity>
+    }
 
     protected abstract val pendingRequest: Int
     abstract val pinningRequestCode: Int
@@ -69,14 +74,14 @@ abstract class RemoteViewUpdater {
     fun createRemoteViews(context: Context, widgetId: Int): RemoteViews =
         RemoteViews(context.packageName, layoutId).also {
 
-            val intent =
-                if (widgetId != AppWidgetManager.INVALID_APPWIDGET_ID)
-                //opens core configs
-                    Intent(context, configActivity.java).also { intent ->
-                        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId)
-                    }
-                else
-                    return@also
+            var intent = Intent(context, onClickActivity.java)
+
+            //opens core configs on Android 11 and lower
+            if (widgetId != AppWidgetManager.INVALID_APPWIDGET_ID && Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+                intent = Intent(context, configActivity.java).apply {
+                    putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId)
+                }
+            }
 
             val pending = PendingIntent.getActivity(
                 context,

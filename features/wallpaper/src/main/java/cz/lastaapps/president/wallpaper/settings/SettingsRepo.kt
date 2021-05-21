@@ -289,10 +289,10 @@ internal fun SettingsRepo.getClockThemeOptions(mode: Int, isPortrait: Boolean) =
 
 /** isPortrait methods wrapper */
 internal fun SettingsRepo.getClockThemeOptions(isLight: Boolean, isPortrait: Boolean) =
-    if (isLight)
-        if (isPortrait) themeLightPortrait else themeDarkPortrait
+    if (isPortrait)
+        if (isLight) themeLightPortrait else themeDarkPortrait
     else
-        if (isPortrait) themeLightLandscape else themeDarkLandscape
+        if (isLight) themeLightLandscape else themeDarkLandscape
 
 
 /** isPortrait methods wrapper */

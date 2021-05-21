@@ -27,4 +27,5 @@
     android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="1800000"
     android:widgetCategory="home_screen|keyguard"
-    android:configure="cz.lastaapps.president.widget.small.WidgetConfigActivityImpl" />
+    android:configure="cz.lastaapps.president.widget.small.WidgetConfigActivityImpl"
+    android:widgetFeatures="reconfigurable" />

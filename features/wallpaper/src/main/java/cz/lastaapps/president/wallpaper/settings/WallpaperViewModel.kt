@@ -139,7 +139,10 @@ internal class WallpaperViewModel(private val app: Application) : AndroidViewMod
 
                 job?.cancel()
                 job = launch {
-                    Sett.getClockThemeOptions(state.first, state.second).moveTo(this, themeOptions)
+                    Sett.getClockThemeOptions(
+                        isLight = state.first,
+                        isPortrait = state.second,
+                    ).moveTo(this, themeOptions)
                 }
             }
         }
@@ -147,7 +150,11 @@ internal class WallpaperViewModel(private val app: Application) : AndroidViewMod
 
     fun setThemeOptions(value: ClockThemeOptions) {
         viewModelScope.launch {
-            Sett.setClockThemeOptions(value, isDayPreview.value, isPortrait.value)
+            Sett.setClockThemeOptions(
+                value,
+                isLight = isDayPreview.value,
+                isPortrait = isPortrait.value,
+            )
         }
     }
 
