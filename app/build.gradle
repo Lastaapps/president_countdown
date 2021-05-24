@@ -95,6 +95,7 @@ dependencies {
 
     implementation project(":app:firebase")
     implementation project(":app:navigation")
+    implementation project(":core:assets")
     implementation project(":core:core")
     implementation project(":features:about")
     implementation project(":features:notifications")

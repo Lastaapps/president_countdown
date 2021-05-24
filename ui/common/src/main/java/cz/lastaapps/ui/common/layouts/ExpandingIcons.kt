@@ -37,8 +37,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import cz.lastaapps.ui.common.components.ExpandSwitchIconButton
 import cz.lastaapps.ui.common.components.IconTextRow
 import cz.lastaapps.ui.common.components.ImageTextRow
@@ -72,10 +74,12 @@ fun ExpandingIcons(
                 end.linkTo(iconsConst.start, 8.dp)
                 top.linkTo(parent.top)
                 bottom.linkTo(barrier)
+
+                width = Dimension.preferredWrapContent
             },
             contentAlignment = Alignment.CenterStart,
         ) {
-            Text(label)
+            Text(label, textAlign = TextAlign.Center)
         }
 
 

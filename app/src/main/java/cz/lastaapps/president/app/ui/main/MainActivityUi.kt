@@ -142,7 +142,7 @@ private fun CheckWhatsNew() {
 
 /**
  * The main content - clock, navigation
- * Set's up the snackbar
+ * Set's up the SnackBar
  * */
 @Composable
 private fun MainScaffold(
@@ -154,14 +154,14 @@ private fun MainScaffold(
     val scaffoldState = rememberScaffoldState()
     val viewModel = mainViewModel()
 
-    //deletes snackbar message on config/orientation change
+    //deletes SnackBar message on config/orientation change
     remember(LocalContext.current.resources) {
         viewModel.showSnackbar(null)
         null
     }
 
     LaunchedEffect("") {
-        //wait's until snackbar message has been deleted after a configuration change
+        //wait's until SnackBar message has been deleted after a configuration change
         delay(100)
         viewModel.snackbarMessage.collectLatest {
             it?.let {
@@ -173,9 +173,9 @@ private fun MainScaffold(
     Scaffold(
         scaffoldState = scaffoldState,
         snackbarHost = {
-            // reuse default SnackbarHost to have default animation and timing handling
+            // reuse default SnackBarHost to have default animation and timing handling
             SnackbarHost(it) { data ->
-                // custom snackbar with the custom border
+                // custom SnackBar with the custom border
                 Snackbar(
                     modifier = Modifier,
                     snackbarData = data
@@ -206,6 +206,8 @@ private fun Content(
     uiModeStorage: UIModeStorage,
     modifier: Modifier = Modifier
 ) {
+    val viewModel = mainViewModel()
+
     ConstraintLayout(
         modifier = Modifier
             .padding(padding)
@@ -217,9 +219,9 @@ private fun Content(
         var expanded by rememberMutableSaveable { mutableStateOf(false) }
 
         val guideClock = createGuidelineFromTop(0.3f)
+
         //Clock
-        Clock(
-            state = mainViewModel().clockState.collectAsState().value,
+        ClockStateHolder(
             modifier = Modifier
                 .constrainAs(clock) {
                     if (!expanded) {
@@ -228,7 +230,7 @@ private fun Content(
                         top.linkTo(parent.top, margin = 24.dp)
                     }
                     centerHorizontallyTo(parent)
-                }
+                },
         )
 
         //Web message
@@ -246,7 +248,6 @@ private fun Content(
 
         val guideOverview = createGuidelineFromTop(0.3f)
 
-        val viewModel = mainViewModel()
         val isOpened by viewModel.isOpened.collectAsState()
 
         ExpandableBottomLayout(
@@ -279,7 +280,7 @@ private fun Content(
                     modifier = Modifier
                         .padding(padding)
                         .verticalScroll(scrollPosition),
-                    verticalArrangement = Arrangement.Bottom
+                    verticalArrangement = Arrangement.Bottom,
                 )
             }
         }
@@ -296,6 +297,15 @@ private fun Content(
             }
         )
     }
+}
+
+@Composable
+private fun ClockStateHolder(modifier: Modifier = Modifier) {
+
+    val viewModel = mainViewModel()
+    val clockState by remember { viewModel.clockState }.collectAsState()
+
+    Clock(state = clockState, modifier = modifier)
 }
 
 @ExperimentalAnimationApi

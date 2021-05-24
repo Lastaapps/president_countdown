@@ -18,4 +18,7 @@
   ~
   -->
 
-<resources></resources>
+<resources>
+    <dimen name="splash_size_icon">196dp</dimen>
+    <!--dimen name="splash_size_icon">314dp</dimen-->
+</resources>
