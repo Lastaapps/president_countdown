@@ -34,7 +34,6 @@ import cz.lastaapps.president.widget.core.R
 import cz.lastaapps.ui.common.extencions.rememberMutableSaveable
 import cz.lastaapps.ui.settings.ColorPickerSetting
 import cz.lastaapps.ui.settings.SettingsGroup
-import cz.lastaapps.ui.settings.SettingsGroupColumn
 import cz.lastaapps.ui.settings.SwitchSettings
 import kotlin.math.round
 
@@ -62,7 +61,7 @@ fun UIModeSelection(
         )
     }
 
-    SettingsGroupColumn(modifier) {
+    SettingsGroup(modifier) {
         //labels above the slider
         Row {
             Text(
@@ -239,7 +238,7 @@ fun DifferYear(
     isLightPreview: Boolean,
     modifier: Modifier = Modifier
 ) {
-    SettingsGroupColumn(modifier = modifier.animateContentSize()) {
+    SettingsGroup(modifier = modifier.animateContentSize()) {
         SwitchSettings(
             text = stringResource(id = R.string.differ_year),
             checked = state.isDifferYear(isLightPreview),

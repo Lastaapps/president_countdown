@@ -37,6 +37,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.lifecycle.ViewModelProvider
 import cz.lastaapps.president.wallpaper.settings.WallpaperViewModel
+import cz.lastaapps.ui.common.extencions.FullScreen
 import cz.lastaapps.ui.common.extencions.centerToWithPadding
 import cz.lastaapps.ui.common.extencions.viewModelKt
 import cz.lastaapps.ui.common.themes.MainTheme
@@ -46,6 +47,8 @@ import cz.lastaapps.ui.common.themes.MainTheme
  * */
 @Composable
 fun WallpaperSettings(modifier: Modifier = Modifier) {
+
+    FullScreen()
 
     val sideMargins = 8.dp
     val viewModel = wallpaperViewModel()

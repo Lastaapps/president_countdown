@@ -112,7 +112,10 @@ private fun Content(requestDismiss: () -> Unit, modifier: Modifier = Modifier) {
             },
             modifier = paddingModifier,
         ) {
-            Text(text = stringResource(id = R.string.dialog_read_button))
+            Text(
+                text = stringResource(id = R.string.dialog_read_button),
+                textAlign = TextAlign.Center,
+            )
         }
 
         var agreed by remember { mutableStateOf(false) }
@@ -168,7 +171,10 @@ private fun Content(requestDismiss: () -> Unit, modifier: Modifier = Modifier) {
                 },
                 modifier = paddingModifier,
             ) {
-                Text(text = stringResource(id = R.string.dialog_disagree))
+                Text(
+                    text = stringResource(id = R.string.dialog_disagree),
+                    textAlign = TextAlign.Center,
+                )
             }
         }
     }

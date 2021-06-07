@@ -32,5 +32,9 @@
     <string name="content_description_telegram">Der Kontakt zum Entwickler der App über Telegramm</string>
     <string name="content_description_github_project">Das Quellcode-Github-Repository des Projekts</string>
 
-    <string name="thanks_review">Vielen Dank für Ihre Bewertung!</string>
+    <string name="review_dialog_title">Rezension</string>
+    <string name="review_dialog_message">Könnten Sie bitte erwägen, dieser App eine nette Bewertung zu geben?</string>
+    <string name="review_dialog_positive">Natürlich</string>
+    <string name="review_dialog_negative">Nein</string>
+    <string name="review_thanks">Vielen Dank für Ihre Bewertung!</string>
 </resources>

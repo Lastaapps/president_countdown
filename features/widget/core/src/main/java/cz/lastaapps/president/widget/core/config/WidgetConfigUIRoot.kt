@@ -33,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.min
@@ -284,14 +285,20 @@ private fun ConfirmButtons(
             modifier = Modifier.weight(.5f),
             enabled = enabled,
         ) {
-            Text(text = stringResource(id = R.string.cancel))
+            Text(
+                text = stringResource(id = R.string.cancel),
+                textAlign = TextAlign.Center,
+            )
         }
         Button(
             onClick = { viewModel.ok() },
             modifier = Modifier.weight(.5f),
             enabled = enabled,
         ) {
-            Text(text = stringResource(id = R.string.ok))
+            Text(
+                text = stringResource(id = R.string.ok),
+                textAlign = TextAlign.Center,
+            )
         }
     }
 }

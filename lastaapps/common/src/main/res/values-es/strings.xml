@@ -32,5 +32,9 @@
     <string name="content_description_telegram">El contacto con el desarrollador de la aplicación que usa Telegram</string>
     <string name="content_description_github_project">El repositorio de Github del código fuente del proyecto</string>
 
-    <string name="thanks_review">¡Gracias por tu reseña!</string>
+    <string name="review_dialog_title">Revisar</string>
+    <string name="review_dialog_message">¿Podrías considerar darle una buena reseña a esta aplicación?</string>
+    <string name="review_dialog_positive">Sí</string>
+    <string name="review_dialog_negative">No</string>
+    <string name="review_thanks">¡Gracias por tu reseña!</string>
 </resources>

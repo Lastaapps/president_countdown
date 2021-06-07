@@ -19,11 +19,4 @@
   -->
 
 <resources>
-
-    <color name="flag_white">#ffffff</color>
-    <color name="flag_red">#D7141A</color>
-    <color name="flag_blue">#11457E</color>
-
-    <color name="splash_background">#FFF</color>
-
 </resources>

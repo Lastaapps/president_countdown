@@ -20,10 +20,8 @@
 
 package cz.lastaapps.president.app.ui.uimode
 
-import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bedtime
 import androidx.compose.material.icons.filled.InvertColors
@@ -51,15 +49,13 @@ fun UIModeSwitch(
         else -> throw IllegalArgumentException("Invalid ${UIModeState::class.simpleName} value: $uiMode")
     }
 
-    Card(backgroundColor = MaterialTheme.colors.primaryVariant) {
-        IconButton(
-            onClick = { uiModeChanged(UIModeState.next(uiMode)) },
-            modifier = modifier
-        ) {
-            Icon(
-                icon,
-                contentDescription = stringResource(id = R.string.content_description_theme)
-            )
-        }
+    IconButton(
+        onClick = { uiModeChanged(UIModeState.next(uiMode)) },
+        modifier = modifier
+    ) {
+        Icon(
+            icon,
+            contentDescription = stringResource(id = R.string.content_description_theme)
+        )
     }
 }

@@ -42,6 +42,8 @@ abstract class WidgetDatabase : RoomDatabase() {
 
     companion object {
 
+        private val TAG get() = WidgetDatabase::class.simpleName!!
+
         //tables
         const val TABLE_WIDGET_STATE = "widget_state"
 
@@ -57,12 +59,12 @@ abstract class WidgetDatabase : RoomDatabase() {
 
             with(
                 Room.databaseBuilder(
-                    context.applicationContext,
-                    WidgetDatabase::class.java, DATABASE_NAME
+                    context.applicationContext, WidgetDatabase::class.java, DATABASE_NAME
                 )
             ) {
                 fallbackToDestructiveMigration()
                 setAutoCloseTimeout(5, TimeUnit.MINUTES)
+                addCallback(Listener(TAG))
                 build()
             }.also {
                 database = it

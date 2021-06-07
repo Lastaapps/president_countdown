@@ -40,9 +40,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import cz.lastaapps.president.core.functionality.PendingIntentCompat
+import cz.lastaapps.ui.common.layouts.FlexRow
 
 /**
  * Tries to pin a widget, or shows legacy help dialog
@@ -54,7 +56,7 @@ fun PinWidgetDialog(
 ) {
     if (shown) {
         Dialog(onDismissRequest = onDismissRequest) {
-            Surface(color = MaterialTheme.colors.background) {
+            Surface(color = MaterialTheme.colors.surface) {
                 Box(Modifier.padding(16.dp)) {
 
                     val context = LocalContext.current
@@ -89,10 +91,13 @@ private fun PinningDialog(onDismissRequest: () -> Unit) {
             modifier = Modifier
         )
 
-        Column(
+        FlexRow(
             Modifier.width(IntrinsicSize.Min),
-            verticalArrangement = Arrangement.spacedBy(4.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
+            itemInBoxAlignment = Alignment.CenterVertically,
+            horizontalItemsBoxInRowArrangement = Arrangement.spacedBy(
+                8.dp, Alignment.CenterHorizontally
+            ),
+            rowsVerticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically),
         ) {
 
             WidgetsCombiner.modules.forEach {
@@ -100,7 +105,10 @@ private fun PinningDialog(onDismissRequest: () -> Unit) {
                     requestPinning(context, it)
                     onDismissRequest()
                 }, Modifier.fillMaxWidth()) {
-                    Text(stringResource(id = it.name))
+                    Text(
+                        stringResource(id = it.name),
+                        textAlign = TextAlign.Center,
+                    )
                 }
             }
         }
@@ -128,7 +136,10 @@ private fun LegacyContent() {
                 context.startActivity(startMain)
             }
         ) {
-            Text(text = stringResource(id = R.string.widget_pinning_legacy_ok))
+            Text(
+                text = stringResource(id = R.string.widget_pinning_legacy_ok),
+                textAlign = TextAlign.Center,
+            )
         }
     }
 }

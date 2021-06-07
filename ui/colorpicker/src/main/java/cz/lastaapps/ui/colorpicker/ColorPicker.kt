@@ -27,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
@@ -74,7 +75,10 @@ fun ColorPickerDialog(
                 TextButton(
                     onClick = { onShownChanged(false) }
                 ) {
-                    Text(stringResource(R.string.color_picker_dialog_cancel))
+                    Text(
+                        stringResource(R.string.color_picker_dialog_cancel),
+                        textAlign = TextAlign.Center,
+                    )
                 }
                 Button(
                     onClick = {
@@ -82,7 +86,10 @@ fun ColorPickerDialog(
                         onShownChanged(false)
                     }
                 ) {
-                    Text(stringResource(R.string.color_picker_dialog_ok))
+                    Text(
+                        stringResource(R.string.color_picker_dialog_ok),
+                        textAlign = TextAlign.Center,
+                    )
                 }
             }
         }

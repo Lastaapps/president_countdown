@@ -1,0 +1,50 @@
+/*
+ *   Copyright 2021, Petr Laštovička as Lasta apps, All rights reserved
+ *
+ *     This file is part of President Countdown.
+ *
+ *     This app is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     This app is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with this app.  If not, see <https://www.gnu.org/licenses/>.
+ *
+ */
+
+package cz.lastaapps.president.about.ui
+
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import cz.lastaapps.common.PlayStoreReview
+import cz.lastaapps.president.about.R
+import cz.lastaapps.president.constants.playStoreLink
+
+object AboutActions {
+
+    @SuppressLint("ObsoleteSdkInt")
+    fun rateAction(context: Context) {
+        PlayStoreReview.doInAppReview(context as Activity)
+    }
+
+    fun shareAction(context: Context) {
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(
+                Intent.EXTRA_TEXT,
+                context.getString(R.string.share_message) + " $playStoreLink"
+            )
+            type = "text/plain"
+        }
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        context.startActivity(shareIntent)
+    }
+}

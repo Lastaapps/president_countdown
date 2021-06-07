@@ -34,6 +34,35 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:11414584295:android:ca43fda7247d75af02db42",
+        "android_client_info": {
+          "package_name": "cz.lastaapps.president.app.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "11414584295-6c9uise4pe7rvmjh6fnf23ef4e10451m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAF-KxMPZ2iJxVevL7cIeNDkhJdaiYL054"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "11414584295-6c9uise4pe7rvmjh6fnf23ef4e10451m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"

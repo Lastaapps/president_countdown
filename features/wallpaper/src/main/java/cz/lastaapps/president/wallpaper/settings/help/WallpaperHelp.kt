@@ -29,6 +29,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import cz.lastaapps.president.wallpaper.R
 import cz.lastaapps.ui.common.extencions.rememberMutableSaveable
 
@@ -68,7 +69,10 @@ internal fun WallpaperHelpDialog(shown: Boolean, onDismissRequest: () -> Unit) {
             },
             confirmButton = {
                 Button(onClick = { myDismiss() }) {
-                    Text(text = stringResource(id = R.string.help_ok))
+                    Text(
+                        text = stringResource(id = R.string.help_ok),
+                        textAlign = TextAlign.Center,
+                    )
                 }
             },
         )

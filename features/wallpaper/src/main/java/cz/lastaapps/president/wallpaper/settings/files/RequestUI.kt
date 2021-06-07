@@ -26,6 +26,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.*
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import cz.lastaapps.president.core.coroutines.loopingStateFlow
 import cz.lastaapps.president.wallpaper.R
 import cz.lastaapps.ui.common.extencions.LocalActivity
@@ -78,7 +79,10 @@ internal fun RequestStoragePermissionDialog(
                 TextButton(onClick = {
                     onShownChanged(false)
                 }) {
-                    Text(text = stringResource(id = R.string.perm_cancel))
+                    Text(
+                        text = stringResource(id = R.string.perm_cancel),
+                        textAlign = TextAlign.Center,
+                    )
                 }
             },
         )

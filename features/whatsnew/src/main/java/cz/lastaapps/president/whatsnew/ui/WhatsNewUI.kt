@@ -31,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -86,11 +87,9 @@ private fun Content(
 
         val (topConst, centerConst, bottomConst) = createRefs()
 
-        val paddingModifier = Modifier.padding(top = 4.dp, bottom = 4.dp)
-
         Text(
             text = stringResource(id = R.string.whatsnew_dialog_title),
-            modifier = paddingModifier.constrainAs(topConst) {
+            modifier = Modifier.constrainAs(topConst) {
                 centerHorizontallyTo(parent)
                 top.linkTo(parent.top)
             },
@@ -101,10 +100,10 @@ private fun Content(
 
             VersionsContent(
                 settings = settings,
-                modifier = paddingModifier.constrainAs(centerConst) {
+                modifier = Modifier.constrainAs(centerConst) {
                     centerHorizontallyTo(parent)
-                    top.linkTo(topConst.bottom)
-                    bottom.linkTo(bottomConst.top)
+                    top.linkTo(topConst.bottom, 8.dp)
+                    bottom.linkTo(bottomConst.top, 8.dp)
                     height = Dimension.preferredWrapContent
                 },
             )
@@ -113,26 +112,30 @@ private fun Content(
                 modifier = Modifier.constrainAs(bottomConst) {
                     centerHorizontallyTo(parent)
                     bottom.linkTo(parent.bottom)
-                }
+                },
+                verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                ViewCommits(paddingModifier.fillMaxWidth())
+                ViewCommits(Modifier.fillMaxWidth())
 
                 SettingsGroup {
                     ShowAdvancedSettings(
                         settings = settings,
-                        modifier = paddingModifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth()
                     )
                     AutoLaunchSettings(
                         settings = settings,
-                        modifier = paddingModifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth()
                     )
                 }
 
                 TextButton(
                     onClick = { visibilityChanged(false) },
-                    modifier = paddingModifier.align(Alignment.End),
+                    modifier = Modifier.align(Alignment.End),
                 ) {
-                    Text(stringResource(id = R.string.whatsnew_dialog_ok))
+                    Text(
+                        stringResource(id = R.string.whatsnew_dialog_ok),
+                        textAlign = TextAlign.Center,
+                    )
                 }
             }
         }
@@ -201,13 +204,8 @@ private fun VersionsContent(settings: WhatsNewProperties, modifier: Modifier = M
 @Composable
 private fun VersionItem(version: Version, modifier: Modifier = Modifier) {
 
-    val color = if (version.isRelease)
-        MaterialTheme.colors.primary
-    else
-        MaterialTheme.colors.secondary
-
     Card(
-        backgroundColor = color,
+        backgroundColor = MaterialTheme.colors.primarySurface,
         modifier = modifier,
     ) {
         Column(Modifier.padding(8.dp)) {

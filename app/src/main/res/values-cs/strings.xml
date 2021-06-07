@@ -28,4 +28,12 @@
     <string name="widget_debug_disabled">Debug mód zakázán!</string>
 
     <string name="content_description_theme">Změní téma aplikace mezi světlým, tmavým a systémovým.</string>
+
+    <string name="idea_dialog_title">Zdroj inspirace</string>
+    <string name="idea_dialog_message">
+        Inspiroval jsem se webem zemancountdown.cz.
+        Všechna sláva za nápad odpočtu náleží jim.
+    </string>
+    <string name="idea_dialog_ok">OK</string>
+    <string name="idea_dialog_web">Otevřít web</string>
 </resources>

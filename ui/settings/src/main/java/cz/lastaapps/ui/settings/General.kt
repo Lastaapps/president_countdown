@@ -26,7 +26,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.*
+import androidx.compose.material.Card
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Switch
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -213,42 +216,24 @@ fun SettingsGroup(
     shape: Shape = MaterialTheme.shapes.medium,
     categoryName: String? = null,
     border: BorderStroke? = null,
+    backgroundAlpha: Float = 1f,
+    elevation: Dp = 1.dp,
     content: @Composable () -> Unit,
 ) {
     Card(
         modifier = modifier,
         shape = shape,
-        backgroundColor = MaterialTheme.colors.surface.copy(alpha = LocalContentAlpha.current),
+        backgroundColor = MaterialTheme.colors.surface.copy(alpha = backgroundAlpha),
         border = border,
+        elevation = elevation,
     ) {
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
             categoryName?.let {
                 SettingsCategoryName(text = it)
             }
-            content()
-        }
-    }
-}
-
-/**
- * Background for settings components
- * */
-@Composable
-fun SettingsGroupColumn(
-    modifier: Modifier = Modifier,
-    shape: Shape = MaterialTheme.shapes.medium,
-    border: BorderStroke? = null,
-    categoryName: String? = null,
-    content: @Composable () -> Unit,
-) {
-    SettingsGroup(
-        modifier = modifier,
-        shape = shape,
-        categoryName = categoryName,
-        border = border,
-    ) {
-        Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-            content()
+            Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                content()
+            }
         }
     }
 }

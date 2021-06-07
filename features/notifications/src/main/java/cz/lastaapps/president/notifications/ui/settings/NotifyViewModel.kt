@@ -22,22 +22,25 @@ package cz.lastaapps.president.notifications.ui.settings
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
 import cz.lastaapps.president.notifications.NotificationsConfig
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
 import java.time.LocalTime
 
 internal class NotifyViewModel(private val app: Application) : AndroidViewModel(app) {
 
     private lateinit var settings: NotificationSettingsRepo
 
-    private val initMutex = Mutex()
+    val isReady = MutableStateFlow(false)
 
-    suspend fun initializeSettings() = initMutex.withLock {
-        if (!this::settings.isInitialized)
+    init {
+        viewModelScope.launch {
             settings = NotificationSettingsRepo.getInstance(app)
+
+            isReady.tryEmit(true)
+        }
     }
 
     val announcementsFlow by lazy { settings.announcementsFlow }

@@ -1,4 +1,4 @@
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~   Copyright 2021, Petr Laštovička as Lasta apps, All rights reserved
   ~
   ~     This file is part of President Countdown.
@@ -19,23 +19,5 @@
   -->
 
 <resources>
-
-    <string name="wallpaper">Set as wallpaper</string>
-    <string name="widget">Use as widget</string>
-    <string name="notification">Notifications</string>
-    <string name="about">About</string>
-
-    <string name="widget_debug_enabled">Debug mode enabled!</string>
-    <string name="widget_debug_disabled">Debug mode disabled!</string>
-
-    <string name="content_description_theme">Changes app\'s system/light/dark theme modes</string>
-
-    <string name="idea_dialog_title">The Idea source</string>
-    <string name="idea_dialog_message">
-        I got the inspiration for this project from zemancountdown.cz.
-    All the credits for the idea belong to them.
-    </string>
-    <string name="idea_dialog_ok">OK</string>
-    <string name="idea_dialog_web">Show the web</string>
-
+    <dimen name="splash_size_icon">196dp</dimen>
 </resources>

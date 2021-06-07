@@ -21,25 +21,32 @@
 package cz.lastaapps.president.app.ui.main
 
 import androidx.compose.animation.*
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.ConstraintLayoutScope
 import androidx.constraintlayout.compose.Dimension
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import cz.lastaapps.president.about.R
 import cz.lastaapps.president.about.ui.About
+import cz.lastaapps.president.about.ui.AboutActions
+import cz.lastaapps.president.app.ui.idea.IdeaDialog
+import cz.lastaapps.president.app.ui.rate.RatePopup
 import cz.lastaapps.president.app.ui.uimode.UIModeState
 import cz.lastaapps.president.app.ui.uimode.UIModeStorage
 import cz.lastaapps.president.app.ui.uimode.UIModeSwitch
@@ -50,6 +57,7 @@ import cz.lastaapps.president.privacypolicy.PrivacyPolicy
 import cz.lastaapps.president.wallpaper.settings.ui.WallpaperSettings
 import cz.lastaapps.president.whatsnew.WhatsNewProperties
 import cz.lastaapps.president.whatsnew.ui.WhatsNewDialog
+import cz.lastaapps.ui.common.extencions.LocalActivity
 import cz.lastaapps.ui.common.extencions.rememberMutableSaveable
 import cz.lastaapps.ui.common.extencions.viewModelKt
 import cz.lastaapps.ui.common.layouts.ExpandableBottomLayout
@@ -59,7 +67,6 @@ import kotlinx.coroutines.flow.collectLatest
 import cz.lastaapps.president.navigation.NavigationConstants as N
 
 private val padding = 16.dp
-private const val UI_MODE_STORAGE_NAME = "MAIN_UI_MODE"
 
 /**
  * UI for the Main activity
@@ -68,9 +75,8 @@ private const val UI_MODE_STORAGE_NAME = "MAIN_UI_MODE"
 internal fun MainActivityRoot(modifier: Modifier = Modifier) {
 
     //manages ui mode
-    val context = LocalContext.current
-    val uiModeStorage = remember(context) { UIModeStorage(context, UI_MODE_STORAGE_NAME) }
-    val uiMode by uiModeStorage.getThemeFlow().collectAsState()
+    val viewModel = mainViewModel()
+    val uiMode by viewModel.uiModeStorage.getThemeFlow().collectAsState()
 
     MainTheme(UIModeState.isLight(uiMode)) {
         Surface(color = MaterialTheme.colors.background) {
@@ -81,14 +87,19 @@ internal fun MainActivityRoot(modifier: Modifier = Modifier) {
                 //shows whats new
                 CheckWhatsNew()
 
+                //Shows rate popup
+                RatePopup()
+
+                //Tells an user about http://zemancountdown.cz
+                IdeaDialog()
+
                 //navigation between parts of the app
                 val navController = rememberNavController()
 
                 NavHost(navController, startDestination = N.id.home) {
                     composable(N.id.home) {
                         MainScaffold(
-                            navController,
-                            uiModeStorage,
+                            navController, viewModel,
                             modifier
                         )
                     }
@@ -147,12 +158,11 @@ private fun CheckWhatsNew() {
 @Composable
 private fun MainScaffold(
     navController: NavController,
-    uiModeStorage: UIModeStorage,
-    modifier: Modifier = Modifier
+    viewModel: MainViewModel,
+    modifier: Modifier = Modifier,
 ) {
 
     val scaffoldState = rememberScaffoldState()
-    val viewModel = mainViewModel()
 
     //deletes SnackBar message on config/orientation change
     remember(LocalContext.current.resources) {
@@ -160,7 +170,7 @@ private fun MainScaffold(
         null
     }
 
-    LaunchedEffect("") {
+    LaunchedEffect(true) {
         //wait's until SnackBar message has been deleted after a configuration change
         delay(100)
         viewModel.snackbarMessage.collectLatest {
@@ -185,8 +195,7 @@ private fun MainScaffold(
         content = { innerPadding ->
 
             Content(
-                navController,
-                uiModeStorage,
+                navController, viewModel,
                 Modifier
                     .padding(innerPadding)
                     .fillMaxSize()
@@ -203,18 +212,16 @@ private fun MainScaffold(
 @Composable
 private fun Content(
     navController: NavController,
-    uiModeStorage: UIModeStorage,
+    viewModel: MainViewModel,
     modifier: Modifier = Modifier
 ) {
-    val viewModel = mainViewModel()
-
     ConstraintLayout(
         modifier = Modifier
             .padding(padding)
             .then(modifier)
     ) {
 
-        val (clock, messages, overview, themeMode) = createRefs()
+        val (clock, messages, overview) = createRefs()
 
         var expanded by rememberMutableSaveable { mutableStateOf(false) }
 
@@ -286,16 +293,36 @@ private fun Content(
         }
 
         //Theme
-        UIMode(
-            expanded = expanded,
-            uiModeStorage = uiModeStorage,
-            modifier = Modifier.constrainAs(themeMode) {
-                val themePadding = 0.dp
+        TopBar(expanded = expanded) {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                horizontalAlignment = Alignment.End,
+            ) {
+                Card(backgroundColor = MaterialTheme.colors.primaryVariant) {
+                    UIMode(viewModel.uiModeStorage)
+                }
 
-                top.linkTo(parent.top, themePadding)
-                end.linkTo(parent.end, themePadding)
+                Card(backgroundColor = MaterialTheme.colors.primaryVariant) {
+
+                    val activity = LocalActivity.requireActivity()
+
+                    Column(verticalArrangement = Arrangement.spacedBy(0.dp)) {
+                        IconButton(onClick = { AboutActions.rateAction(activity) }) {
+                            Icon(
+                                Icons.Default.Star,
+                                contentDescription = stringResource(id = R.string.rate)
+                            )
+                        }
+                        IconButton(onClick = { AboutActions.shareAction(activity) }) {
+                            Icon(
+                                Icons.Default.Share,
+                                contentDescription = stringResource(id = R.string.share)
+                            )
+                        }
+                    }
+                }
             }
-        )
+        }
     }
 }
 
@@ -310,19 +337,35 @@ private fun ClockStateHolder(modifier: Modifier = Modifier) {
 
 @ExperimentalAnimationApi
 @Composable
-private fun UIMode(expanded: Boolean, uiModeStorage: UIModeStorage, modifier: Modifier = Modifier) {
+private fun ConstraintLayoutScope.TopBar(
+    expanded: Boolean,
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit,
+) {
 
-    val uiMode by uiModeStorage.getThemeFlow().collectAsState()
+    val themeMode = createRef()
 
     AnimatedVisibility(
         visible = expanded,
         enter = slideInVertically({ it * -2 }),
         exit = slideOutHorizontally({ it * 2 }),
-        modifier = modifier
-    ) {
-        UIModeSwitch(uiMode, { uiModeStorage.setTheme(it) })
-    }
+        modifier = Modifier
+            .constrainAs(themeMode) {
+                val themePadding = 0.dp
 
+                top.linkTo(parent.top, themePadding)
+                end.linkTo(parent.end, themePadding)
+            }
+            .then(modifier),
+    ) {
+        content()
+    }
+}
+
+@Composable
+private fun UIMode(uiModeStorage: UIModeStorage, modifier: Modifier = Modifier) {
+    val uiMode by uiModeStorage.getThemeFlow().collectAsState()
+    UIModeSwitch(uiMode, { uiModeStorage.setTheme(it) }, modifier)
 }
 
 @Composable

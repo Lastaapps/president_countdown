@@ -23,13 +23,17 @@ package cz.lastaapps.president.app
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.view.ViewTreeObserver
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.lifecycleScope
 import cz.lastaapps.president.app.ui.main.MainActivityRoot
+import cz.lastaapps.president.app.ui.main.MainViewModel
 import cz.lastaapps.president.firebase.MyAnalytics
 import cz.lastaapps.president.widget.wrapper.WidgetConfig
 import kotlinx.coroutines.delay
@@ -66,6 +70,24 @@ class MainActivity : AppCompatActivity() {
             delay(3000)
             WidgetConfig.updateService(this@MainActivity)
         }
+
+        val viewModel: MainViewModel by viewModels()
+
+        //TODO test
+        //keeps a slash screen active until the main viewModel is ready
+        val content: View = findViewById(android.R.id.content)
+        content.viewTreeObserver.addOnPreDrawListener(
+            object : ViewTreeObserver.OnPreDrawListener {
+                override fun onPreDraw(): Boolean {
+                    return if (viewModel.isReady.value) {
+                        content.viewTreeObserver.removeOnPreDrawListener(this)
+                        true
+                    } else {
+                        false
+                    }
+                }
+            }
+        )
 
         //set the Main UI
         setContent {

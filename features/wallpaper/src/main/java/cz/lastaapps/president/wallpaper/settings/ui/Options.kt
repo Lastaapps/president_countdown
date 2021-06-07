@@ -39,6 +39,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
@@ -59,71 +60,69 @@ import cz.lastaapps.ui.settings.*
 @Composable
 internal fun WallpaperOptionsLayout(modifier: Modifier = Modifier) {
 
-    CompositionLocalProvider(LocalContentAlpha provides .7f) {
+    val backgroundAlpha = .7f
+    val sideMargins = 8.dp
 
-        val sideMargins = 8.dp
+    var expanded by rememberMutableSaveable { mutableStateOf(true) }
 
-        var expanded by rememberMutableSaveable { mutableStateOf(true) }
+    ConstraintLayout(modifier = modifier.padding(sideMargins)) {
 
-        ConstraintLayout(modifier = modifier.padding(sideMargins)) {
+        val (switchesConst, settingsConst) = createRefs()
 
-            val (switchesConst, settingsConst) = createRefs()
+        AnimatedVisibility(
+            visible = expanded,
+            enter = slideInVertically({ it * -2 }),
+            exit = slideOutVertically({ it * -2 }),
+            modifier = Modifier.constrainAs(switchesConst) {
+                top.linkTo(parent.top)
+                centerHorizontallyTo(parent)
+            },
+        ) {
+            Switches(transparency = backgroundAlpha)
+        }
 
-            AnimatedVisibility(
-                visible = expanded,
-                enter = slideInVertically({ it * -2 }),
-                exit = slideOutVertically({ it * -2 }),
-                modifier = Modifier.constrainAs(switchesConst) {
-                    top.linkTo(parent.top)
-                    centerHorizontallyTo(parent)
-                },
-            ) {
-                Switches()
+        val maxHeightGuide = createGuidelineFromTop(.3f)
+        val scroll = rememberScrollState()
+
+        ExpandableBottomLayout(
+            expanded = expanded,
+            onExpanded = { expanded = it },
+            modifier = Modifier.constrainAs(settingsConst) {
+                top.linkTo(maxHeightGuide)
+                bottom.linkTo(parent.bottom, sideMargins)
+                centerHorizontallyTo(parent)
+
+                width = Dimension.fillToConstraints
+                height = Dimension.fillToConstraints
             }
+        ) {
 
-            val maxHeightGuide = createGuidelineFromTop(.3f)
-
-            ExpandableBottomLayout(
-                expanded = expanded,
-                onExpanded = { expanded = it },
-                modifier = Modifier.constrainAs(settingsConst) {
-                    top.linkTo(maxHeightGuide)
-                    bottom.linkTo(parent.bottom, sideMargins)
-                    centerHorizontallyTo(parent)
-
-                    width = Dimension.fillToConstraints
-                    height = Dimension.fillToConstraints
-                }
+            Column(
+                modifier = Modifier
+                    .padding(start = 8.dp, end = 8.dp)
+                    .verticalScroll(scroll),
+                verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.Bottom)
             ) {
-                val scroll = rememberScrollState()
 
-                Column(
-                    modifier = Modifier
-                        .padding(start = 8.dp, end = 8.dp)
-                        .verticalScroll(scroll),
-                    verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.Bottom)
-                ) {
+                val maxWidthMod = Modifier.fillMaxWidth()
 
-                    val maxWidthMod = Modifier.fillMaxWidth()
+                SettingsGroup(backgroundAlpha = backgroundAlpha) {
+                    RotationFixSwitch(maxWidthMod)
+                    UIModeSelection(maxWidthMod)
+                }
 
-                    SettingsGroupColumn {
-                        RotationFixSwitch(maxWidthMod)
-                        UIModeSelection(maxWidthMod)
-                    }
+                SettingsGroup(backgroundAlpha = backgroundAlpha) {
+                    ScaleSlider(maxWidthMod)
+                    VerticalBiasSlider(maxWidthMod)
+                    HorizontalBiasSlider(maxWidthMod)
+                }
 
-                    SettingsGroupColumn {
-                        ScaleSlider(maxWidthMod)
-                        VerticalBiasSlider(maxWidthMod)
-                        HorizontalBiasSlider(maxWidthMod)
-                    }
+                SettingsGroup(backgroundAlpha = backgroundAlpha) {
+                    Pickers(maxWidthMod)
+                }
 
-                    SettingsGroup {
-                        Pickers(maxWidthMod)
-                    }
-
-                    SettingsGroup {
-                        WallpaperConfigs(maxWidthMod)
-                    }
+                SettingsGroup(backgroundAlpha = backgroundAlpha) {
+                    WallpaperConfigs(maxWidthMod)
                 }
             }
         }
@@ -134,14 +133,19 @@ internal fun WallpaperOptionsLayout(modifier: Modifier = Modifier) {
  * Preview options in the top of a screen
  * */
 @Composable
-private fun Switches(modifier: Modifier = Modifier) {
+private fun Switches(
+    modifier: Modifier = Modifier,
+    transparency: Float = 1f,
+) {
     SettingsGroup(
         modifier = modifier,
         border = BorderStroke(0.dp, Color.Transparent),
+        backgroundAlpha = transparency,
     ) {
         FlexRow(
-            rowsArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterVertically),
-            itemsAlignment = Alignment.CenterVertically,
+            rowsVerticalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterVertically),
+            itemInBoxAlignment = Alignment.CenterVertically,
+            horizontalItemsBoxInRowArrangement = Arrangement.Center,
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -293,7 +297,10 @@ private fun RotationFixHelpDialog(showDialog: Boolean, onStateChanged: (Boolean)
                         onStateChanged(false)
                     },
                 ) {
-                    Text(stringResource(id = R.string.ui_rotation_help_understand))
+                    Text(
+                        stringResource(id = R.string.ui_rotation_help_understand),
+                        textAlign = TextAlign.Center,
+                    )
                 }
             },
             text = {

@@ -56,9 +56,9 @@ data class WidgetState(
                 // Android S has rounded widget corners - the border looks bad
                 frameEnabled = Build.VERSION.SDK_INT < Build.VERSION_CODES.S,
                 lightForeground = Color(0xff000000).toArgb(),
-                lightBackground = Color(0xffffffff).toArgb(),
+                lightBackground = Color(0x7fffffff).toArgb(),
                 darkForeground = Color(0xffffffff).toArgb(),
-                darkBackground = Color(0xff333333).toArgb(),
+                darkBackground = Color(0x7f000000).toArgb(),
                 lightDifferYear = true,
                 darkDifferYear = true,
                 lightYearColor = Color(0xffff0000).toArgb(),

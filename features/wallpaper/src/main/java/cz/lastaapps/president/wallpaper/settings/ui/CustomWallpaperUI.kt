@@ -39,6 +39,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import cz.lastaapps.president.wallpaper.R
 import cz.lastaapps.president.wallpaper.settings.WallpaperViewModel
@@ -113,7 +114,10 @@ private fun LoadSystem(modifier: Modifier = Modifier) {
         },
         modifier = modifier,
     ) {
-        Text(text = stringResource(id = R.string.ui_system_wallpaper))
+        Text(
+            text = stringResource(id = R.string.ui_system_wallpaper),
+            textAlign = TextAlign.Center,
+        )
     }
 
     RequestStoragePermissionDialog(shown = dialogShown, onShownChanged = { dialogShown = it })
@@ -152,7 +156,10 @@ private fun LoadStorage(modifier: Modifier = Modifier) {
         },
         modifier = modifier,
     ) {
-        Text(text = stringResource(id = R.string.ui_choose_image))
+        Text(
+            text = stringResource(id = R.string.ui_choose_image),
+            textAlign = TextAlign.Center,
+        )
     }
 
     RequestStoragePermissionDialog(shown = dialogShown, onShownChanged = { dialogShown = it })
@@ -179,7 +186,10 @@ private fun CopyToTheOtherMode(modifier: Modifier = Modifier) {
                 stringResource(id = R.string.ui_copy_from_other_mode_landscape)
         )
 
-        Text(text = text)
+        Text(
+            text = text,
+            textAlign = TextAlign.Center,
+        )
     }
 }
 

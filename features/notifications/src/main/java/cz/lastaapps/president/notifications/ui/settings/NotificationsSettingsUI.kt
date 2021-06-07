@@ -25,11 +25,12 @@ import android.os.Build
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.OpenInNew
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -38,8 +39,9 @@ import androidx.compose.ui.unit.dp
 import cz.lastaapps.battery.BatteryWarning
 import cz.lastaapps.president.clock.ClockLayout
 import cz.lastaapps.president.notifications.R
+import cz.lastaapps.ui.common.components.IconTextRow
+import cz.lastaapps.ui.common.extencions.viewModelKt
 import cz.lastaapps.ui.settings.SettingsGroup
-import cz.lastaapps.ui.settings.SettingsGroupColumn
 import cz.lastaapps.ui.settings.SwitchSettings
 import cz.lastaapps.ui.settings.TimeSettings
 
@@ -47,9 +49,12 @@ import cz.lastaapps.ui.settings.TimeSettings
 @Composable
 fun NotificationSettings(modifier: Modifier = Modifier) {
 
+    val viewModel = viewModelKt(NotifyViewModel::class)
+
     ClockLayout(modifier) {
 
-        val settingsInitialized = loadSettings()
+
+        val settingsInitialized by viewModel.isReady.collectAsState()
 
         if (settingsInitialized) {
             Box(
@@ -62,13 +67,13 @@ fun NotificationSettings(modifier: Modifier = Modifier) {
                         .fillMaxWidth()
 
                     SettingsGroup(modifier = fillWidth) {
-                        NotificationTimeChooser(fillWidth)
+                        NotificationTimeChooser(viewModel, fillWidth)
                     }
 
-                    SettingsGroupColumn(modifier = fillWidth) {
-                        Announcement(fillWidth)
-                        Daily(fillWidth)
-                        Permanent(fillWidth)
+                    SettingsGroup(modifier = fillWidth) {
+                        Announcement(viewModel, fillWidth)
+                        Daily(viewModel, fillWidth)
+                        Permanent(viewModel, fillWidth)
                     }
 
                     Row(
@@ -93,26 +98,7 @@ fun NotificationSettings(modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun loadSettings(): Boolean {
-
-    var initialized by remember { mutableStateOf(false) }
-
-    val context = LocalContext.current
-    val viewModel = viewModel()
-
-    LaunchedEffect(context) {
-        viewModel.initializeSettings()
-        initialized = true
-    }
-
-    // Return the state-backed image property
-    return initialized
-}
-
-@Composable
-private fun NotificationTimeChooser(modifier: Modifier = Modifier) {
-
-    val viewModel = viewModel()
+private fun NotificationTimeChooser(viewModel: NotifyViewModel, modifier: Modifier = Modifier) {
 
     val state by remember { viewModel.notificationsTimeFlow }.collectAsState()
 
@@ -126,9 +112,7 @@ private fun NotificationTimeChooser(modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun Announcement(modifier: Modifier = Modifier) {
-
-    val viewModel = viewModel()
+private fun Announcement(viewModel: NotifyViewModel, modifier: Modifier = Modifier) {
 
     val state = viewModel.announcementsFlow.collectAsState()
 
@@ -141,9 +125,7 @@ private fun Announcement(modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun Daily(modifier: Modifier = Modifier) {
-
-    val viewModel = viewModel()
+private fun Daily(viewModel: NotifyViewModel, modifier: Modifier = Modifier) {
 
     val state = viewModel.dailyFlow.collectAsState()
 
@@ -156,9 +138,7 @@ private fun Daily(modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun Permanent(modifier: Modifier = Modifier) {
-
-    val viewModel = viewModel()
+private fun Permanent(viewModel: NotifyViewModel, modifier: Modifier = Modifier) {
 
     val state = viewModel.permanentFlow.collectAsState()
 
@@ -177,7 +157,9 @@ private fun OpenSystemSettings(modifier: Modifier = Modifier) {
 
         val context = LocalContext.current
 
-        Row(
+        IconTextRow(
+            Icons.Default.OpenInNew,
+            text = stringResource(id = R.string.sett_system),
             modifier = modifier
                 .padding(8.dp)
                 .clickable {
@@ -189,19 +171,7 @@ private fun OpenSystemSettings(modifier: Modifier = Modifier) {
                             )
                     context.startActivity(intent)
                 },
-            Arrangement.Center,
-            Alignment.CenterVertically,
-        ) {
-
-            val text = stringResource(id = R.string.sett_system)
-
-            Icon(Icons.Default.OpenInNew, contentDescription = text)
-            Text(text = text)
-        }
+        )
     }
 }
-
-@Composable
-private fun viewModel() =
-    cz.lastaapps.ui.common.extencions.viewModelKt(NotifyViewModel::class)
 

@@ -20,8 +20,6 @@
 
 package cz.lastaapps.president.about.ui
 
-import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager.NameNotFoundException
@@ -42,10 +40,8 @@ import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import cz.lastaapps.common.Communication
-import cz.lastaapps.common.PlayStoreReview
 import cz.lastaapps.president.about.R
 import cz.lastaapps.president.clock.ClockLayout
-import cz.lastaapps.president.constants.playStoreLink
 import cz.lastaapps.president.core.functionality.getLocale
 import cz.lastaapps.president.core.functionality.getVersionCode
 import cz.lastaapps.president.core.functionality.getVersionName
@@ -134,7 +130,7 @@ private fun AppName(modifier: Modifier = Modifier) {
 @Composable
 private fun Rate(modifier: Modifier = Modifier) {
     val context = LocalContext.current
-    Button(onClick = { rateAction(context) }, modifier = modifier) {
+    Button(onClick = { AboutActions.rateAction(context) }, modifier = modifier) {
         IconTextRow(
             Icons.Default.Star,
             text = stringResource(id = R.string.rate),
@@ -146,7 +142,7 @@ private fun Rate(modifier: Modifier = Modifier) {
 @Composable
 private fun Share(modifier: Modifier = Modifier) {
     val context = LocalContext.current
-    Button(onClick = { shareAction(context) }, modifier = modifier) {
+    Button(onClick = { AboutActions.shareAction(context) }, modifier = modifier) {
         IconTextRow(
             Icons.Default.Share,
             text = stringResource(id = R.string.share),
@@ -266,7 +262,10 @@ private fun LinksHelp(modifier: Modifier = Modifier) {
             },
             confirmButton = {
                 Button(onClick = { dialogShown = false }) {
-                    Text(text = stringResource(id = R.string.ads_ok))
+                    Text(
+                        text = stringResource(id = R.string.ads_ok),
+                        textAlign = TextAlign.Center,
+                    )
                 }
             },
         )
@@ -302,7 +301,10 @@ private fun BuggyUI(modifier: Modifier = Modifier) {
             },
             confirmButton = {
                 TextButton(onClick = { shown = false }) {
-                    Text(stringResource(id = R.string.buggy_ok))
+                    Text(
+                        stringResource(id = R.string.buggy_ok),
+                        textAlign = TextAlign.Center,
+                    )
                 }
             },
         )
@@ -357,24 +359,6 @@ private fun Licenses(modifier: Modifier = Modifier) {
             iconSize = iconSize
         )
     }
-}
-
-@SuppressLint("ObsoleteSdkInt")
-private fun rateAction(context: Context) {
-    PlayStoreReview.doInAppReview(context as Activity)
-}
-
-private fun shareAction(context: Context) {
-    val sendIntent: Intent = Intent().apply {
-        action = Intent.ACTION_SEND
-        putExtra(
-            Intent.EXTRA_TEXT,
-            context.getString(R.string.share_message) + " $playStoreLink"
-        )
-        type = "text/plain"
-    }
-    val shareIntent = Intent.createChooser(sendIntent, null)
-    context.startActivity(shareIntent)
 }
 
 @Composable

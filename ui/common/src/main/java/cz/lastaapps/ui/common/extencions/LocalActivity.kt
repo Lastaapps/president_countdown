@@ -25,6 +25,7 @@ import android.view.ContextThemeWrapper
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.platform.LocalContext
 
 /**
@@ -64,5 +65,8 @@ object LocalActivity {
 
     @Composable
     fun requireActivity() = getCompat() ?: error("No activity instance found!")
+
+    @Composable
+    fun rememberUpdatedState() = rememberUpdatedState(requireActivity())
 
 }

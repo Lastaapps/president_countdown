@@ -33,6 +33,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
@@ -48,9 +49,15 @@ fun ImageTextRow(
     contentDescription: String = text,
     iconSize: Dp = cz.lastaapps.ui.common.extencions.iconSize,
     textStyle: TextStyle = TextStyle.Default,
+    textAlign: TextAlign = TextAlign.Start,
 ) = Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
     Image(painter = painter, contentDescription, modifier = Modifier.size(iconSize))
-    Text(text, style = textStyle, modifier = Modifier.padding(start = 8.dp))
+    Text(
+        text = text,
+        style = textStyle,
+        textAlign = textAlign,
+        modifier = Modifier.padding(start = 8.dp),
+    )
 }
 
 /**
@@ -64,9 +71,15 @@ fun IconTextRow(
     contentDescription: String = text,
     iconSize: Dp = cz.lastaapps.ui.common.extencions.iconSize,
     textStyle: TextStyle = TextStyle.Default,
+    textAlign: TextAlign = TextAlign.Start,
 ) = Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
     Icon(painter, contentDescription, modifier = Modifier.size(iconSize))
-    Text(text, style = textStyle, modifier = Modifier.padding(start = 8.dp))
+    Text(
+        text = text,
+        style = textStyle,
+        textAlign = textAlign,
+        modifier = Modifier.padding(start = 8.dp),
+    )
 }
 
 @Composable
@@ -77,6 +90,7 @@ fun IconTextRow(
     contentDescription: String = text,
     iconSize: Dp = cz.lastaapps.ui.common.extencions.iconSize,
     textStyle: TextStyle = TextStyle.Default,
+    textAlign: TextAlign = TextAlign.Start,
 ) = IconTextRow(
     painter = rememberVectorPainter(vector),
     text = text,
@@ -84,4 +98,5 @@ fun IconTextRow(
     contentDescription = contentDescription,
     iconSize = iconSize,
     textStyle = textStyle,
+    textAlign = textAlign,
 )

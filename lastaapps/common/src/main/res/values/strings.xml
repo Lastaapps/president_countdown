@@ -33,6 +33,11 @@
     <string name="content_description_github_project">The project\'s source code Github repository</string>
     <string name="content_description_play_store">The other apps by the app\'s developer</string>
     <string name="content_description_telegram">The contact to the app\'s developer using Telegram</string>
-    <string name="thanks_review">Thank you for your review!</string>
+
+    <string name="review_dialog_title">Review</string>
+    <string name="review_dialog_message">Could you please consider giving this app a nice review?</string>
+    <string name="review_dialog_positive">Sure</string>
+    <string name="review_dialog_negative">Nope</string>
+    <string name="review_thanks">Thank you for your review!</string>
 
 </resources>

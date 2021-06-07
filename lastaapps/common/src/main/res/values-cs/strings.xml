@@ -32,5 +32,9 @@
     <string name="content_description_telegram">Kontakt na vývojáře na platformě Telegram</string>
     <string name="content_description_github_project">Zdrojový kód projektu na Githubu</string>
 
-    <string name="thanks_review">Děkujeme za vaše hodnocení!</string>
+    <string name="review_dialog_title">Hodnocení</string>
+    <string name="review_dialog_message">Mohli byste nám prosím věnovat vteřinku a ohodnotit tuto aplikaci?</string>
+    <string name="review_dialog_positive">Jasně</string>
+    <string name="review_dialog_negative">Ne</string>
+    <string name="review_thanks">Děkujeme za vaše hodnocení!</string>
 </resources>

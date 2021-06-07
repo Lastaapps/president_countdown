@@ -33,6 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import cz.lastaapps.president.core.coroutines.loopingStateFlow
 import cz.lastaapps.ui.common.extencions.rememberMutableSaveable
@@ -67,17 +68,26 @@ internal fun BatteryOptimizationDialog(shown: Boolean, onShownChanged: (Boolean)
                     TextButton(
                         onClick = { onShownChanged(false) },
                     ) {
-                        Text(text = stringResource(id = R.string.battery_ignore))
+                        Text(
+                            text = stringResource(id = R.string.battery_ignore),
+                            textAlign = TextAlign.Center,
+                        )
                     }
                     TextButton(
                         onClick = { showBatterySettings(context) },
                     ) {
-                        Text(text = stringResource(id = R.string.battery_settings))
+                        Text(
+                            text = stringResource(id = R.string.battery_settings),
+                            textAlign = TextAlign.Center,
+                        )
                     }
                     Button(
                         onClick = { showAppInfo(context) },
                     ) {
-                        Text(text = stringResource(id = R.string.battery_open))
+                        Text(
+                            text = stringResource(id = R.string.battery_open),
+                            textAlign = TextAlign.Center,
+                        )
                     }
                 }
             },

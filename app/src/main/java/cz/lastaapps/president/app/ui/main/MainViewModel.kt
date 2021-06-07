@@ -26,6 +26,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import cz.lastaapps.president.app.BuildConfig
 import cz.lastaapps.president.app.R
+import cz.lastaapps.president.app.ui.uimode.UIModeStorage
 import cz.lastaapps.president.core.president.CurrentState
 import cz.lastaapps.president.widget.wrapper.WidgetConfig
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -34,6 +35,19 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 
 class MainViewModel(app: Application) : AndroidViewModel(app) {
+
+    companion object {
+        private const val UI_MODE_STORAGE_NAME = "MAIN_UI_MODE"
+    }
+
+    val isReady = MutableStateFlow(false)
+
+    init {
+        viewModelScope.launch {
+            uiModeStorage = UIModeStorage(getApplication(), UI_MODE_STORAGE_NAME)
+            isReady.tryEmit(true)
+        }
+    }
 
     val clockState = CurrentState.getCurrentState(viewModelScope)
 
@@ -54,6 +68,8 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
             )
         }
     }
+
+    lateinit var uiModeStorage: UIModeStorage
 
     // shows user that there is a small arrow to open config menu
     private val menuOpened = MenuOpened(app)

@@ -34,13 +34,12 @@ import kotlin.math.max
  * Like a normal row, but an overflow function is enabled - if you exceed row width, items continue
  * on the next line
  * */
-//TODO equal items per row
 @Composable
 fun FlexRow(
     modifier: Modifier = Modifier,
-    horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
-    rowsArrangement: Arrangement.Vertical = Arrangement.Top,
-    itemsAlignment: Alignment.Vertical = Alignment.Top,
+    rowsVerticalArrangement: Arrangement.Vertical = Arrangement.Top,
+    horizontalItemsBoxInRowArrangement: Arrangement.Horizontal = Arrangement.Start,
+    itemInBoxAlignment: Alignment.Vertical = Alignment.Top,
     content: @Composable () -> Unit,
 ) {
 
@@ -52,8 +51,8 @@ fun FlexRow(
         modifier = modifier,
     ) { measurables, constraints ->
 
-        val verticalSpacing = rowsArrangement.spacing.roundToPx()
-        val horizontalSpacing = horizontalArrangement.spacing.roundToPx()
+        val verticalSpacing = rowsVerticalArrangement.spacing.roundToPx()
+        val horizontalSpacing = horizontalItemsBoxInRowArrangement.spacing.roundToPx()
 
         //measures composes
         val placeables = measurables.map { it.measure(constraints) }
@@ -105,7 +104,7 @@ fun FlexRow(
         layout(width, height) {
 
             val rowsOffsets = IntArray(lines.size)
-            with(rowsArrangement) {
+            with(rowsVerticalArrangement) {
                 density.arrange(height, lines.map { rowHeight(it) }.toIntArray(), rowsOffsets)
             }
 
@@ -114,18 +113,18 @@ fun FlexRow(
                 val lineHeight = rowHeight(line)
 
                 val horizontalOffsets = IntArray(line.size)
-                with(horizontalArrangement) {
+                with(horizontalItemsBoxInRowArrangement) {
                     density.arrange(
                         width,
                         line.map { it.width }.toIntArray(),
                         layoutDirection,
-                        horizontalOffsets
+                        horizontalOffsets,
                     )
                 }
 
                 line.forEachIndexed { placableIndex, placeable ->
 
-                    val itemOffset = itemsAlignment.align(placeable.height, lineHeight)
+                    val itemOffset = itemInBoxAlignment.align(placeable.height, lineHeight)
                     val horizontalOffset = horizontalOffsets[placableIndex]
 
                     placeable.place(horizontalOffset, verticalOffset + itemOffset)
