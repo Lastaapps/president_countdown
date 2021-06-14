@@ -33,7 +33,7 @@ buildscript {
 
         //latest version, may be preview
         compile_sdk_version = 'android-S'
-        build_tools_version = '31.0.0 rc4'
+        build_tools_version = '31.0.0 rc5'
         target_sdk_version = 'S'
 
         //legacy version, last released android version
@@ -47,7 +47,7 @@ buildscript {
 
         //JetBrains
 //        kotlin_version = '1.5.10'
-//        ksp_version = "$kotlin_version-1.0.0-beta01"
+//        ksp_version = "$kotlin_version-1.0.0-beta02"
         kotlin_version = '1.4.32'
         ksp_version = "$kotlin_version-1.0.0-alpha08"
         compose_compiler_version = kotlin_version

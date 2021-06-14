@@ -36,7 +36,7 @@ import kotlin.reflect.KClass
 private const val TAG = "ComposeFunctions"
 
 /**
- * The same as libraries #viewModel(), but this one accepts KClass instead of java Class
+ * The same as libraries #viewModel(), but this one accepts KClass instead of kotlin Class
  * */
 @Composable
 fun <T : ViewModel> viewModelKt(
