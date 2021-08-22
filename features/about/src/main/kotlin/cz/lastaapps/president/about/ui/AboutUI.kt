@@ -53,6 +53,7 @@ import cz.lastaapps.ui.common.extencions.iconSize
 import cz.lastaapps.ui.common.extencions.rememberMutableSaveable
 import cz.lastaapps.ui.common.layouts.ExpandingIcons
 import cz.lastaapps.ui.common.layouts.LabelPainterActionData
+import cz.lastaapps.ui.common.themes.MainTheme
 import cz.lastaapps.ui.socials.DeveloperNotice
 import cz.lastaapps.ui.socials.Socials
 
@@ -67,7 +68,42 @@ fun About(modifier: Modifier = Modifier) {
         Box(
             contentAlignment = Alignment.BottomCenter,
         ) {
-            Content()
+
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Top),
+                modifier = Modifier.padding(16.dp)
+            ) {
+
+                AppName()
+
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Rate()
+                    Share()
+                }
+
+                //links to the info about President, definitely no Rickrolling
+                PresidentWebLinks()
+                Socials()
+
+                //scrolls horizontally
+                val moreScroll = rememberScrollState()
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    modifier = Modifier.horizontalScroll(moreScroll)
+                ) {
+                    WhatsNew()
+                    ShowPrivacyPolicy()
+                    Licenses()
+                }
+
+                //describes, why the UI can seen buggy and some numbers are eventually skipped
+                //disabled - app doesn't lag as much any more and this would drop down overall feel
+                //BuggyUI()
+
+                DeveloperNotice()
+                Version()
+            }
         }
     }
 }
@@ -75,46 +111,47 @@ fun About(modifier: Modifier = Modifier) {
 @Composable
 private fun Content(modifier: Modifier = Modifier) {
 
-    Card(
-        backgroundColor = MaterialTheme.colors.primaryVariant,
-        modifier = modifier.fillMaxWidth(),
+//    Card(
+//        backgroundColor = MaterialTheme.colors.primaryVariant,
+//        modifier = modifier.fillMaxWidth(),
+//    ) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Top),
+        modifier = Modifier.padding(16.dp)
     ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Top),
-            modifier = Modifier.padding(16.dp)
-        ) {
+        Text(text = "WTF is going on...")
 
-            AppName()
+        AppName()
 
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                Rate()
-                Share()
-            }
-
-            //links to the info about President, definitely no Rickrolling
-            PresidentWebLinks()
-            Socials()
-
-            //scrolls horizontally
-            val moreScroll = rememberScrollState()
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                modifier = Modifier.horizontalScroll(moreScroll)
-            ) {
-                WhatsNew()
-                ShowPrivacyPolicy()
-                Licenses()
-            }
-
-            //describes, why the UI can seen buggy and some numbers are eventually skipped
-            //disabled - app doesn't lag as much any more and this would drop down overall feel
-            //BuggyUI()
-
-            DeveloperNotice()
-            Version()
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            Rate()
+            Share()
         }
-    }
+
+        //links to the info about President, definitely no Rickrolling
+        PresidentWebLinks()
+        Socials()
+
+        //scrolls horizontally
+        val moreScroll = rememberScrollState()
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.horizontalScroll(moreScroll)
+        ) {
+            WhatsNew()
+            ShowPrivacyPolicy()
+            Licenses()
+        }
+
+        //describes, why the UI can seen buggy and some numbers are eventually skipped
+        //disabled - app doesn't lag as much any more and this would drop down overall feel
+        //BuggyUI()
+
+        DeveloperNotice()
+        Version()
+        }
+    //}
 }
 
 @Composable

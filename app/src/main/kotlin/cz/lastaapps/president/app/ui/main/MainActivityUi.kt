@@ -21,6 +21,8 @@
 package cz.lastaapps.president.app.ui.main
 
 import androidx.compose.animation.*
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -34,10 +36,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.constraintlayout.compose.ConstraintLayoutScope
-import androidx.constraintlayout.compose.Dimension
+import androidx.constraintlayout.compose.*
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -45,6 +47,7 @@ import androidx.navigation.compose.rememberNavController
 import cz.lastaapps.president.about.R
 import cz.lastaapps.president.about.ui.About
 import cz.lastaapps.president.about.ui.AboutActions
+import cz.lastaapps.president.app.BuildConfig
 import cz.lastaapps.president.app.ui.idea.IdeaDialog
 import cz.lastaapps.president.app.ui.rate.RatePopup
 import cz.lastaapps.president.app.ui.uimode.UIModeState
@@ -215,6 +218,20 @@ private fun Content(
     viewModel: MainViewModel,
     modifier: Modifier = Modifier
 ) {
+
+    var expanded by rememberMutableSaveable { mutableStateOf(BuildConfig.DEBUG) }
+
+    val progress by animateFloatAsState(
+        targetValue = if (expanded) 1f else 0f,
+        animationSpec = tween(6000)
+    )
+
+    MotionLayout(
+        MotionScenes.getMainScene(), progress
+    ) {
+
+    }
+
     ConstraintLayout(
         modifier = Modifier
             .padding(padding)
@@ -223,13 +240,12 @@ private fun Content(
 
         val (clock, messages, overview) = createRefs()
 
-        var expanded by rememberMutableSaveable { mutableStateOf(false) }
-
         val guideClock = createGuidelineFromTop(0.3f)
 
         //Clock
         ClockStateHolder(
             modifier = Modifier
+                .layoutId("clock", MotionScenes.Tags.clock)
                 .constrainAs(clock) {
                     if (!expanded) {
                         top.linkTo(guideClock)
@@ -370,6 +386,9 @@ private fun UIMode(uiModeStorage: UIModeStorage, modifier: Modifier = Modifier) 
 
 @Composable
 internal fun mainViewModel(
+    viewModelStoreOwner: ViewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current) {
+        "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+    },
     key: String? = null,
     factory: ViewModelProvider.Factory? = null
-): MainViewModel = viewModelKt(MainViewModel::class, key, factory)
+): MainViewModel = viewModelKt(MainViewModel::class, viewModelStoreOwner, key, factory)

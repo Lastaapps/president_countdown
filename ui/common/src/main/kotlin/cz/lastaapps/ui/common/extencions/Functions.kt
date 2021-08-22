@@ -31,6 +31,9 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
+import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlin.reflect.KClass
 
 private const val TAG = "ComposeFunctions"
@@ -39,11 +42,14 @@ private const val TAG = "ComposeFunctions"
  * The same as libraries #viewModel(), but this one accepts KClass instead of kotlin Class
  * */
 @Composable
-fun <T : ViewModel> viewModelKt(
-    modelClass: KClass<T>,
+fun <VM : ViewModel> viewModelKt(
+    modelClass: KClass<VM>,
+    viewModelStoreOwner: ViewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current) {
+        "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+    },
     key: String? = null,
     factory: ViewModelProvider.Factory? = null
-): T = androidx.lifecycle.viewmodel.compose.viewModel(modelClass.java, key, factory)
+): VM = viewModel(modelClass.java, viewModelStoreOwner, key, factory)
 
 /**
  * changes status bar color to selected color

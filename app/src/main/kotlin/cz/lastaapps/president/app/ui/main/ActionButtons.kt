@@ -43,7 +43,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.compose.navigate
 import cz.lastaapps.president.app.R
 import cz.lastaapps.president.navigation.NavigationConstants
 import cz.lastaapps.president.wallpaper.service.PresidentWallpaperService

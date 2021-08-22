@@ -19,49 +19,46 @@
  */
 
 plugins {
-    id 'com.android.library'
-    id 'kotlin-android'
+    id("com.android.library")
+    id("kotlin-android")
 }
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.3"
+    compileSdk = App.compile_sdk_version
+    buildToolsVersion = App.build_tools_version
 
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 30
+        minSdk = App.min_sdk_version
+        targetSdk = App.target_sdk_version
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles "consumer-rules.pro"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
 
-        multiDexEnabled true
-
-        buildConfigField "java.lang.Long", "BUILD_DATE", "" + ZonedDateTime.now().toInstant().epochSecond + "L"
+        multiDexEnabled = true
     }
 
     buildTypes {
-        release {
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        getByName("release") {
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
     compileOptions {
-        coreLibraryDesugaringEnabled true
-
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility = Versions.JAVA
+        targetCompatibility = Versions.JAVA
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = Versions.JVM_TARGET
     }
     buildFeatures {
-        buildConfig true
+        buildConfig = false
     }
 }
 
 dependencies {
-    coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:$desugar_version"
 
-    implementation "androidx.appcompat:appcompat:$appcompat_version"
-    implementation "com.google.android.play:core-ktx:$play_version"
+    implementation(Libs.MATERIAL)
 
 }

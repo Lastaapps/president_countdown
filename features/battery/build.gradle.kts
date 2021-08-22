@@ -19,42 +19,50 @@
  */
 
 plugins {
-    id 'com.android.library'
-    id 'kotlin-android'
+    id("com.android.library")
+    id("kotlin-android")
 }
 
 android {
-    compileSdkVersion compile_sdk_version
-    buildToolsVersion build_tools_version
+    compileSdk = App.compile_sdk_version
+    buildToolsVersion = App.build_tools_version
 
     defaultConfig {
-        minSdkVersion min_sdk_version
-        targetSdkVersion target_sdk_version
+        minSdk = App.min_sdk_version
+        targetSdk = App.target_sdk_version
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles "consumer-rules.pro"
-
-        multiDexEnabled true
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
-        release {
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        getByName("release") {
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility = Versions.JAVA
+        targetCompatibility = Versions.JAVA
     }
     kotlinOptions {
-        jvmTarget = '1.8'
-        useIR = true
+        jvmTarget = Versions.JVM_TARGET
     }
     buildFeatures {
-        buildConfig false
+        compose = true
+        buildConfig = false
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = Versions.COMPOSE_COMPILER
     }
 }
 
 dependencies {
-    implementation "com.google.android.material:material:$material_version"
+
+    implementation(project(":core:core"))
+    implementation(project(":ui:common"))
+    implementation(project(":ui:composeimpl"))
+
 }

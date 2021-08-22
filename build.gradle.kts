@@ -18,43 +18,27 @@
  *
  */
 
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        google()
-    }
-}
+buildscript {
 
-dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
         mavenCentral()
     }
+    dependencies {
+
+        classpath("com.android.tools.build:gradle:7.1.0-alpha08")
+        classpath("com.google.gms:google-services:4.3.10")
+        classpath("com.google.firebase:firebase-crashlytics-gradle:2.7.1")
+        classpath("com.google.android.gms:oss-licenses-plugin:0.10.4")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.KOTLIN}")
+
+    }
 }
 
-rootProject.name = "President Countdown"
+plugins {
+    id("com.google.devtools.ksp") version Versions.KSP
+}
 
-include ':app'
-include ':app:firebase'
-include ':app:navigation'
-include ':core:assets'
-include ':core:constants'
-include ':core:core'
-include ':features:about'
-include ':features:battery'
-include ':features:notifications'
-include ':features:privacypolicy'
-include ':features:wallpaper'
-include ':features:whatsnew'
-include ':features:widget:big'
-include ':features:widget:core'
-include ':features:widget:small'
-include ':features:widget:wrapper'
-include ':lastaapps:common'
-include ':ui:clock'
-include ':ui:colorpicker'
-include ':ui:common'
-include ':ui:composeimpl'
-include ':ui:settings'
-include ':ui:socials'
+tasks.register("clean", Delete::class) {
+    delete(rootProject.buildDir)
+}

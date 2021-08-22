@@ -36,6 +36,8 @@ import androidx.compose.ui.unit.toSize
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import cz.lastaapps.president.wallpaper.settings.WallpaperViewModel
 import cz.lastaapps.ui.common.extencions.FullScreen
 import cz.lastaapps.ui.common.extencions.centerToWithPadding
@@ -120,6 +122,9 @@ private fun WallpaperCanvas(modifier: Modifier = Modifier) {
  * */
 @Composable
 internal fun wallpaperViewModel(
+    viewModelStoreOwner: ViewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current) {
+        "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+    },
     key: String? = null,
     factory: ViewModelProvider.Factory? = null
-): WallpaperViewModel = viewModelKt(WallpaperViewModel::class, key, factory)
+): WallpaperViewModel = viewModelKt(WallpaperViewModel::class, viewModelStoreOwner, key, factory)
