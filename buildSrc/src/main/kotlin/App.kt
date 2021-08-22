@@ -48,27 +48,26 @@ object App {
     val buildDate = ZonedDateTime.of(LocalDate.now(), LocalTime.MIDNIGHT, ZoneId.of("UTC"))
         .toInstant().epochSecond
 
-    //TODO rename later
-    const val app_id = "cz.lastaapps.president.app"
-    const val app_version_code = 1010000 // 1x major . 2x minor . 2x path . 2x build diff
-    const val app_version_name = "1.1.0"
-    const val app_is_alpha = false
-    const val app_is_beta = false
+    const val APP_ID = "cz.lastaapps.president.app"
+    const val VERSION_CODE = 1010000 // 1x major . 2x minor . 2x path . 2x build diff
+    const val VERSION_NAME = "1.1.0"
+    const val IS_ALPHA = false
+    const val IS_BETA = false
 
-    const val use_legacy = false
-    const val min_sdk_version = 21
+    const val USE_LEGACY = false
+    const val MIN_SDK = 21
 
     //latest version, may be preview
-    const val compile_sdk_version = 31
-    const val build_tools_version = "31.0.0"
-    const val target_sdk_version = 31
-//    const val compile_sdk_version = "android-S"
-//    const val build_tools_version = "31.0.0 rc5"
-//    const val target_sdk_version = "S"
+    const val COMPILE_SDK = 31
+    const val BUILD_TOOLS = "31.0.0"
+    const val TARGET_SDK = 31
+//    const val COMPILE_SDK = "android-S"
+//    const val BUILD_TOOLS = "31.0.0 rc5"
+//    const val TARGET_SDK = "S"
 
     //legacy version, last released android version
-    const val legacy_compile_sdk_version = 31
-    const val legacy_build_tools_version = "31.0.0"
-    const val legacy_target_sdk_version = 31
+    const val LEGACY_COMPILE_SDK = 31
+    const val LEGACY_BUILD_TOOLS = "31.0.0"
+    const val LEGACY_TARGET_SDK = 31
 
 }

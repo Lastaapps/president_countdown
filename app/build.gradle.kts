@@ -30,21 +30,21 @@ plugins {
 
 android {
 
-    if (App.use_legacy) {
-        compileSdk = App.compile_sdk_version
-        buildToolsVersion = App.build_tools_version
+    if (App.USE_LEGACY) {
+        compileSdk = App.COMPILE_SDK
+        buildToolsVersion = App.BUILD_TOOLS
     } else {
-        compileSdk = App.legacy_compile_sdk_version
-        buildToolsVersion = App.legacy_build_tools_version
+        compileSdk = App.LEGACY_COMPILE_SDK
+        buildToolsVersion = App.LEGACY_BUILD_TOOLS
     }
 
     defaultConfig {
-        applicationId = App.app_id
-        minSdk = App.min_sdk_version
-        versionCode = App.app_version_code
-        versionName = App.app_version_name
+        applicationId = App.APP_ID
+        minSdk = App.MIN_SDK
+        versionCode = App.VERSION_CODE
+        versionName = App.VERSION_NAME
 
-        targetSdk = if (App.use_legacy) App.target_sdk_version else App.legacy_target_sdk_version
+        targetSdk = if (App.USE_LEGACY) App.TARGET_SDK else App.LEGACY_TARGET_SDK
 
         resourceConfigurations.addAll(setOf("en", "cs"))
 
