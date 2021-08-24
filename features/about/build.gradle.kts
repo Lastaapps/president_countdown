@@ -57,7 +57,7 @@ android {
         buildConfig = false
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = Versions.COMPOSE_COMPILER
+        kotlinCompilerExtensionVersion = Versions.COMPOSE
     }
 }
 
@@ -74,7 +74,7 @@ dependencies {
     implementation(project(":lastaapps:common"))
 
     implementation(Libs.APPCOMPAT)
+    implementation(Libs.OSS_LICENSE)
     implementation(Libs.PLAY_SERVICES)
-    implementation(Libs.CORE)
 
 }

@@ -30,7 +30,10 @@ import cz.lastaapps.president.core.president.CurrentState
 import cz.lastaapps.president.widget.core.config.database.WidgetDatabase
 import cz.lastaapps.president.widget.core.widget.RemoteViewUpdater
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 abstract class WidgetViewModel(app: Application) : AndroidViewModel(app) {

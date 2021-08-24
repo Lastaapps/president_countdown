@@ -21,7 +21,10 @@
 package cz.lastaapps.president.widget.wrapper.service
 
 import android.app.Service
-import android.content.*
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.content.res.Configuration
 import android.os.Build
 import android.os.IBinder

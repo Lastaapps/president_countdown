@@ -22,22 +22,26 @@ package cz.lastaapps.president.wallpaper.service
 
 import android.app.WallpaperColors
 import android.content.res.Configuration
-import android.graphics.*
+import android.graphics.Bitmap
+import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
 import android.service.wallpaper.WallpaperService
 import android.util.DisplayMetrics
 import android.util.Log
-import android.view.*
 import android.view.Surface
+import android.view.SurfaceHolder
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import cz.lastaapps.president.core.coroutines.collectAsync
 import cz.lastaapps.president.core.president.CurrentState
 import cz.lastaapps.president.wallpaper.R
 import cz.lastaapps.president.wallpaper.WallpaperViewBitmapCreator
-import cz.lastaapps.president.wallpaper.settings.*
+import cz.lastaapps.president.wallpaper.settings.SettingsRepo
 import cz.lastaapps.president.wallpaper.settings.files.ImageRepo
+import cz.lastaapps.president.wallpaper.settings.getClockLayoutOptions
+import cz.lastaapps.president.wallpaper.settings.getClockThemeOptions
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
 

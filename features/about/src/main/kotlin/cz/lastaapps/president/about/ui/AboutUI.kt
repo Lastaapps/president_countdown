@@ -48,12 +48,11 @@ import cz.lastaapps.president.core.functionality.getVersionName
 import cz.lastaapps.president.core.president.President
 import cz.lastaapps.president.privacypolicy.PrivacyPolicy
 import cz.lastaapps.president.whatsnew.ui.WhatsNewDialog
-import cz.lastaapps.ui.common.components.*
+import cz.lastaapps.ui.common.components.IconTextRow
 import cz.lastaapps.ui.common.extencions.iconSize
 import cz.lastaapps.ui.common.extencions.rememberMutableSaveable
 import cz.lastaapps.ui.common.layouts.ExpandingIcons
 import cz.lastaapps.ui.common.layouts.LabelPainterActionData
-import cz.lastaapps.ui.common.themes.MainTheme
 import cz.lastaapps.ui.socials.DeveloperNotice
 import cz.lastaapps.ui.socials.Socials
 

@@ -48,7 +48,6 @@ object Versions {
     //JetBrains
     const val KOTLIN = "1.5.21"
     const val KSP = "$KOTLIN-1.0.0-beta07"
-    const val COMPOSE_COMPILER = KOTLIN
     const val COROUTINES = "1.5.1-native-mt"
 
     //androidx

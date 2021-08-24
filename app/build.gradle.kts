@@ -120,7 +120,7 @@ dependencies {
     implementation(Libs.OSS_LICENSE)
     implementation(Libs.PLAY_SERVICES)
 
-    implementation(Libs.FIREBASE_BOM)
+    implementation(platform(Libs.FIREBASE_BOM))
     implementation(Libs.FIREBASE_ANALYTICS)
     implementation(Libs.FIREBASE_CONFIG)
     implementation(Libs.FIREBASE_CRASHLYTICS)
